@@ -1,0 +1,26 @@
+<app-breadcrumb [title]="'Settings'" [active_item]="'Settings'"></app-breadcrumb>
+<div class="row">
+    <div class="col-lg-12 mb-5 text-center">
+        <h2>
+            Logo Management
+        </h2>
+    </div>
+    <div class="col-lg-6 mb-3 d-flex flex-column justify-content-between align-items-center">
+        <h6>Logo</h6>
+        <div class="avatar">
+            <img alt="" [src]="dashboardLogo">
+        </div>
+        <input id="dashboardLogo" class="upload" type="file"
+            (change)="readUrl($event,'dashboardLogo')" hidden/>
+        <label for="dashboardLogo" class="icon-wrapper"><i class="icofont icofont-pencil-alt-5"></i></label>
+    </div>
+    <div class="col-lg-6 mb-3 d-flex flex-column justify-content-between align-items-center">
+        <h6>Logo Icon</h6>
+        <div class="avatar">
+            <img alt="" [src]="dashboardIcon">
+        </div>
+        <input id="dashboardIcon" class="upload" type="file"
+            (change)="readUrl($event,'dashboardIcon')" hidden />
+        <label for="dashboardIcon" class="icon-wrapper"><i class="icofont icofont-pencil-alt-5"></i></label>
+    </div>
+</div>

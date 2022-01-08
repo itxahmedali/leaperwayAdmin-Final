@@ -1,0 +1,3 @@
+privacy routes page is email component
+terms and condition routes page is chat
+settings routes is bookmarks component

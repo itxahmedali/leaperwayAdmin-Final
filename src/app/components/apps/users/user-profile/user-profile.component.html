@@ -1,0 +1,202 @@
+<app-breadcrumb [title]="'User Profile'" [items]="['Users']" [active_item]="'User Profile'"></app-breadcrumb>
+<div class="container-fluid">
+    <div class="user-profile">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 mb-3">
+                <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+                    <ngb-panel title="User Info">
+                        <ng-template ngbPanelContent>
+                            <div class="col-sm-12">
+                                <div class="card hovercard text-center">
+                                    <div class="user-image">
+                                        <div class="avatar"><img alt="" [src]="'assets/1x/userProfile.jpg'">
+                                        </div>
+                                    </div>
+                                    <div class="info">
+                                        <div class="row">
+                                            <div class="col-sm-6 col-lg-4 order-sm-1 order-xl-0">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="ttl-info text-left">
+                                                            <h6><i class="fa fa-envelope"></i>   Email</h6>
+                                                            <span>elenagilbert@yahoo.com</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="ttl-info text-left">
+                                                            <h6><i class="fa fa-calendar"></i>   Registered On</h6>
+                                                            <span>02
+                                                                January 2022</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-lg-4 order-sm-0 order-xl-1">
+                                                <div class="user-designation">
+                                                    <div class="title"><a target="_blank" href="">Elena Gilbert</a>
+                                                    </div>
+                                                    <div class="desc mt-2">Owner</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-lg-4 order-sm-2 order-xl-2">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="ttl-info text-left">
+                                                            <h6><i class="fa fa-phone"></i>   Contact Me</h6><span>India
+                                                                +91 123-456-7890</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="ttl-info text-left">
+                                                            <h6><i class="fa fa-location-arrow"></i>   Location</h6>
+                                                            <span>B69 Near Schoool Demo Home</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 order-sm-2 order-xl-3">
+                                                <div class="ttl-info text-center wallet">
+                                                    <h6><i class="fa fa-credit-card"></i>   Wallet</h6>
+                                                    <span>$ 1709</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
+            </div>
+            <div class="col-lg-12 col-sm-12 mb-3">
+                <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+                    <ngb-panel title="Cards">
+                        <ng-template ngbPanelContent>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 mb-3" *ngFor="let cards of cards; index as i;">
+                                    <div class="cstmcard">
+                                        <div class="card__front card__part">
+                                            <img class="card__front-square card__square" src="assets/1x/cardchip.png">
+                                            <img class="card__front-logo card__logo" src={{cards.type}}>
+                                            <p class="card_numer">{{cards.number}}</p>
+                                            <div class="card__space-75">
+                                                <span class="card__label">Card holder</span>
+                                                <p class="card__info">{{cards.name}}</p>
+                                            </div>
+                                            <div class="card__space-25">
+                                                <span class="card__label">Expires</span>
+                                                <p class="card__info">{{cards.DateExpiry}}</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="card__back card__part">
+                                            <div class="card__black-line"></div>
+                                            <div class="card__back-content">
+                                                <div class="card__secret">
+                                                    <p class="card__secret--last">{{cards.cc}}</p>
+                                                </div>
+                                                <img class="card__back-square card__square"
+                                                    src="assets/1x/cardchip.png">
+                                                <img class="card__back-logo card__logo" src={{cards.type}}>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
+            </div>
+            <div class="col-lg-12 col-sm-12 mb-3">
+                <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+                    <ngb-panel title="Transactions">
+                        <ng-template ngbPanelContent>
+                            <ngb-tabset>
+                                <ngb-tab title="Deposit History">
+                                    <ng-template ngbTabContent>
+                                        <div class="currentOrder">
+                                            <div class="row" *ngFor="let item of depositHistory | paginate: { itemsPerPage:
+                                            3, currentPage: p }; index as i;">
+                                                <div class="col">
+                                                    <div class="leaperName">
+                                                        <label for="">Card Title</label>
+                                                        <h6>{{item.cardHolder}}</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="leaperDeal">
+                                                        <label for="">Card No</label>
+                                                        <h6>{{item.cardNo}}</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="dealPrice">
+                                                        <label for="">Deposit</label>
+                                                        <h6>{{item.deposit| currency:'USD'}}</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="coupanDate">
+                                                        <label for="">Transaction Date</label>
+                                                        <h6>{{item.transactionDate}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <pagination-controls (pageChange)="p=$event" previousLabel="" nextLabel="">
+                                            </pagination-controls>
+                                        </div>
+
+                                    </ng-template>
+                                </ngb-tab>
+                                <ngb-tab title="Transaction">
+                                    <ng-template ngbTabContent>
+                                        <div class="completedOrders">
+                                            <div class="row" *ngFor="let item of currenttransaction | paginate: { itemsPerPage:
+                                            3, currentPage: currentTransactionPages }; index as i;">
+                                                <div class="col">
+                                                    <div class="leaperName">
+                                                        <label for="">Card Title</label>
+                                                        <h6>{{item.cardHolder}}</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="leaperDeal">
+                                                        <label for="">Card No</label>
+                                                        <h6>{{item.cardNo}}</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="dealPrice">
+                                                        <label for="">Deposit</label>
+                                                        <h6>{{item.deposit| currency:'USD'}}</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="coupanDate">
+                                                        <label for="">Payment Date</label>
+                                                        <h6>{{item.paymentDate}}</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="coupanDate">
+                                                        <label for="">Due Date</label>
+                                                        <h6>{{item.dueDate}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <pagination-controls (pageChange)="currentTransactionPages=$event"
+                                                previousLabel="" nextLabel="">
+                                            </pagination-controls>
+                                        </div>
+                                    </ng-template>
+                                </ngb-tab>
+                            </ngb-tabset>
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="container-fluid p-0">
+  <div class="row">
+    <div class="col-12">     
+      <div class="login-card">
+        <div>
+          <div>
+            <a class="logo" routerLink='/'>
+              <img class="img-fluid for-light" src="assets/1x/logo.png" alt="looginpage">
+              <img class="img-fluid for-dark" src="assets/1x/logo.png" alt="looginpage">
+            </a>
+          </div>
+          <div class="login-main"> 
+            <form class="theme-form" [formGroup]="loginForm">
+              <h4>Sign in to account</h4>
+              <div class="form-group">
+                <label class="col-form-label">Email Address</label>
+                <input class="form-control" type="email" required="" placeholder="app@yourmail.com" formControlName="email">
+                  <div *ngIf="loginForm.controls.email.touched && loginForm.controls.email.errors?.required"
+                      class="text text-danger mt-1">
+                      Email is required
+                  </div>
+                  <div *ngIf="loginForm.controls.email.touched && loginForm.controls.email.errors?.email"
+                      class="text text-danger mt-1">
+                      Invalid Email
+                  </div>
+              </div>
+              <div class="form-group">
+                <label class="col-form-label">Password</label>
+                <input class="form-control" [type]="show ? 'text' : 'password'" formControlName="password" required="" placeholder="*********">
+                <div class="show-hide" (click)="showPassword()" *ngIf="!show"><span class="show"></span></div>
+                <div class="show-hide" (click)="showPassword()" *ngIf="show"><span class="Hide"></span></div>
+                <div *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors?.required"
+                      class="text text-danger mt-1">
+                      Password is required
+                </div>
+              </div>
+              <div class="form-group mb-0">
+                <div class="checkbox p-0">
+                  <input id="checkbox1" type="checkbox">
+                  <label class="text-muted" for="checkbox1">Remember password</label>
+                </div>
+                <!-- <a [routerLink]="'/authentication/forgot-password'" class="link">Forgot password?</a> -->
+                <button class="btn btn-primary btn-block"
+                  [class.loader--text]="authService.showLoader"
+                  [disabled]="!loginForm.valid || authService.showLoader"
+                  (click)="login()"
+                  type="button"><span>{{ authService.showLoader ? '' : 'Login' }}</span>
+                </button >
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
