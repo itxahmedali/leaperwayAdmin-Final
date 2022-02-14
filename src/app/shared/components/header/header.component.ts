@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { NavService } from '../../services/nav.service';
 import { LayoutService } from '../../services/layout.service';
+import { HttpService } from 'src/app/services/http.service';
 
 @Component({
   selector: 'app-header',
@@ -9,19 +10,30 @@ import { LayoutService } from '../../services/layout.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
+  // userData;
   public elem: any;
   public dark: boolean = this.layout.config.settings.layout_version == 'dark-only' ? true : false;
 
   constructor(public layout: LayoutService,
     public navServices: NavService, 
+    private http:HttpService,
     @Inject(DOCUMENT) private document: any
   ) {
   }
 
   ngOnInit() {
     this.elem = document.documentElement;
+    // this.getAdmin()
   }
+
+  // async getAdmin(){
+  //   this.http.get('admin/my_data',true).then((res:any)=>{
+  //     this.userData = res;
+  //   }),
+  //   (err)=>{
+  //     console.log(err)
+  //   }
+  // }
 
   sidebarToggle() {
     this.navServices.collapseSidebar = !this.navServices.collapseSidebar;
@@ -32,14 +44,6 @@ export class HeaderComponent implements OnInit {
   layoutToggle() {
     this.dark = !this.dark;
     this.layout.config.settings.layout_version = this.dark ? 'dark-only' : 'light';
-  }
-
-  searchToggle() {
-    this.navServices.search = true;
-  }
-
-  languageToggle() {
-    this.navServices.language = !this.navServices.language;
   }
 
   toggleFullScreen() {

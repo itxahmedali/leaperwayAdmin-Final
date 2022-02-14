@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import {ObservableService} from '../../../services/observable.service'
 @Component({
   selector: 'app-loader',
   templateUrl: './loader.component.html',
@@ -7,16 +7,24 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class LoaderComponent implements OnInit {
 
-  public show: boolean = true;
+  public show: boolean = false;
 
-  constructor() {
-    setTimeout(() => {
-      this.show = false;
-    }, 3000);
+  constructor(
+    private cd:ChangeDetectorRef
+  ) {
+
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.observe()
+   }
 
   ngOnDestroy() { }
 
+  async observe(){
+    ObservableService.loader.subscribe((res:any)=>{
+      this.show = res;
+      this.cd.detectChanges();
+    })
+  }
 }

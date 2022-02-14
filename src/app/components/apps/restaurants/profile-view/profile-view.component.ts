@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
+import * as moment from "moment";
 import {NgbModal, ModalDismissReasons, NgbDateStruct, NgbDate, NgbCalendar, NgbDatepickerConfig, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+import { ComingSoonModule } from 'src/app/pages/coming-soon/coming-soon.module';
 @Component({
   selector: "app-profile-view",
   templateUrl: "./profile-view.component.html",
@@ -24,50 +26,54 @@ export class ProfileViewComponent implements OnInit {
   today = this.calendar.getToday();
   fromDateParse: any;
   toDateParse: any;
-  public company = [
-    {
-      name: "StarBucks",
-      leaper: "Ethel Price",
-      email: "ethelprice@gmail.com",
-      date: "22/12/2022",
-    },
-    {
-      name: "StarBucks",
-      leaper: "Ethel Price",
-      email: "ethelprice@gmail.com",
-      date: "22/12/2022",
-    },
-    {
-      name: "StarBucks",
-      leaper: "Ethel Price",
-      email: "ethelprice@gmail.com",
-      date: "22/12/2022",
-    },
-    {
-      name: "StarBucks",
-      leaper: "Ethel Price",
-      email: "ethelprice@gmail.com",
-      date: "22/12/2022",
-    },
-    {
-      name: "StarBucks",
-      leaper: "Ethel Price",
-      email: "ethelprice@gmail.com",
-      date: "22/12/2022",
-    },
-    {
-      name: "StarBucks",
-      leaper: "Ethel Price",
-      email: "ethelprice@gmail.com",
-      date: "22/12/2022",
-    },
-    {
-      name: "StarBucks",
-      leaper: "Ethel Price",
-      email: "ethelprice@gmail.com",
-      date: "22/12/2022",
-    },
-  ];
+  // data from api
+  company = history.state.data.row;
+  formatDate;
+  formattedDate
+  // public company = [
+  //   {
+  //     name: "StarBucks",
+  //     leaper: "Ethel Price",
+  //     email: "ethelprice@gmail.com",
+  //     date: "22/12/2022",
+  //   },
+  //   {
+  //     name: "StarBucks",
+  //     leaper: "Ethel Price",
+  //     email: "ethelprice@gmail.com",
+  //     date: "22/12/2022",
+  //   },
+  //   {
+  //     name: "StarBucks",
+  //     leaper: "Ethel Price",
+  //     email: "ethelprice@gmail.com",
+  //     date: "22/12/2022",
+  //   },
+  //   {
+  //     name: "StarBucks",
+  //     leaper: "Ethel Price",
+  //     email: "ethelprice@gmail.com",
+  //     date: "22/12/2022",
+  //   },
+  //   {
+  //     name: "StarBucks",
+  //     leaper: "Ethel Price",
+  //     email: "ethelprice@gmail.com",
+  //     date: "22/12/2022",
+  //   },
+  //   {
+  //     name: "StarBucks",
+  //     leaper: "Ethel Price",
+  //     email: "ethelprice@gmail.com",
+  //     date: "22/12/2022",
+  //   },
+  //   {
+  //     name: "StarBucks",
+  //     leaper: "Ethel Price",
+  //     email: "ethelprice@gmail.com",
+  //     date: "22/12/2022",
+  //   },
+  // ];
   public revenue = [
     {
       title: "Jacob Gomez",
@@ -412,5 +418,12 @@ export class ProfileViewComponent implements OnInit {
       $(".toDate").html(this.toDateParse);
     }
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.formatdateandTime()
+    console.log(this.company.deals.deal_name)
+  }
+  formatdateandTime(){
+      this.formatDate = this.company.user.created_at;
+      this.formattedDate = moment(this.formatDate).format('MMMM Do YYYY');
+  }
 }

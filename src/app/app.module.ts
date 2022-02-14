@@ -9,7 +9,7 @@ import { SharedModule } from "./shared/shared.module";
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
-
+import { AgmCoreModule } from '@agm/core';
 // for HttpClient import:
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 // for Router import:
@@ -55,6 +55,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     AngularFireAuthModule,
     CountToModule,
     CountUpModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCab5ahH6KkodUavDwBCigXTL7ZbrkzS94'
+    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

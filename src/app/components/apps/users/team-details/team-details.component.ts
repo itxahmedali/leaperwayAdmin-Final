@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import * as $ from "jquery";
+import * as moment from "moment";
+import { HttpService } from "src/app/services/http.service";
 @Component({
   selector: "app-team-details",
   templateUrl: "./team-details.component.html",
@@ -8,90 +10,33 @@ import * as $ from "jquery";
 })
 export class TeamDetailsComponent implements OnInit {
   public url: any;
-  public company = [
-    {
-      id: 1,
-      name: "StarBucks",
-      owner: "Ethel Price",
-      email: "ethelprice@gmail.com",
-      resgistration: "22/12/2022",
-      editActions: "fa fa-edit",
-      delActions: "fa fa-times",
-      viewActions: "fa fa-eye",
-      status: "Activate",
-    },
-    {
-      id: 2,
-      name: "StarBucks",
-      owner: "Ethel Price",
-      email: "ethelprice@gmail.com",
-      resgistration: "22/12/2022",
-      editActions: "fa fa-edit",
-      delActions: "fa fa-times",
-      viewActions: "fa fa-eye",
-      status: "Activate",
-    },
-    {
-      id: 3,
-      name: "StarBucks",
-      owner: "Ethel Price",
-      email: "ethelprice@gmail.com",
-      resgistration: "22/12/2022",
-      editActions: "fa fa-edit",
-      delActions: "fa fa-times",
-      viewActions: "fa fa-eye",
-      status: "Activate",
-    },
-    {
-      id: 4,
-      name: "StarBucks",
-      owner: "Ethel Price",
-      email: "ethelprice@gmail.com",
-      resgistration: "22/12/2022",
-      editActions: "fa fa-edit",
-      delActions: "fa fa-times",
-      viewActions: "fa fa-eye",
-      status: "Activate",
-    },
-    {
-      id: 5,
-      name: "StarBucks",
-      owner: "Ethel Price",
-      email: "ethelprice@gmail.com",
-      resgistration: "22/12/2022",
-      editActions: "fa fa-edit",
-      delActions: "fa fa-times",
-      viewActions: "fa fa-eye",
-      status: "Activate",
-    },
-    {
-      id: 6,
-      name: "StarBucks",
-      owner: "Ethel Price",
-      email: "ethelprice@gmail.com",
-      resgistration: "22/12/2022",
-      editActions: "fa fa-edit",
-      delActions: "fa fa-times",
-      viewActions: "fa fa-eye",
-      status: "Activate",
-    },
-    {
-      id: 7,
-      name: "StarBucks",
-      owner: "Ethel Price",
-      email: "ethelprice@gmail.com",
-      resgistration: "22/12/2022",
-      editActions: "fa fa-edit",
-      delActions: "fa fa-times",
-      viewActions: "fa fa-eye",
-      status: "Activate",
-    },
-  ];
+  public company;
+  formatDate;
+  formattedDate;
   //google map
   public lat_m2: number = 52.5159;
   public lng_m2: number = 13.3777;
   public zoom_m2: number = 14;
-  constructor(private modalService: NgbModal) {}
+  constructor(private modalService: NgbModal, private http:HttpService) {}
+  
+  ngOnInit() {
+    this.getUsers()
+  }
+
+  getUsers(){
+    this.http.get('admin/user',true).then((res:any)=>{
+      this.company = res;
+      for (let index = 0; index < this.company.length; index++) {
+        this.formatDate = this.company[index].created_at;
+        // console.log(this.formatDate)
+        // console.log(this.formattedDate)
+        this.formattedDate = moment(this.formatDate).format('MMMM Do YYYY');
+      }
+    }),
+    (err)=>{
+      console.log(err)
+    }
+  }
   // filter functionality
   updateFilter(event) {
     // const val = event.target.value.toLowerCase();
@@ -165,5 +110,4 @@ export class TeamDetailsComponent implements OnInit {
       };
     }
   }
-  ngOnInit(): void {}
 }

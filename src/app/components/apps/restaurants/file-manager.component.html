@@ -10,25 +10,25 @@
               <i class='fa fa-plus'></i>
             </button>
           </div>
-          <ngx-datatable [rows]="company" class="material fullscreen bootstrap" [columnMode]="'standard'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [scrollbarV]="false" [scrollbarH]="true" [limit]="5">
+          <ngx-datatable #table [rows]="company" class="material fullscreen bootstrap" [columnMode]="'standard'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [scrollbarV]="false" [scrollbarH]="true" [limit]="5">
             <ngx-datatable-column name="Name" sortable="true" [width]="130">
               <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                {{row.name}}
+                {{row.user.name}}
               </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Owner" sortable="true" [width]="130">
               <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                {{row.owner}}
+                {{row.user.owner}}
               </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Email" sortable="true" [width]="180">
               <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                {{row.email}}
+                {{row.user.email}}
               </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Resgistration" sortable="true" [width]="135">
               <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                {{row.resgistration}}
+                {{formattedDate}}
               </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Status" sortable="false" [width]="100">
@@ -42,14 +42,14 @@
             <ngx-datatable-column name="Actions" sortable="false" [width]="250">
               <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
                 <div class="d-flex actionsBtn">
-                  <button class="btn btn-dark" routerLink="/allRestaurants/restaurantProfile">
-                    <i class='{{row.viewActions}}'></i>
+                  <button class="btn btn-dark" (click)="viewpage(row)">
+                    <i class='fa fa-eye'></i>
                   </button>
                   <button class="btn btn-primary" (click)="open(content)">
-                    <i class='{{row.editActions}}'></i>
+                    <i class='fa fa-edit'></i>
                   </button>
                   <button class="btn btn-danger">
-                    <i class='{{row.delActions}}'></i>
+                    <i class='fa fa-times'></i>
                   </button>
                 </div>
               </ng-template>

@@ -28,10 +28,10 @@ export class NavService implements OnDestroy {
   );
 
   // Search Box
-  public search: boolean = false;
+  // public search: boolean = false;
 
-  // Language
-  public language: boolean = false;
+  // // Language
+  // public language: boolean = false;
 
   // Mega Menu
   public megaMenu: boolean = false;

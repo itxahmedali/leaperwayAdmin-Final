@@ -1,14 +1,23 @@
 .user-profile .hovercard .user-image .avatar img {
     object-fit: cover;
 }
+
 // orders cards styling
-.currentOrder, .completedOrders, .withdrawOrders {
+.currentOrder,
+.completedOrders,
+.withdrawOrders {
     border-radius: 10px;
 }
-.currentOrder .btn, .completedOrders .btn, .withdrawOrders .btn{
+
+.currentOrder .btn,
+.completedOrders .btn,
+.withdrawOrders .btn {
     width: 120px;
 }
-.currentOrder .row, .completedOrders .row, .withdrawOrders .row {
+
+.currentOrder .row,
+.completedOrders .row,
+.withdrawOrders .row {
     margin-top: 0.5rem;
     margin-bottom: 1.5rem;
     width: 100%;
@@ -19,95 +28,139 @@
     margin-left: auto;
     margin-right: auto;
 }
-.currentOrder .row .col, .completedOrders .row .col, .withdrawOrders .row .col {
+
+.currentOrder .row .col,
+.completedOrders .row .col,
+.withdrawOrders .row .col {
     display: flex;
     align-items: center;
 }
-.currentOrder .row .col label, .completedOrders .row .col label, .withdrawOrders .row .col label {
+
+.currentOrder .row .col label,
+.completedOrders .row .col label,
+.withdrawOrders .row .col label {
     font-weight: 500;
     color: #666;
 }
-.currentOrder .row .col .leaperName h6, .completedOrders .row .col .leaperName h6, .withdrawOrders .row .col .leaperName h6 {
+
+.currentOrder .row .col .leaperName h6,
+.completedOrders .row .col .leaperName h6,
+.withdrawOrders .row .col .leaperName h6 {
     color: #e83131;
     margin: 0;
 }
-.currentOrder .row .col h6, .completedOrders .row .col h6, .withdrawOrders .row .col h6 {
+
+.currentOrder .row .col h6,
+.completedOrders .row .col h6,
+.withdrawOrders .row .col h6 {
     color: #000;
     margin: 0;
 }
-.completedOrders .row .col .leaperBtn button{
+
+.completedOrders .row .col .leaperBtn button {
     color: #fff;
     background: #e83131;
     border: none;
     padding: 10px 30px;
     border-radius: 5px;
 }
+
 // deals card styling
- .deals-cards .row .col-lg-4 {
+.deals-cards .row .col-lg-4 {
     padding: 10px;
 }
- .deals-cards .row .col-lg-4 .card {
+
+.deals-cards .row .col-lg-4 .card {
     position: relative;
     border: none;
     box-shadow: 0 0 11px -4px #0000004f;
     -webkit-box-shadow: 0 0 11px -4px rgb(0 0 0 / 31%);
-    -moz-box-shadow: 0 0 11px -4px rgba(0,0,0,.31);
+    -moz-box-shadow: 0 0 11px -4px rgba(0, 0, 0, .31);
     margin: 0 auto;
 }
- .deals-cards .row .col-lg-4 .card .menuBtn {
+
+.deals-cards .row .col-lg-4 .card .menuBtn {
     display: flex;
     justify-content: flex-end;
 }
+
 .menuBtn {
     color: #000;
     font-family: gilroyBold;
 }
+
 .colorRed {
     color: #e83131;
 }
- .deals-cards .row .col-lg-4 .card .title {
+
+.deals-cards .row .col-lg-4 .card .title {
     font-size: 1.2rem;
 }
- .deals-cards .row .col-lg-4 .card .card-text {
+
+.deals-cards .row .col-lg-4 .card .card-text {
     color: #666;
 }
-.deals-cards .row .col-lg-4 .card .card-body{
+
+.deals-cards .row .col-lg-4 .card .card-body {
     padding: 20px;
 }
- .deals-cards .row .col-lg-4 .card .qty-price {
+
+.deals-cards .row .col-lg-4 .card .qty-price {
     margin-top: 2rem;
 }
- .deals-cards .row .col-lg-4 .card .qty-price .qtyLabel,  .deals-cards .row .col-lg-4 .card .qty-price .priceLabel {
+
+.deals-cards .row .col-lg-4 .card .qty-price .qtyLabel,
+.deals-cards .row .col-lg-4 .card .qty-price .priceLabel {
     margin-left: 5px;
 }
- .deals-cards .row .col-lg-4 .card .qty-price .priceLabel {
+
+.deals-cards .row .col-lg-4 .card .qty-price .priceLabel {
     font-size: 1.3rem;
 }
+
 // datepicker styling
-.mutliple-datepicker ngb-datepicker, .mutliple-datepicker .dropdown-menu{
+.mutliple-datepicker ngb-datepicker,
+.mutliple-datepicker .dropdown-menu {
     width: 100%;
 }
-.fromDate, .toDate{
-    margin:0 5px;
+
+.fromDate,
+.toDate {
+    margin: 0 5px;
 }
-.pendingAmount{
-    color:green;
+
+.pendingAmount {
+    color: green;
 }
-.dueAmount{
+
+.dueAmount {
     color: #e83131;
 }
 
-@media only screen and (max-width:768px){
-    .currentOrder .row .col, .completedOrders .row .col, .withdrawOrders .row .col {
+.locationBox {
+    span {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+}
+
+@media only screen and (max-width:768px) {
+
+    .currentOrder .row .col,
+    .completedOrders .row .col,
+    .withdrawOrders .row .col {
         min-width: 140px;
         margin-top: 1rem;
         margin-bottom: 1rem;
     }
-    .user-profile .hovercard .user-image{
+
+    .user-profile .hovercard .user-image {
         height: auto;
     }
+
     .user-profile .hovercard .user-image .avatar {
         margin-top: -30px;
     }
-    }
-    
+}

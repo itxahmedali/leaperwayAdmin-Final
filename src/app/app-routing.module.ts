@@ -17,7 +17,8 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    component: LoginComponent
+    component: LoginComponent,
+    // canActivate: [AdminGuard]
   },
   {
     path: '',

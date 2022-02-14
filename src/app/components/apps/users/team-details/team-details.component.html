@@ -30,7 +30,7 @@
             </ngx-datatable-column>
             <ngx-datatable-column name="Resgistration" sortable="true" [width]="135">
               <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                {{row.resgistration}}
+                {{formattedDate}}
               </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Status" sortable="false" [width]="100">
@@ -47,13 +47,13 @@
               <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
                 <div class="d-flex actionsBtn">
                   <button class="btn btn-dark" routerLink="userProfile">
-                    <i class='{{row.viewActions}}'></i>
+                    <i class='fa fa-eye'></i>
                   </button>
                   <button class="btn btn-primary" (click)="open(content)">
-                    <i class='{{row.editActions}}'></i>
+                    <i class='fa fa-pencil'></i>
                   </button>
                   <button class="btn btn-danger">
-                    <i class='{{row.delActions}}'></i>
+                    <i class='fa fa-times'></i>
                   </button>
                 </div>
               </ng-template>

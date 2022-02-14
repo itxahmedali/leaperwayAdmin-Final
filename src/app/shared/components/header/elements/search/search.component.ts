@@ -23,7 +23,7 @@ export class SearchComponent implements OnInit {
   }
 
   searchToggle() {
-    this.navServices.search = false;
+    // this.navServices.search = false;
   }
 
   searchTerm(term: any) {
