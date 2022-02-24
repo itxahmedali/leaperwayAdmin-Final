@@ -12,7 +12,8 @@ const routes: Routes = [
         component: FileManagerComponent,
       },
       {
-        path: "restaurantProfile",
+        path: "restaurant-profile/:id",
+
         component: ProfileViewComponent
       },
     ],

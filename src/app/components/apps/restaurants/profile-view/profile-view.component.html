@@ -20,7 +20,7 @@
                                                     <div class="col-md-6">
                                                         <div class="ttl-info text-left">
                                                             <h6><i class="fa fa-envelope"></i>   Email</h6>
-                                                            <span>{{company.user.email}}</span>
+                                                            <span>{{company?.user.email}}</span>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -33,22 +33,22 @@
                                             </div>
                                             <div class="col-sm-12 col-lg-4 order-sm-0 order-xl-1">
                                                 <div class="user-designation">
-                                                    <div class="title"><a target="_blank" href="">{{company.user.name}}</a></div>
-                                                    <div class="desc mt-2">{{company.user.type}}</div>
+                                                    <div class="title"><a target="_blank" href="">{{company?.user.name}}</a></div>
+                                                    <div class="desc mt-2">{{company?.user.type}}</div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-lg-4 order-sm-2 order-xl-2">
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="ttl-info text-left">
-                                                            <h6><i class="fa fa-phone"></i>   Contact Us</h6><span>{{company.country}}
-                                                                {{company.user.phone}}</span>
+                                                            <h6><i class="fa fa-phone"></i>   Contact Us</h6><span>{{company?.country}}
+                                                                {{company?.user.phone}}</span>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="ttl-info text-left locationBox">
                                                             <h6><i class="fa fa-location-arrow"></i>   Location</h6>
-                                                            <span placement="bottom" ngbTooltip="{{company.address}}">{{company.address}}</span>
+                                                            <span placement="bottom" ngbTooltip="{{company?.address}}">{{company?.address}}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -94,25 +94,25 @@
                                                 <div class="col">
                                                     <div class="leaperName">
                                                         <label for="">Leaper Name</label>
-                                                        <h6>{{item.name}}</h6>
+                                                        <h6>{{item?.name}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="leaperDeal">
                                                         <label for="">Leaper Deal</label>
-                                                        <h6>{{item.deal}}</h6>
+                                                        <h6>{{item?.deal}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="dealPrice">
                                                         <label for="">Deal Price</label>
-                                                        <h6>{{item.dealAmount| currency:'USD'}}</h6>
+                                                        <h6>{{item?.dealAmount| currency:'USD'}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="coupanDate">
                                                         <label for="">Coupan Date</label>
-                                                        <h6>{{item.coupanDate}}</h6>
+                                                        <h6>{{item?.coupanDate}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
@@ -136,25 +136,25 @@
                                                 <div class="col">
                                                     <div class="leaperName">
                                                         <label for="">Leaper Name</label>
-                                                        <h6>{{item.name}}</h6>
+                                                        <h6>{{item?.name}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="leaperDeal">
                                                         <label for="">Leaper Deal</label>
-                                                        <h6>{{item.deal}}</h6>
+                                                        <h6>{{item?.deal}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="dealPrice">
                                                         <label for="">Deal Price</label>
-                                                        <h6>{{item.dealAmount| currency:'USD'}}</h6>
+                                                        <h6>{{item?.dealAmount| currency:'USD'}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="coupanDate">
                                                         <label for="">Coupan Date</label>
-                                                        <h6>{{item.coupanDate}}</h6>
+                                                        <h6>{{item?.coupanDate}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
@@ -177,25 +177,25 @@
                                                 <div class="col">
                                                     <div class="leaperName">
                                                         <label for="">Leaper Name</label>
-                                                        <h6>{{item.name}}</h6>
+                                                        <h6>{{item?.name}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="leaperDeal">
                                                         <label for="">Leaper Deal</label>
-                                                        <h6>{{item.deal}}</h6>
+                                                        <h6>{{item?.deal}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="dealPrice">
                                                         <label for="">Deal Price</label>
-                                                        <h6>{{item.dealAmount| currency:'USD'}}</h6>
+                                                        <h6>{{item?.dealAmount| currency:'USD'}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="coupanDate">
                                                         <label for="">Coupan Date</label>
-                                                        <h6>{{item.coupanDate}}</h6>
+                                                        <h6>{{item?.coupanDate}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
@@ -221,16 +221,18 @@
                         <ng-template ngbPanelContent>
                             <div class="deals-cards">
                                 <div class="row">
-                                    <div class="col-lg-4">
-                                        <div class="card" style="width: 95%;" *ngFor="let company of company.deals">
-                                            <img src="{{company.deal_image}}" class="card-img-top" alt="...">
+                                    <div class="col-lg-4"  *ngFor="let company of company?.deals">
+                                        <div class="card" style="width: 95%;">
+                                            <div class="cardImgBox">
+                                                <img src="{{company?.deal_image}}" class="card-img-top" alt="...">
+                                            </div>
                                             <div class="card-body">
-                                                <h1 class="colorBlue title">{{company.deal_name}}</h1>
-                                                <!-- <p class="card-text">{{company.details}}</p> -->
+                                                <h1 class="colorBlue title">{{company?.deal_name}}</h1>
+                                                <!-- <p class="card-text">{{company?.details}}</p> -->
                                                 <div class="qty-price d-flex justify-content-end">
                                                     <div class="price">
                                                         <label>Price: </label>
-                                                        <label class="colorRed priceLabel">{{company.deal_price | currency:'USD'}}</label>
+                                                        <label class="colorRed priceLabel">{{company?.deal_price | currency:'USD'}}</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -272,31 +274,31 @@
                                             <div class="col">
                                                 <div class="leaperName">
                                                     <label for="">Card Title</label>
-                                                    <h6>{{item.title}}</h6>
+                                                    <h6>{{item?.title}}</h6>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="leaperDeal">
                                                     <label for="">Leaper Deal</label>
-                                                    <h6>{{item.deal}}</h6>
+                                                    <h6>{{item?.deal}}</h6>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="dealPrice">
                                                     <label for="">Deal Price</label>
-                                                    <h6>{{item.dealAmount| currency:'USD'}}</h6>
+                                                    <h6>{{item?.dealAmount| currency:'USD'}}</h6>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="coupanDate">
                                                     <label for="">Coupan Date</label>
-                                                    <h6>{{item.coupanDate}}</h6>
+                                                    <h6>{{item?.coupanDate}}</h6>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="coupanDate">
                                                     <label for="">Coupan No</label>
-                                                    <h6>{{item.coupanNo}}</h6>
+                                                    <h6>{{item?.coupanNo}}</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -338,25 +340,25 @@
                                                 <div class="col">
                                                     <div class="leaperName">
                                                         <label for="">Account Title</label>
-                                                        <h6>{{item.accountTitle}}</h6>
+                                                        <h6>{{item?.accountTitle}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="leaperDeal">
                                                         <label for="">Account No</label>
-                                                        <h6>{{item.accountNo}}</h6>
+                                                        <h6>{{item?.accountNo}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="dealPrice">
                                                         <label for="">Amount Recieved</label>
-                                                        <h6>{{item.amountRecieved| currency:'USD'}}</h6>
+                                                        <h6>{{item?.amountRecieved| currency:'USD'}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="coupanDate">
                                                         <label for="">Transaction Date</label>
-                                                        <h6>{{item.transactionDate}}</h6>
+                                                        <h6>{{item?.transactionDate}}</h6>
                                                     </div>
                                                 </div>
                                             </div>
@@ -374,19 +376,19 @@
                                                 <div class="col">
                                                     <div class="leaperName">
                                                         <label for="">Account Title</label>
-                                                        <h6>{{item.accountTitle}}</h6>
+                                                        <h6>{{item?.accountTitle}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="leaperDeal">
                                                         <label for="">Account No</label>
-                                                        <h6>{{item.accountNo}}</h6>
+                                                        <h6>{{item?.accountNo}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="dealPrice">
                                                         <label for="">Amount Recieved</label>
-                                                        <h6>{{item.amountRecieved| currency:'USD'}}</h6>
+                                                        <h6>{{item?.amountRecieved| currency:'USD'}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">

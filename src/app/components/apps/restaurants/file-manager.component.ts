@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router, ParamMap } from "@angular/router";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { DatatableComponent } from "@swimlane/ngx-datatable";
 import * as $ from "jquery";
@@ -17,15 +17,19 @@ export class FileManagerComponent implements OnInit {
   long;
   formatDate;
   formattedDate;
+  id
   // temp = [];
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
-  constructor(private modalService: NgbModal, private http: HttpService, private router:Router) {}
+  constructor(private modalService: NgbModal, private http: HttpService, private router:Router, private activatedRoute:ActivatedRoute) {
+    
+  }
   ngOnInit() {
     this.location();
     setTimeout(() => {
       this.getRestuarants();
     })
   }
+ 
   // restaurants Api
   async getRestuarants() {
     this.http.get(`admin/restaurents/${this.lat},${this.long}`, true).then((res) => {
@@ -107,8 +111,18 @@ export class FileManagerComponent implements OnInit {
     });
   }
   viewpage(row){
-    this.router.navigate(["/allRestaurants/restaurantProfile"], {
-      state: { data: { row} },
-    });
+    // this.activatedRoute.params.subscribe( params => console.log(params) );
+    // // console.log(row)
+    // var user_id = row.id
+    // this.router.navigate(["/all-restaurants/restaurant-profile"], 
+    // { queryParams: {user_id} }
+    // // {
+    // //   state: { data: { row} },
+    // // }
+    // );
+    // this.activatedRoute.queryParams.subscribe(params => {
+    //   console.log(params)
+    // });
+    this.router.navigate(["/all-restaurants/restaurant-profile",row.id])
   }
 }

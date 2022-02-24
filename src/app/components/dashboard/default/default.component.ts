@@ -37,8 +37,8 @@ export class DefaultComponent implements OnInit {
       this.greeting = 'Good Evening'
     }
     this.startTime();
-    document.getElementById('knob').append(this.knob);
-    document.getElementById('knob-right').append(this.knobRight);
+    // document.getElementById('knob').append(this.knob);
+    // document.getElementById('knob-right').append(this.knobRight);
   }
 
   startTime() {

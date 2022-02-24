@@ -42,7 +42,8 @@
             <ngx-datatable-column name="Actions" sortable="false" [width]="250">
               <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
                 <div class="d-flex actionsBtn">
-                  <button class="btn btn-dark" (click)="viewpage(row)">
+                  <!-- <button class="btn btn-dark" (click)="viewpage(row)"> -->
+                    <button class="btn btn-dark" (click)="viewpage(row)">
                     <i class='fa fa-eye'></i>
                   </button>
                   <button class="btn btn-primary" (click)="open(content)">

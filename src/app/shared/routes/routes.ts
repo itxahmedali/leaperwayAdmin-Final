@@ -19,7 +19,7 @@ export const content: Routes = [
     loadChildren: () => import('../../components/apps/privacypolicy/email.module').then(m=>m.EmailModule)
   },
   {
-    path: 'allRestaurants',
+    path: 'all-restaurants',
     loadChildren: () => import('../../components/apps/restaurants/file-manager.module').then(m=>m.FileManagerModule)
   },
   {

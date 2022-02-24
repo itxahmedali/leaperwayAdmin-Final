@@ -88,7 +88,7 @@ export class NavService implements OnDestroy {
       type: "link",
     },
     {
-      path: "/allRestaurants",
+      path: "/all-restaurants",
       title: "Restaurants",
       icon: "git-pull-request",
       type: "link",

@@ -3,6 +3,8 @@ import * as $ from 'jquery';
 import * as moment from "moment";
 import {NgbModal, ModalDismissReasons, NgbDateStruct, NgbDate, NgbCalendar, NgbDatepickerConfig, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import { ComingSoonModule } from 'src/app/pages/coming-soon/coming-soon.module';
+import { HttpService } from 'src/app/services/http.service';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: "app-profile-view",
   templateUrl: "./profile-view.component.html",
@@ -27,53 +29,10 @@ export class ProfileViewComponent implements OnInit {
   fromDateParse: any;
   toDateParse: any;
   // data from api
-  company = history.state.data.row;
+  company;
+  apiData;
   formatDate;
   formattedDate
-  // public company = [
-  //   {
-  //     name: "StarBucks",
-  //     leaper: "Ethel Price",
-  //     email: "ethelprice@gmail.com",
-  //     date: "22/12/2022",
-  //   },
-  //   {
-  //     name: "StarBucks",
-  //     leaper: "Ethel Price",
-  //     email: "ethelprice@gmail.com",
-  //     date: "22/12/2022",
-  //   },
-  //   {
-  //     name: "StarBucks",
-  //     leaper: "Ethel Price",
-  //     email: "ethelprice@gmail.com",
-  //     date: "22/12/2022",
-  //   },
-  //   {
-  //     name: "StarBucks",
-  //     leaper: "Ethel Price",
-  //     email: "ethelprice@gmail.com",
-  //     date: "22/12/2022",
-  //   },
-  //   {
-  //     name: "StarBucks",
-  //     leaper: "Ethel Price",
-  //     email: "ethelprice@gmail.com",
-  //     date: "22/12/2022",
-  //   },
-  //   {
-  //     name: "StarBucks",
-  //     leaper: "Ethel Price",
-  //     email: "ethelprice@gmail.com",
-  //     date: "22/12/2022",
-  //   },
-  //   {
-  //     name: "StarBucks",
-  //     leaper: "Ethel Price",
-  //     email: "ethelprice@gmail.com",
-  //     date: "22/12/2022",
-  //   },
-  // ];
   public revenue = [
     {
       title: "Jacob Gomez",
@@ -324,14 +283,30 @@ export class ProfileViewComponent implements OnInit {
   successOrdersPages: any = 1;
   // withdraw Orders pagination
   withdrawOrdersPages: any = 1;
+  // location
+  lat;
+  long;
+  // url param
+  id;
   constructor(
     private modalService: NgbModal,
     private calendar: NgbCalendar,
-    public formatter: NgbDateParserFormatter
+    public formatter: NgbDateParserFormatter,
+    private http: HttpService,
+    private activatedRoute:ActivatedRoute
   ) {
+    this.id=this.activatedRoute.snapshot.paramMap.get("id");
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), "d", 10);
+    this.location()
   }
+  async location() {
+    await navigator.geolocation.getCurrentPosition((position) => { 
+       console.log("Got position", position.coords);
+       this.lat = position.coords.latitude; 
+       this.long = position.coords.longitude;
+     });
+   }
   // modal
   closeResult = "";
   open(content) {
@@ -420,10 +395,39 @@ export class ProfileViewComponent implements OnInit {
   }
   ngOnInit(): void {
     this.formatdateandTime()
-    console.log(this.company.deals.deal_name)
+    // console.log(this.company.deals.deal_name)
+    setTimeout(() => {
+      this.getRestuarants();
+    })
+  }
+  // ngAfterViewInit(){
+  //   this.id=this.activatedRoute.snapshot.paramMap.get("id");
+  //    }
+   // restaurants Api
+   async getRestuarants() {
+    this.http.get(`admin/restaurents/${this.lat},${this.long}`, true).then((res) => {
+      this.apiData = res;
+      this.apiData.map((data)=>{
+        // console.log(data)
+        if(data.id == this.id){
+          this.company = data
+        }
+      })
+      // for (let index = 0; index < this.apiData.length; index++) {
+      //   if(this.apiData[index].id == id){
+      //     this.company = this.apiData
+      //   }
+      // }
+      console.log(this.company)
+      
+    }),
+      (err) => {
+        console.log(err);
+      };
   }
   formatdateandTime(){
-      this.formatDate = this.company.user.created_at;
+      // this.formatDate = this.company.user.created_at;
       this.formattedDate = moment(this.formatDate).format('MMMM Do YYYY');
-  }
+    }
+    
 }
