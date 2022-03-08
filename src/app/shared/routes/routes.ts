@@ -16,11 +16,11 @@ export const content: Routes = [
   },
   {
     path: 'privacy',
-    loadChildren: () => import('../../components/apps/privacypolicy/email.module').then(m=>m.EmailModule)
+    loadChildren: () => import('../../components/apps/privacypolicy/privacy.module').then(m=>m.EmailModule)
   },
   {
     path: 'all-restaurants',
-    loadChildren: () => import('../../components/apps/restaurants/file-manager.module').then(m=>m.FileManagerModule)
+    loadChildren: () => import('../../components/apps/restaurants/restaurants.module').then(m=>m.FileManagerModule)
   },
   {
     path: 'settings',

@@ -27,4 +27,16 @@ export class AppComponent {
     }
   }
 
+  ngOnInit() {
+    this.location();
+  }
+
+  async location() {
+    await navigator.geolocation.getCurrentPosition((position) => { 
+       console.log("Got position", position.coords);
+      localStorage.setItem('lat',JSON.stringify(position.coords.latitude))
+      localStorage.setItem('lang',JSON.stringify(position.coords.longitude))
+     });
+   }
+
 }

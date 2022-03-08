@@ -26,12 +26,16 @@ export class TeamDetailsComponent implements OnInit {
   getUsers(){
     this.http.get('admin/user',true).then((res:any)=>{
       this.company = res;
+      console.log(res,'res')
       for (let index = 0; index < this.company.length; index++) {
         this.formatDate = this.company[index].created_at;
-        // console.log(this.formatDate)
-        // console.log(this.formattedDate)
         this.formattedDate = moment(this.formatDate).format('MMMM Do YYYY');
       }
+      // this.company.map((v,i)=>{
+      //   if(v.type != 'user'){
+      //     this.company.splice(i, 1)
+      //   }
+      // })
     }),
     (err)=>{
       console.log(err)

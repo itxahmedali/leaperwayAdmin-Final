@@ -1,3 +1,4 @@
+import { HttpService } from './../../../../services/http.service';
 import { Component, OnInit } from '@angular/core';
 import { ChatUsers } from '../../../../shared/model/chat.model';
 import { ChatService } from '../../../../shared/services/chat.service';
@@ -9,91 +10,36 @@ import { ChatService } from '../../../../shared/services/chat.service';
 })
 export class ChatComponent implements OnInit {
   
-  public openTab : string = "call";
-  public users : ChatUsers[] = []
-  public searchUsers : ChatUsers[] = []
-  public chatUser : any;
-  public profile : any;
-  public chats : any;
-  public chatText : string;
-  public error : boolean = false;
-  public notFound: boolean = false;
-  public id : any;
-  public searchText : string;
-  public showEmojiPicker:boolean = false;
-  public emojies: any;
-  public mobileToggle: boolean = false
+  termsTxt:any;
 
-  constructor(private chatService: ChatService) {   
-    this.chatService.getUsers().subscribe(users => { 
-      this.searchUsers = users
-      this.users = users
-    })
-  }
+	constructor(
+		private http: HttpService
+	) { }
 
-  ngOnInit() {  
-    this.userChat(this.id)
-    this.getProfile()
-  }
+	ngOnInit() { 
+		this.privacyGet()
+	}
 
-  public toggleEmojiPicker(){
-    this.showEmojiPicker=!this.showEmojiPicker;
-  }
+	privacyGet(){
+		this.http.get('admin/terms',true).then((res:any)=>{
+			console.log(res)
+			this.termsTxt = res.paragraph
+		}).catch((err)=>{
+			console.log(err)
+		})
+	}
 
-  addEmoji(event){
-    const text = `${event.emoji.native}`;
-    this.chatText = text;
-    this.showEmojiPicker = false;
-  }
+	save(){
+		let data = {
+			heading:'Privacy',
+			paragraph:this.termsTxt
+		}
+		this.http.post('admin/terms_update',data,true).then((res:any)=>{
+			this.privacyGet()
+		}).catch((err)=>{
+			console.log(err)
+		})
+	}
 
-  public tabbed(val) {
-  	this.openTab = val
-  }
-
-  // Get user Profile
-  public getProfile() {
-    this.chatService.getCurrentUser().subscribe(userProfile => this.profile = userProfile)
-  }
-
-  // User Chat
-  public userChat(id:number =1){    
-    this.chatService.chatToUser(id).subscribe(chatUser => this.chatUser = chatUser)
-    this.chatService.getChatHistory(id).subscribe(chats => this.chats = chats)
-  }
-  
-  // Send Message to User
-  public sendMessage(form) {
-    if(!form.value.message){
-      this.error = true
-      return false
-    }
-    this.error = false
-    let chat = {
-      sender: this.profile.id,
-      receiver: this.chatUser.id,
-      receiver_name: this.chatUser.name,
-      message: form.value.message
-    }
-    this.chatService.sendMessage(chat) 
-    this.chatText = ''
-    this.chatUser.seen = 'online'
-    this.chatUser.online = true
-  }
-
-  searchTerm(term: any) {
-    if(!term) return this.searchUsers = this.users
-    term = term.toLowerCase();
-    let user = []
-    this.users.filter(users => {
-      if(users.name.toLowerCase().includes(term)) {
-        user.push(users)
-      } 
-    })
-    this.searchUsers = user
-  }
-
-  mobileMenu() {
-    this.mobileToggle = !this.mobileToggle;
-  }
     
 }
