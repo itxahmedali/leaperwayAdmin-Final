@@ -10,7 +10,7 @@
               <i class='fa fa-plus'></i>
             </button>
           </div>
-          <ngx-datatable #table [rows]="company" class="material fullscreen bootstrap" [columnMode]="'standard'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [scrollbarV]="false" [scrollbarH]="true" [limit]="5">
+          <!-- <ngx-datatable #table [rows]="company" class="material fullscreen bootstrap" [columnMode]="'standard'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [scrollbarV]="false" [scrollbarH]="true" [limit]="5">
             <ngx-datatable-column name="Name" sortable="true" [width]="130">
               <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
                 {{row.user.name}}
@@ -42,7 +42,6 @@
             <ngx-datatable-column name="Actions" sortable="false" [width]="250">
               <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
                 <div class="d-flex actionsBtn">
-                  <!-- <button class="btn btn-dark" (click)="viewpage(row)"> -->
                     <button class="btn btn-dark" (click)="viewpage(row)">
                     <i class='fa fa-eye'></i>
                   </button>
@@ -55,7 +54,54 @@
                 </div>
               </ng-template>
             </ngx-datatable-column>
-          </ngx-datatable>
+          </ngx-datatable> -->
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Owner</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Registration</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let restaurant of company | paginate: { itemsPerPage: 10, currentPage: page, totalItems: total}">
+                  <th scope="row">{{restaurant?.user.id}}</th>
+                  <td>{{restaurant?.user.name}}</td>
+                  <td>{{restaurant?.user.owner}}</td>
+                  <td>{{restaurant?.user.email}}</td>
+                  <td>{{formattedDate}}</td>
+                  <td> 
+                    <div class="toggleBtn">
+                      <label class="switch"><input type="checkbox" (change)="status($event)"
+                          [checked]="true" />
+                        <div></div>
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex actionsBtn">
+                      <button class="btn btn-dark" (click)="viewpage(row)">
+                      <i class='fa fa-eye'></i>
+                    </button>
+                    <button class="btn btn-primary" (click)="open(content)">
+                      <i class='fa fa-edit'></i>
+                    </button>
+                    <button class="btn btn-danger">
+                      <i class='fa fa-times'></i>
+                    </button>
+                  </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls (pageChange)="page = $event;"></pagination-controls>
+          </div>
         </div>
       </div>
     </div>

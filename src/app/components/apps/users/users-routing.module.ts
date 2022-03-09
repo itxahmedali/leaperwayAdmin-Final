@@ -13,7 +13,7 @@ const routes: Routes = [
         component:TeamDetailsComponent
       },
       {
-        path:"userProfile",
+        path:"userProfile/:id",
         component:UserProfileComponent
       },
       // {

@@ -12,7 +12,44 @@ export class HttpService {
     public generalServie: GeneralService,
     ) {}
     
-    
+    postApi(link, data, token){
+      ObservableService.loader.next(true)
+      let header = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+      let headerT = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        'Accept': 'application/json'
+      }
+  
+      return this.http.post(
+        this.generalServie.globalUrl + link,
+        JSON.stringify(data),
+        {
+          headers: !token ? header : headerT,
+        }
+      );
+    }
+    getApi(link,token){
+      ObservableService.loader.next(true)
+      let header = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+      let headerT = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        'Accept': 'application/json'
+      }
+      return this.http.get(
+        this.generalServie.globalUrl + link,
+        {
+          headers: !token ? header : headerT,
+        }
+      );
+    }
     post(link, data, token){
       ObservableService.loader.next(true)
       let header = {

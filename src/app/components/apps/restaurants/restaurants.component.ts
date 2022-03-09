@@ -17,7 +17,11 @@ export class FileManagerComponent implements OnInit {
   long;
   formatDate;
   formattedDate;
-  id
+  id;
+  // pagination
+  page: number = 1;
+  totalPage = [];
+  total;
   // temp = [];
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
   constructor(private modalService: NgbModal, private http: HttpService, private router:Router, private activatedRoute:ActivatedRoute) {

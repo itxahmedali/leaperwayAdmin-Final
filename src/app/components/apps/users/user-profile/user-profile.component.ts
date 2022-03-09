@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
+import { HttpService } from 'src/app/services/http.service';
+import { ObservableService } from 'src/app/services/observable.service';
 // ng pagination
 // import {NgxPaginationModule} from 'ngx-pagination';
 @Component({
@@ -7,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ["./user-profile.component.scss"],
 })
 export class UserProfileComponent implements OnInit {
-  public cards = [
+  public cards12 = [
     {
       name: "Elena Gilbert",
       type: "assets/1x/mastercard.png",
@@ -128,5 +132,32 @@ export class UserProfileComponent implements OnInit {
   p: number = 1;
   // current transaction pagination
   currentTransactionPages = 1;
-  ngOnInit(): void {}
+  id;
+  userData;
+  formattedDate;
+  cards;
+  constructor(private route: ActivatedRoute, private http:HttpService){
+
+  }
+  ngOnInit(){
+    this.getData()
+  }
+  getData(){
+    // getting id
+    this.id=this.route.snapshot.paramMap.get("id");
+    // getting deails of user
+    this.http.getApi(`admin/user/${this.id}`, true).subscribe((res:any)=>{
+      this.formattedDate = moment(res.created_at).format('MMMM Do YYYY');
+      this.userData = res;
+      console.log(res);
+      
+      ObservableService.loader.next(false)
+    })
+    // getting wallet details
+    this.http.getApi(`admin/cards/${this.id}`, true).subscribe((res:any)=>{
+      console.log(res);
+      this.cards = res;
+      ObservableService.loader.next(false)
+    })
+  }
 }
