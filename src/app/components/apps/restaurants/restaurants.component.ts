@@ -117,8 +117,7 @@ export class FileManagerComponent implements OnInit {
   //     this.long = position.coords.longitude;
   //   });
   // }
-  viewpage(row){
-
-    this.router.navigate(["/all-restaurants/restaurant-profile",row.id])
+  viewpage(restaurant){
+    this.router.navigate(["/all-restaurants/restaurant-profile",restaurant.id])
   }
 }
