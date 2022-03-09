@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
+import { FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router, ParamMap } from "@angular/router";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { DatatableComponent } from "@swimlane/ngx-datatable";
 import * as $ from "jquery";
 import * as moment from "moment";
+import { ToastrService } from "ngx-toastr";
 import { HttpService } from "src/app/services/http.service";
+import { ObservableService } from "src/app/services/observable.service";
 @Component({
   selector: "app-file-manager",
   templateUrl: "./restaurants.component.html",
@@ -12,60 +15,75 @@ import { HttpService } from "src/app/services/http.service";
 })
 export class FileManagerComponent implements OnInit {
   public url: any;
-  public company; 
+  public company;
   lat;
   long;
-  formatDate;
-  formattedDate;
   id;
   // pagination
   page: number = 1;
   totalPage = [];
   total;
+  restaurantData;
+  restauratnImage;
+  restaurantstatus
+  // edit form
+  editForm = this.fb.group({
+    name: [null],
+    phone: [null],
+    address: [null],
+    city: [null],
+    state: [null],
+    country: [null],
+    password: [null],
+    image: [null],
+  });
   // temp = [];
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
-  constructor(private modalService: NgbModal, private http: HttpService, private router:Router, private activatedRoute:ActivatedRoute) {
-    
-  }
+  constructor(
+    private modalService: NgbModal,
+    private http: HttpService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private fb: FormBuilder,
+    private toaster: ToastrService
+  ) {}
   ngOnInit() {
-    // this.location();
     setTimeout(() => {
       this.getRestuarants();
-    },1000)
+    }, 1000);
   }
- 
+
   // restaurants Api
   async getRestuarants() {
-    this.http.get(`admin/restaurents/${localStorage.getItem('lat')},${localStorage.getItem('lang')}`, true).then((res) => {
+    this.http.getApi(`admin/restaurents/${localStorage.getItem(
+      "lat"
+    )},${localStorage.getItem("lang")}`,
+    true).subscribe((res)=>{
       this.company = res;
-      for (let index = 0; index < this.company.length; index++) {
-        this.formatDate = this.company[index].user.created_at;
-        this.formattedDate = moment(this.formatDate).format('MMMM Do YYYY');
-        // if(this.company[index].user.status == 0){
-        //   this.company.splice(index,1)
-        // }
-      }
-    }),
-      (err) => {
-        console.log(err);
-      };
-  }
-  // filter functionality
-  updateFilter(event) {
-    // const val = event.target.value.toLowerCase();
-    // // filter our data
-    // const temp = this.company.filter(function(d) {
-    //   return d.name.toLowerCase().indexOf(val) !== -1 || !val;
-    // });
-    // // update the rows
-    // this.company = temp;
-    // // Whenever the filter changes, always go back to the first page
-    // this.table.offset = 0;
+      ObservableService.loader.next(false);
+    },
+    (err) => {
+      ObservableService.loader.next(false);
+      console.log(err);
+    })
   }
 
   // modal
   closeResult = "";
-  open(content) {
+  open(content, restaurant) {
+    console.log(restaurant);
+    this.restaurantData = restaurant;
+    // edit form
+    this.editForm = this.fb.group({
+      name: [this.restaurantData?.user?.name, [Validators.required]],
+      password: [null],
+      address: [this.restaurantData?.address],
+      city: [this.restaurantData?.city],
+      state: [this.restaurantData?.state],
+      country: [this.restaurantData?.country],
+      phone: [this.restaurantData?.user?.phone, [Validators.required]],
+      image: [this.restaurantData?.user?.image, [Validators.required]],
+    });
     this.modalService
       .open(content, { ariaLabelledBy: "modal-basic-title" })
       .result.then(
@@ -86,8 +104,30 @@ export class FileManagerComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-  // restaurant status
-  status(event) {}
+   // restaurant status
+   status(event, id) {
+    if (event.target.checked == true) {
+      this.restaurantstatus = 1;
+    } else {
+      this.restaurantstatus = 0;
+    }
+
+    let data = {
+      status:this.restaurantstatus
+    }
+
+    this.http
+      .postApi(`admin/restaurent_edit/${id}`, data, true)
+      .subscribe((res: any) => {
+        ObservableService.loader.next(false);
+        this.toaster.success(res.message);
+        // event.target.checked == false
+        this.getRestuarants()
+      },
+      (err)=>{
+        ObservableService.loader.next(false)
+      });
+  }
   changeHeading(event) {
     if ($(event.target.id == "addBtn")) {
       $("#modal-basic-title").text("Add Restaurant Info");
@@ -97,27 +137,77 @@ export class FileManagerComponent implements OnInit {
   }
   //FileUpload
   readUrl(event: any) {
-    if (event.target.files.length === 0) return;
-    //Image upload validation
-    var mimeType = event.target.files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
-      return;
-    } else {
-      var reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      reader.onload = (_event) => {
+    let reader = new FileReader();
+    if (event.target.files && event.target.files.length > 0) {
+      let file = event.target.files[0];
+      this.restauratnImage = event.target.files[0];
+      reader.readAsDataURL(file);
+      reader.onload = () => {
         this.url = reader.result;
       };
+    } else {
+      return false;
     }
   }
   // async location() {
-  //  await navigator.geolocation.getCurrentPosition((position) => { 
+  //  await navigator.geolocation.getCurrentPosition((position) => {
   //     console.log("Got position", position.coords);
-  //     this.lat = position.coords.latitude; 
+  //     this.lat = position.coords.latitude;
   //     this.long = position.coords.longitude;
   //   });
   // }
-  viewpage(restaurant){
-    this.router.navigate(["/all-restaurants/restaurant-profile",restaurant.id])
+  async dealAdd() {
+    if(this.url){
+      await this.http
+      .uploadImages(this.restauratnImage, "admin/image_upload")
+      .then((res: any) => {
+        console.log(res);
+        if (res.image) {
+          return false;
+        }
+        this.editForm.patchValue({
+          image: res.data.image_url,
+        });
+        setTimeout(() => {
+          this.update();
+        }, 1000);
+      }),
+      (e) => {};
+    }else{
+      this.update();
+    }
   }
+  viewpage(restaurant) {
+    this.router.navigate([
+      "/all-restaurants/restaurant-profile",
+      restaurant.id,
+    ]);
+  }
+  update() {
+    if(this.editForm.value.password == null){
+      this.editForm.removeControl('password');
+    }
+    this.http
+      .postApi(`admin/restaurent_edit/${this.restaurantData.id}`, this.editForm.value, true)
+      .subscribe((res: any) => {
+        ObservableService.loader.next(false);
+        this.toaster.success(res.message);
+        this.url = undefined;
+        this.editForm = this.fb.group({
+          name: [this.restaurantData?.user?.name, [Validators.required]],
+          password: [null],
+          address: [this.restaurantData?.address],
+          city: [this.restaurantData?.city],
+          state: [this.restaurantData?.state],
+          country: [this.restaurantData?.country],
+          phone: [this.restaurantData?.user?.phone, [Validators.required]],
+          image: [this.restaurantData?.user?.image, [Validators.required]],
+        });
+        this.getRestuarants()
+      },
+      (err)=>{
+        ObservableService.loader.next(false)
+      });
+  }
+
 }

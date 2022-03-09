@@ -32,7 +32,7 @@
                               <h6>
                                 <i class="fa fa-calendar"></i>   Registered On
                               </h6>
-                              <span>{{ formattedDate }}</span>
+                              <span>{{ userData?.created_at | date: 'dd/MM/yyyy' }}</span>
                             </div>
                           </div>
                         </div>

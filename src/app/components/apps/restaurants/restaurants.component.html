@@ -5,56 +5,11 @@
       <div class="card">
         <div class="card-body custom-datatable">
           <div class="searchBox d-flex justify-content-between">
-            <input type="text" class="filter-ngx form-control" placeholder='Search' (keyup)="updateFilter($event)"/>
-            <button class="btn btn-primary" id="addBtn" (click)="open(content); changeHeading($event)">
+            <input type="text" class="filter-ngx form-control" placeholder='Search'/>
+            <!-- <button class="btn btn-primary" id="addBtn" (click)="open(content); changeHeading($event)">
               <i class='fa fa-plus'></i>
-            </button>
+            </button> -->
           </div>
-          <!-- <ngx-datatable #table [rows]="company" class="material fullscreen bootstrap" [columnMode]="'standard'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [scrollbarV]="false" [scrollbarH]="true" [limit]="5">
-            <ngx-datatable-column name="Name" sortable="true" [width]="130">
-              <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                {{row.user.name}}
-              </ng-template>
-            </ngx-datatable-column>
-            <ngx-datatable-column name="Owner" sortable="true" [width]="130">
-              <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                {{row.user.owner}}
-              </ng-template>
-            </ngx-datatable-column>
-            <ngx-datatable-column name="Email" sortable="true" [width]="180">
-              <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                {{row.user.email}}
-              </ng-template>
-            </ngx-datatable-column>
-            <ngx-datatable-column name="Resgistration" sortable="true" [width]="135">
-              <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                {{formattedDate}}
-              </ng-template>
-            </ngx-datatable-column>
-            <ngx-datatable-column name="Status" sortable="false" [width]="100">
-              <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                <div class="toggleBtn">
-                  <label class="switch"><input type="checkbox" (change)="status($event)" id={{row.id}} [checked]="true"/>    <div></div>
-                  </label>
-                </div>
-              </ng-template>
-            </ngx-datatable-column>
-            <ngx-datatable-column name="Actions" sortable="false" [width]="250">
-              <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                <div class="d-flex actionsBtn">
-                    <button class="btn btn-dark" (click)="viewpage(row)">
-                    <i class='fa fa-eye'></i>
-                  </button>
-                  <button class="btn btn-primary" (click)="open(content)">
-                    <i class='fa fa-edit'></i>
-                  </button>
-                  <button class="btn btn-danger">
-                    <i class='fa fa-times'></i>
-                  </button>
-                </div>
-              </ng-template>
-            </ngx-datatable-column>
-          </ngx-datatable> -->
           <div class="table-responsive">
             <table class="table table-hover">
               <thead>
@@ -75,11 +30,11 @@
                   <td>{{restaurant?.user.name}}</td>
                   <td>{{restaurant?.user.owner}}</td>
                   <td>{{restaurant?.user.email}}</td>
-                  <td>{{formattedDate}}</td>
+                  <td>{{restaurant?.created_at | date: 'dd/MM/yyyy'}}</td>
                   <td> 
                     <div class="toggleBtn">
-                      <label class="switch"><input type="checkbox" (change)="status($event)"
-                          [checked]="true" />
+                      <label class="switch"><input type="checkbox" (change)="status($event, restaurant?.id)"
+                        [checked]="restaurant?.user?.status == 1 ? true : false" />
                         <div></div>
                       </label>
                     </div>
@@ -89,7 +44,7 @@
                       <button class="btn btn-dark" (click)="viewpage(restaurant)">
                       <i class='fa fa-eye'></i>
                     </button>
-                    <button class="btn btn-primary" (click)="open(content)">
+                    <button class="btn btn-primary" (click)="open(content, restaurant)">
                       <i class='fa fa-edit'></i>
                     </button>
                     <button class="btn btn-danger">
@@ -117,12 +72,12 @@
     </button>
   </div>
   <div class="modal-body">
-    <form>
+    <form [formGroup]="editForm">
       <div class="row">
         <div class="col-lg-12 d-flex flex-column justify-content-center align-items-center">
           <div class="imgBox">
             <div class="avatar">
-              <img alt="" [src]="url? url:'assets/images/user/1.jpg'">
+              <img alt="" [src]="url? url: restaurantData?.user?.image">
             </div>
             <input id="dashboardLogo" class="upload" type="file" (change)="readUrl($event)" hidden />
             <label for="dashboardLogo" class="icon-wrapper"><i class="icofont icofont-pencil-alt-5"></i></label>
@@ -131,49 +86,49 @@
         <div class="col-lg-6 mt-3">
           <label for="name">Name</label>
           <div class="input-group">
-            <input id="name" class="form-control" placeholder="Name" name="name">
-          </div>
-        </div>
-        <div class="col-lg-6 mt-3">
-          <label for="email">Email</label>
-          <div class="input-group">
-            <input id="email" class="form-control" placeholder="Email" name="email" type="email">
+            <input id="name" class="form-control" placeholder="Name" formControlName ="name">
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="phone">Phone</label>
           <div class="input-group">
-            <input id="phone" class="form-control" placeholder="Phone" name="phone" type="number" [min]="0">
+            <input id="phone" class="form-control" placeholder="Phone" formControlName ="phone" type="text">
+          </div>
+        </div>
+        <div class="col-lg-6 mt-3">
+          <label for="phone">Password</label>
+          <div class="input-group">
+            <input id="phone" class="form-control" placeholder="Password" formControlName ="password" type="password">
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="address">Address</label>
           <div class="input-group">
-            <input id="address" class="form-control" placeholder="Address" name="address">
+            <input id="address" class="form-control" placeholder="Address" formControlName ="address">
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="city">City</label>
           <div class="input-group">
-            <input id="city" class="form-control" placeholder="City" name="city">
+            <input id="city" class="form-control" placeholder="City" formControlName ="city">
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="state">State</label>
           <div class="input-group">
-            <input id="state" class="form-control" placeholder="State" name="state">
+            <input id="state" class="form-control" placeholder="State" formControlName ="state">
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="country">Country</label>
           <div class="input-group">
-            <input id="country" class="form-control" placeholder="Country" name="country">
+            <input id="country" class="form-control" placeholder="Country" formControlName ="country">
           </div>
         </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click'); dealAdd(); ">Save</button>
   </div>
 </ng-template>

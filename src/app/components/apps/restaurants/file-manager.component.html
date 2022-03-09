@@ -75,7 +75,7 @@
                   <td>{{user.name}}</td>
                   <td>{{user.owner}}</td>
                   <td>{{user.email}}</td>
-                  <td>{{formattedDate}}</td>
+                  <td>{{user?.created_at | date: 'dd/MM/yyyy'}}</td>
                   <td> 
                     <div class="toggleBtn">
                       <label class="switch"><input type="checkbox" (change)="status($event)"

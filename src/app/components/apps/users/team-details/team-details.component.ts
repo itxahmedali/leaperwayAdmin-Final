@@ -48,34 +48,17 @@ export class TeamDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.getUsers();
-    console.log(this.userData);
   }
 
   getUsers() {
-    this.http.get("admin/user", true).then((res: any) => {
+    this.http.getApi("admin/user", true).subscribe((res)=>{
       this.company = res;
-      for (let index = 0; index < this.company.length; index++) {
-        this.formatDate = this.company[index].created_at;
-        this.formattedDate = moment(this.formatDate).format("MMMM Do YYYY");
-        console.log(this.formattedDate, "res");
-        // this.formattedDate.push(formattedDate)
-      }
-    }),
-      (err) => {
-        console.log(err);
-      };
-  }
-  // filter functionality
-  updateFilter(event) {
-    // const val = event.target.value.toLowerCase();
-    // // filter our data
-    // const temp = this.temp.filter(function(d) {
-    //   return d.name.toLowerCase().indexOf(val) !== -1 || !val;
-    // });
-    // // update the rows
-    // this.rows = temp;
-    // // Whenever the filter changes, always go back to the first page
-    // this.table.offset = 0;
+      ObservableService.loader.next(false);
+    },
+    (err) => {
+      ObservableService.loader.next(false);
+      console.log(err);
+    })
   }
   // modal
   closeResult = "";
@@ -113,23 +96,6 @@ export class TeamDetailsComponent implements OnInit {
       );
   }
   async dealAdd() {
-    console.log(this.url);
-
-    // if(this.editForm.invalid || this.url == undefined){
-    //   this.toaster.error("Invalid")
-    //   // return;
-    // }
-    // else{
-    // if (this.url == undefined) {
-    //   let reader = new FileReader();
-    //   this.dealImage = this.userData?.image;
-    //   reader.readAsDataURL(this.dealImage);
-    //   reader.onload = () => {
-    //     this.dealImage = reader.result;
-    //   };
-    // }
-    // imageUpload
-
     if(this.url){
       await this.http
       .uploadImages(this.dealImage, "admin/image_upload")
@@ -149,7 +115,6 @@ export class TeamDetailsComponent implements OnInit {
     }else{
       this.update();
     }
-    // }
   }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -197,8 +162,6 @@ export class TeamDetailsComponent implements OnInit {
     }
   }
   update() {
-    console.log(this.editForm.value);
-
     if(this.editForm.value.password == null){
       this.editForm.removeControl('password');
     }

@@ -10,7 +10,7 @@
                             <div class="col-sm-12">
                                 <div class="card hovercard text-center">
                                     <div class="user-image">
-                                        <div class="avatar"><img alt="" [src]="'assets/1x/restaurantlogo.jpg'">
+                                        <div class="avatar"><img alt="" [src]="url? url: company?.user?.image">
                                         </div>
                                     </div>
                                     <div class="info">
@@ -26,7 +26,7 @@
                                                     <div class="col-md-6">
                                                         <div class="ttl-info text-left">
                                                             <h6><i class="fa fa-calendar"></i>   Registered On</h6>
-                                                            <span>{{formattedDate}}</span>
+                                                            <span>{{company?.created_at | date: 'dd/MM/yyyy'}}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -85,34 +85,34 @@
                     <ngb-panel title="Orders">
                         <ng-template ngbPanelContent>
                             <ngb-tabset>
-                                <ngb-tab title="Current">
+                                <ngb-tab title="Pending Orders">
                                     <ng-template ngbTabContent>
                                         <div class="currentOrder">
                                             <div class="row"
-                                                *ngFor="let item of currentOrders | paginate: { itemsPerPage:
+                                                *ngFor="let item of pendingOrders | paginate: { itemsPerPage:
                                             3, currentPage: currentOrdersPages }; index as i;">
                                                 <div class="col">
                                                     <div class="leaperName">
                                                         <label for="">Leaper Name</label>
-                                                        <h6>{{item?.name}}</h6>
+                                                        <h6>{{item?.leaper_name}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="leaperDeal">
                                                         <label for="">Leaper Deal</label>
-                                                        <h6>{{item?.deal}}</h6>
+                                                        <h6>{{item?.deal?.deal_name}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="dealPrice">
                                                         <label for="">Deal Price</label>
-                                                        <h6>{{item?.dealAmount| currency:'USD'}}</h6>
+                                                        <h6>{{item?.deal?.deal_price| currency:'USD'}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="coupanDate">
                                                         <label for="">Coupan Date</label>
-                                                        <h6>{{item?.coupanDate}}</h6>
+                                                        <h6>{{item?.created_at | date: 'dd/MM/yyyy'}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
@@ -128,33 +128,33 @@
                                         </div>
                                     </ng-template>
                                 </ngb-tab>
-                                <ngb-tab title="Completed">
+                                <ngb-tab title="Withdraw Orders">
                                     <ng-template ngbTabContent>
                                         <div class="completedOrders">
-                                            <div class="row" *ngFor="let item of successOrders | paginate: { itemsPerPage:
+                                            <div class="row" *ngFor="let item of withdrawOrders | paginate: { itemsPerPage:
                                             3, currentPage: successOrdersPages }; index as i;">
                                                 <div class="col">
                                                     <div class="leaperName">
                                                         <label for="">Leaper Name</label>
-                                                        <h6>{{item?.name}}</h6>
+                                                        <h6>{{item?.leaper_name}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="leaperDeal">
                                                         <label for="">Leaper Deal</label>
-                                                        <h6>{{item?.deal}}</h6>
+                                                        <h6>{{item?.deal?.deal_name}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="dealPrice">
                                                         <label for="">Deal Price</label>
-                                                        <h6>{{item?.dealAmount| currency:'USD'}}</h6>
+                                                        <h6>{{item?.deal?.deal_price| currency:'USD'}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="coupanDate">
                                                         <label for="">Coupan Date</label>
-                                                        <h6>{{item?.coupanDate}}</h6>
+                                                        <h6>{{item?.created_at | date: 'dd/MM/yyyy'}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
@@ -169,33 +169,33 @@
                                         </div>
                                     </ng-template>
                                 </ngb-tab>
-                                <ngb-tab title="Withdraw">
+                                <ngb-tab title="Cancelled Orders">
                                     <ng-template ngbTabContent>
                                         <div class="withdrawOrders">
-                                            <div class="row" *ngFor="let item of withdrawOrders | paginate: { itemsPerPage:
+                                            <div class="row" *ngFor="let item of cancelledOrder | paginate: { itemsPerPage:
                                             3, currentPage: withdrawOrdersPages }; index as i;">
                                                 <div class="col">
                                                     <div class="leaperName">
                                                         <label for="">Leaper Name</label>
-                                                        <h6>{{item?.name}}</h6>
+                                                        <h6>{{item?.leaper_name}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="leaperDeal">
                                                         <label for="">Leaper Deal</label>
-                                                        <h6>{{item?.deal}}</h6>
+                                                        <h6>{{item?.deal?.deal_name}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="dealPrice">
                                                         <label for="">Deal Price</label>
-                                                        <h6>{{item?.dealAmount| currency:'USD'}}</h6>
+                                                        <h6>{{item?.deal?.deal_price| currency:'USD'}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="coupanDate">
                                                         <label for="">Coupan Date</label>
-                                                        <h6>{{item?.coupanDate}}</h6>
+                                                        <h6>{{item?.created_at | date: 'dd/MM/yyyy'}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
@@ -219,27 +219,59 @@
                 <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
                     <ngb-panel title="Deals">
                         <ng-template ngbPanelContent>
-                            <div class="deals-cards">
-                                <div class="row">
-                                    <div class="col-lg-4"  *ngFor="let company of company?.deals">
-                                        <div class="card" style="width: 95%;">
-                                            <div class="cardImgBox">
-                                                <img src="{{company?.deal_image}}" class="card-img-top" alt="...">
-                                            </div>
-                                            <div class="card-body">
-                                                <h1 class="colorBlue title">{{company?.deal_name}}</h1>
-                                                <!-- <p class="card-text">{{company?.details}}</p> -->
-                                                <div class="qty-price d-flex justify-content-end">
-                                                    <div class="price">
-                                                        <label>Price: </label>
-                                                        <label class="colorRed priceLabel">{{company?.deal_price | currency:'USD'}}</label>
+                            <ngb-tabset>
+                                <ngb-tab title="Active Deals">
+                                    <ng-template ngbTabContent>
+                                        <div class="deals-cards">
+                                            <div class="row">
+                                                <div class="col-lg-4"  *ngFor="let company of activeDeals">
+                                                    <div class="card" style="width: 95%;">
+                                                        <div class="cardImgBox">
+                                                            <img src="{{company?.deal_image}}" class="card-img-top" alt="...">
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <h1 class="colorBlue title">{{company?.deal_name}}</h1>
+                                                            <!-- <p class="card-text">{{company?.details}}</p> -->
+                                                            <div class="qty-price d-flex justify-content-end">
+                                                                <div class="price">
+                                                                    <label>Price: </label>
+                                                                    <label class="colorRed priceLabel">{{company?.deal_price | currency:'USD'}}</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    </ng-template>
+                                </ngb-tab>
+                                <ngb-tab title="Inactive Deals">
+                                    <ng-template ngbTabContent>
+                                        <div class="deals-cards">
+                                            <div class="row">
+                                                <div class="col-lg-4"  *ngFor="let company of cancelledDeals">
+                                                    <div class="card" style="width: 95%;">
+                                                        <div class="cardImgBox">
+                                                            <img src="{{company?.deal_image}}" class="card-img-top" alt="...">
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <h1 class="colorBlue title">{{company?.deal_name}}</h1>
+                                                            <!-- <p class="card-text">{{company?.details}}</p> -->
+                                                            <div class="qty-price d-flex justify-content-end">
+                                                                <div class="price">
+                                                                    <label>Price: </label>
+                                                                    <label class="colorRed priceLabel">{{company?.deal_price | currency:'USD'}}</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </ngb-tab>
+                            </ngb-tabset>
+                            
                         </ng-template>
                     </ngb-panel>
                 </ngb-accordion>
@@ -251,7 +283,7 @@
                             <div class="row align-items-center">
                                 <div class="col-lg-7 d-flex flex-column">
                                     <label for="">Amount</label>
-                                    <h3>$100900</h3>
+                                    <h3>{{revenueAmount | currency:'USD'}}</h3>
                                 </div>
                                 <div class="col-lg-5 text-right d-flex justify-content-between align-items-center">
                                     <div class="dateValues d-flex justify-content-between">
@@ -269,36 +301,36 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="withdrawOrders">
-                                        <div class="row" *ngFor="let item of revenue | paginate: { itemsPerPage:
+                                        <div class="row" *ngFor="let item of ravenueData | paginate: { itemsPerPage:
                                             3, currentPage: revenuePages }; index as i;">
                                             <div class="col">
                                                 <div class="leaperName">
                                                     <label for="">Card Title</label>
-                                                    <h6>{{item?.title}}</h6>
+                                                    <h6>{{item?.card?.card_name}}</h6>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="leaperDeal">
                                                     <label for="">Leaper Deal</label>
-                                                    <h6>{{item?.deal}}</h6>
+                                                    <h6>{{item?.deal?.deal_name}}</h6>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="dealPrice">
                                                     <label for="">Deal Price</label>
-                                                    <h6>{{item?.dealAmount| currency:'USD'}}</h6>
+                                                    <h6>{{item?.deal?.deal_price| currency:'USD'}}</h6>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="coupanDate">
                                                     <label for="">Coupan Date</label>
-                                                    <h6>{{item?.coupanDate}}</h6>
+                                                    <h6>{{item?.deal?.created_at | date: 'dd/MM/yyyy'}}</h6>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="coupanDate">
                                                     <label for="">Coupan No</label>
-                                                    <h6>{{item?.coupanNo}}</h6>
+                                                    <h6>{{item?.coupon}}</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -321,11 +353,11 @@
                                     <div class="d-flex justify-content-end">
                                         <div class="dueAmount d-flex flex-column mr-5">
                                             <h6>Due</h6>
-                                            <h4>$10000</h4>
+                                            <h4>{{amountDue?.due | currency:'USD'}}</h4>
                                         </div>
                                         <div class="pendingAmount d-flex flex-column">
                                             <h6>Wallet</h6>
-                                            <h4>$68000</h4>
+                                            <h4>{{amountDue?.wallet | currency:'USD'}}</h4>
                                         </div>
                                     </div>
                                 </div>

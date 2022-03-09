@@ -156,6 +156,13 @@
         object-fit: cover;
     }
 }
+.user-image{
+    display: flex;
+    justify-content: center;
+    .avatar{
+        width: fit-content;
+    }
+}
 @media only screen and (max-width:768px) {
 
     .currentOrder .row .col,

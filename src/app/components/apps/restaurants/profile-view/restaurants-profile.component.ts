@@ -1,10 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import * as $ from 'jquery';
+import { Component, OnInit } from "@angular/core";
+import * as $ from "jquery";
 import * as moment from "moment";
-import {NgbModal, ModalDismissReasons, NgbDateStruct, NgbDate, NgbCalendar, NgbDatepickerConfig, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
-import { ComingSoonModule } from 'src/app/pages/coming-soon/coming-soon.module';
-import { HttpService } from 'src/app/services/http.service';
-import { ActivatedRoute } from '@angular/router';
+import {
+  NgbModal,
+  ModalDismissReasons,
+  NgbDateStruct,
+  NgbDate,
+  NgbCalendar,
+  NgbDatepickerConfig,
+  NgbDateParserFormatter,
+} from "@ng-bootstrap/ng-bootstrap";
+import { ComingSoonModule } from "src/app/pages/coming-soon/coming-soon.module";
+import { HttpService } from "src/app/services/http.service";
+import { ActivatedRoute } from "@angular/router";
+import { ObservableService } from "src/app/services/observable.service";
 @Component({
   selector: "app-profile-view",
   templateUrl: "./restaurants-profile.component.html",
@@ -32,51 +41,7 @@ export class ProfileViewComponent implements OnInit {
   company;
   apiData;
   formatDate;
-  formattedDate
-  public revenue = [
-    {
-      title: "Jacob Gomez",
-      deal: "Deal 01",
-      dealAmount: 10,
-      coupanDate: "10/12/2021",
-      coupanNo: 1245,
-    },
-    {
-      title: "Jacob Gomez",
-      deal: "Deal 02",
-      dealAmount: 102,
-      coupanDate: "10/12/2021",
-      coupanNo: 1223,
-    },
-    {
-      title: "Jacob Gomez",
-      deal: "Deal 03",
-      dealAmount: 12,
-      coupanDate: "10/12/2021",
-      coupanNo: 1453,
-    },
-    {
-      title: "Jacob Gomez",
-      deal: "Deal 04",
-      dealAmount: 106,
-      coupanDate: "10/12/2021",
-      coupanNo: 12452,
-    },
-    {
-      title: "Jacob Gomez",
-      deal: "Deal 05",
-      dealAmount: 345,
-      coupanDate: "10/12/2021",
-      coupanNo: 12412,
-    },
-    {
-      title: "Jacob Gomez",
-      deal: "Deal 06",
-      dealAmount: 101,
-      coupanDate: "10/12/2021",
-      coupanNo: 12451,
-    },
-  ];
+  formattedDate;
   public recievingHistory = [
     {
       accountTitle: "Elena Gilbert",
@@ -148,102 +113,9 @@ export class ProfileViewComponent implements OnInit {
       amountRecieved: 966,
     },
   ];
-  public currentOrders = [
-    {
-      name: "Jacob Gomez",
-      deal: "Deal 01",
-      dealAmount: 10,
-      coupanDate: "12/02/2022",
-    },
-    {
-      name: "Jacob Gomez",
-      deal: "Deal 02",
-      dealAmount: 25,
-      coupanDate: "12/02/2022",
-    },
-    {
-      name: "Jacob Gomez",
-      deal: "Deal 03",
-      dealAmount: 8,
-      coupanDate: "12/02/2022",
-    },
-    {
-      name: "Jacob Gomez",
-      deal: "Deal 04",
-      dealAmount: 5,
-      coupanDate: "12/02/2022",
-    },
-    {
-      name: "Jacob Gomez",
-      deal: "Deal 05",
-      dealAmount: 15,
-      coupanDate: "12/02/2022",
-    },
-  ];
-  public successOrders = [
-    {
-      name: "Jacob Gomez",
-      deal: "Deal 01",
-      dealAmount: 10,
-      coupanDate: "12/02/2022",
-    },
-    {
-      name: "Jacob Gomez",
-      deal: "Deal 02",
-      dealAmount: 25,
-      coupanDate: "12/02/2022",
-    },
-    {
-      name: "Jacob Gomez",
-      deal: "Deal 03",
-      dealAmount: 8,
-      coupanDate: "12/02/2022",
-    },
-    {
-      name: "Jacob Gomez",
-      deal: "Deal 04",
-      dealAmount: 5,
-      coupanDate: "12/02/2022",
-    },
-    {
-      name: "Jacob Gomez",
-      deal: "Deal 05",
-      dealAmount: 15,
-      coupanDate: "12/02/2022",
-    },
-  ];
-  public withdrawOrders = [
-    {
-      name: "Jacob Gomez",
-      deal: "Deal 01",
-      dealAmount: 10,
-      coupanDate: "12/02/2022",
-    },
-    {
-      name: "Jacob Gomez",
-      deal: "Deal 02",
-      dealAmount: 25,
-      coupanDate: "12/02/2022",
-    },
-    {
-      name: "Jacob Gomez",
-      deal: "Deal 03",
-      dealAmount: 8,
-      coupanDate: "12/02/2022",
-    },
-    {
-      name: "Jacob Gomez",
-      deal: "Deal 04",
-      dealAmount: 5,
-      coupanDate: "12/02/2022",
-    },
-    {
-      name: "Jacob Gomez",
-      deal: "Deal 05",
-      dealAmount: 15,
-      coupanDate: "12/02/2022",
-    },
-  ];
+  public pendingOrders = [];
+  public cancelledOrder = [];
+  public withdrawOrders = [];
   // deals cards
   cards: any = [
     {
@@ -288,25 +160,34 @@ export class ProfileViewComponent implements OnInit {
   long;
   // url param
   id;
+  // deals data
+  cancelledDeals = [];
+  activeDeals = [];
+  // revenue dates
+  dates;
+  // revenue data
+  ravenueData = [];
+  revenueAmount;
+  // ammount tab
+  amountDue;
   constructor(
     private modalService: NgbModal,
     private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter,
     private http: HttpService,
-    private activatedRoute:ActivatedRoute
+    private activatedRoute: ActivatedRoute
   ) {
-    this.id=this.activatedRoute.snapshot.paramMap.get("id");
+    this.id = this.activatedRoute.snapshot.paramMap.get("id");
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), "d", 10);
-    this.location()
+    this.location();
   }
   async location() {
-    await navigator.geolocation.getCurrentPosition((position) => { 
-       console.log("Got position", position.coords);
-       this.lat = position.coords.latitude; 
-       this.long = position.coords.longitude;
-     });
-   }
+    await navigator.geolocation.getCurrentPosition((position) => {
+      this.lat = position.coords.latitude;
+      this.long = position.coords.longitude;
+    });
+  }
   // modal
   closeResult = "";
   open(content) {
@@ -391,43 +272,102 @@ export class ProfileViewComponent implements OnInit {
       return;
     } else {
       $(".toDate").html(this.toDateParse);
+      this.dates = { from: this.toDateParse, to: this.fromDateParse };
+      setTimeout(() => {
+        this.ravenueData.length = 0;
+        this.http
+          .postApi(`admin/revenue/${this.company.id}`, this.dates, true)
+          .subscribe((res: any) => {
+            console.log(res);
+            res.data.map((data) => {
+              this.ravenueData.push(data);
+            });
+            console.log(this.ravenueData);
+
+            ObservableService.loader.next(false);
+          });
+      }, 1000);
     }
   }
   ngOnInit(): void {
-    this.formatdateandTime()
-    // console.log(this.company.deals.deal_name)
     setTimeout(() => {
       this.getRestuarants();
-    })
+    });
+    setTimeout(() => {
+      this.defaultRevenue();
+    }, 2000);
   }
-  // ngAfterViewInit(){
-  //   this.id=this.activatedRoute.snapshot.paramMap.get("id");
-  //    }
-   // restaurants Api
-   async getRestuarants() {
-    this.http.get(`admin/restaurents/${this.lat},${this.long}`, true).then((res) => {
-      this.apiData = res;
-      this.apiData.map((data)=>{
-        // console.log(data)
-        if(data.id == this.id){
-          this.company = data
+  // restaurants Api
+  async getRestuarants() {
+    await this.http
+      .getApi(`admin/restaurents/${this.lat},${this.long}`, true)
+      .subscribe(
+        (res: any) => {
+          this.apiData = res;
+          this.apiData.map((data) => {
+            if (data.id == this.id) {
+              this.company = data;
+            }
+          });
+          // emptying array
+          this.withdrawOrders.length = 0;
+          this.pendingOrders.length = 0;
+          this.cancelledOrder.length = 0;
+          // emptying array
+          this.cancelledDeals.length = 0;
+          this.activeDeals.length = 0;
+          this.http
+            .getApi(`admin/orders_by_restaurant/${this.company.id}`, true)
+            .subscribe((res: any) => {
+              res.map((data) => {
+                if (data.status == "withdraw") {
+                  this.withdrawOrders.push(data);
+                }
+                if (data.status == "pending") {
+                  this.pendingOrders.push(data);
+                }
+                if (data.status == "Cancelled") {
+                  this.cancelledOrder.push(data);
+                }
+
+                if (data.deal.status == 0) {
+                  this.cancelledDeals.push(data.deal);
+                }
+                if (data.deal.status == 1) {
+                  this.activeDeals.push(data.deal);
+                }
+              });
+            });
+          ObservableService.loader.next(false);
+        },
+        (err) => {
+          console.log(err);
+          ObservableService.loader.next(false);
         }
-      })
-      // for (let index = 0; index < this.apiData.length; index++) {
-      //   if(this.apiData[index].id == id){
-      //     this.company = this.apiData
-      //   }
-      // }
-      console.log(this.company)
-      
-    }),
-      (err) => {
-        console.log(err);
-      };
+      );
   }
-  formatdateandTime(){
-      // this.formatDate = this.company.user.created_at;
-      this.formattedDate = moment(this.formatDate).format('MMMM Do YYYY');
+  defaultRevenue() {
+    var today = new Date(); // today!
+    var prviousDays = new Date();
+    prviousDays.setDate(prviousDays.getDate() - 30);
+    var formattedToday = moment(today).format("MMMM Do YYYY");
+    var formattedpreviousDays = moment(prviousDays).format("MMMM Do YYYY");
+    var dates={
+      to:formattedpreviousDays,
+      from:formattedToday
     }
-    
+    this.http
+      .postApi(`admin/revenue/${this.company.id}`, dates, true)
+      .subscribe((res: any) => {
+        this.revenueAmount = res.amount;
+        res.data.map((data) => {
+          this.ravenueData.push(data);
+        });
+
+        ObservableService.loader.next(false);
+      });
+      this.http.getApi(`admin/dues/${this.company.id}`, true).subscribe((res)=>{
+        this.amountDue = res;
+      })
+  }
 }
