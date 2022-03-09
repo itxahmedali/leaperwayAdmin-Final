@@ -97,7 +97,7 @@ export class TeamDetailsComponent implements OnInit {
     // edit form
     this.editForm = this.fb.group({
       name: [this.userData?.name, [Validators.required]],
-      password: [null, [Validators.required]],
+      password: [null],
       phone: [this.userData?.phone, [Validators.required]],
       image: [this.userData?.image, [Validators.required]],
     });
@@ -120,16 +120,18 @@ export class TeamDetailsComponent implements OnInit {
     //   // return;
     // }
     // else{
-    if (this.url == undefined) {
-      let reader = new FileReader();
-      this.dealImage = this.userData?.image;
-      reader.readAsDataURL(this.dealImage);
-      reader.onload = () => {
-        this.dealImage = reader.result;
-      };
-    }
+    // if (this.url == undefined) {
+    //   let reader = new FileReader();
+    //   this.dealImage = this.userData?.image;
+    //   reader.readAsDataURL(this.dealImage);
+    //   reader.onload = () => {
+    //     this.dealImage = reader.result;
+    //   };
+    // }
     // imageUpload
-    await this.http
+
+    if(this.url){
+      await this.http
       .uploadImages(this.dealImage, "admin/image_upload")
       .then((res: any) => {
         console.log(res);
@@ -144,6 +146,9 @@ export class TeamDetailsComponent implements OnInit {
         }, 1000);
       }),
       (e) => {};
+    }else{
+      this.update();
+    }
     // }
   }
   private getDismissReason(reason: any): string {
@@ -164,11 +169,16 @@ export class TeamDetailsComponent implements OnInit {
       this.userstatus = 0;
     }
 
+    let data = {
+      status:this.userstatus
+    }
+
     this.http
-      .postApi(`admin/user_edit/${id}`, this.userstatus, true)
+      .postApi(`admin/user_edit/${id}`, data, true)
       .subscribe((res: any) => {
         ObservableService.loader.next(false);
         this.toaster.success(res.message);
+        this.getUsers()
       });
   }
 
@@ -188,15 +198,26 @@ export class TeamDetailsComponent implements OnInit {
   }
   update() {
     console.log(this.editForm.value);
+
+    if(this.editForm.value.password == null){
+      this.editForm.removeControl('password');
+    }
     this.http
       .postApi(`admin/user_edit/${this.userData.id}`, this.editForm.value, true)
       .subscribe((res: any) => {
         ObservableService.loader.next(false);
         this.toaster.success(res.message);
+        this.url = undefined;
+        this.editForm = this.fb.group({
+          name: [null, [Validators.required]],
+          password: [null],
+          phone: [null, [Validators.required]],
+          image: [null, [Validators.required]],
+        });
+        this.getUsers()
       });
   }
   userDetails(id) {
     this.router.navigate(["users/userProfile", id]);
   }
-  // routerLink="userProfile"/
 }
