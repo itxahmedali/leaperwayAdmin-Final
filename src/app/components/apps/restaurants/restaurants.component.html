@@ -47,9 +47,6 @@
                     <button class="btn btn-primary" (click)="open(content, restaurant)">
                       <i class='fa fa-edit'></i>
                     </button>
-                    <button class="btn btn-danger">
-                      <i class='fa fa-times'></i>
-                    </button>
                   </div>
                   </td>
                 </tr>
@@ -62,6 +59,79 @@
     </div>
   </div>
 </div>
+
+
+
+<!-- Add form info modals -->
+<ng-template #addForm let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit Restaurant Info</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="editForm">
+      <div class="row">
+        <div class="col-lg-12 d-flex flex-column justify-content-center align-items-center">
+          <div class="imgBox">
+            <div class="avatar">
+              <img alt="" [src]="url? url: restaurantData?.user?.image">
+            </div>
+            <input id="dashboardLogo" class="upload" type="file" (change)="readUrl($event)" hidden />
+            <label for="dashboardLogo" class="icon-wrapper"><i class="icofont icofont-pencil-alt-5"></i></label>
+          </div>
+        </div>
+        <div class="col-lg-6 mt-3">
+          <label for="name">Name</label>
+          <div class="input-group">
+            <input id="name" class="form-control" placeholder="Name" formControlName ="name">
+          </div>
+        </div>
+        <div class="col-lg-6 mt-3">
+          <label for="phone">Phone</label>
+          <div class="input-group">
+            <input id="phone" class="form-control" placeholder="Phone" formControlName ="phone" type="text">
+          </div>
+        </div>
+        <div class="col-lg-6 mt-3">
+          <label for="phone">Password</label>
+          <div class="input-group">
+            <input id="phone" class="form-control" placeholder="Password" formControlName ="password" type="password">
+          </div>
+        </div>
+        <div class="col-lg-6 mt-3">
+          <label for="address">Address</label>
+          <div class="input-group">
+            <input id="address" class="form-control" placeholder="Address" formControlName ="address">
+          </div>
+        </div>
+        <div class="col-lg-6 mt-3">
+          <label for="city">City</label>
+          <div class="input-group">
+            <input id="city" class="form-control" placeholder="City" formControlName ="city">
+          </div>
+        </div>
+        <div class="col-lg-6 mt-3">
+          <label for="state">State</label>
+          <div class="input-group">
+            <input id="state" class="form-control" placeholder="State" formControlName ="state">
+          </div>
+        </div>
+        <div class="col-lg-6 mt-3">
+          <label for="country">Country</label>
+          <div class="input-group">
+            <input id="country" class="form-control" placeholder="Country" formControlName ="country">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click'); dealAdd(); ">Save</button>
+  </div>
+</ng-template>
+
 
 <!-- edit info modals -->
 <ng-template #content let-modal>

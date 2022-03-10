@@ -367,69 +367,34 @@
                                     <ng-template ngbTabContent>
                                         <div class="currentOrder">
                                             <div class="row"
-                                                *ngFor="let item of recievingHistory | paginate: { itemsPerPage:
+                                                *ngFor="let item of amount | paginate: { itemsPerPage:
                                             3, currentPage: recievingHistoryPage }; index as i;">
                                                 <div class="col">
                                                     <div class="leaperName">
                                                         <label for="">Account Title</label>
-                                                        <h6>{{item?.accountTitle}}</h6>
+                                                        <h6>{{item?.account_title}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="leaperDeal">
                                                         <label for="">Account No</label>
-                                                        <h6>{{item?.accountNo}}</h6>
+                                                        <h6>{{item?.account_no}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="dealPrice">
                                                         <label for="">Amount Recieved</label>
-                                                        <h6>{{item?.amountRecieved| currency:'USD'}}</h6>
+                                                        <h6>{{item?.amount| currency:'USD'}}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="coupanDate">
                                                         <label for="">Transaction Date</label>
-                                                        <h6>{{item?.transactionDate}}</h6>
+                                                        <h6>{{item?.created_at | date: 'dd/MM/yyyy'}}</h6>
                                                     </div>
                                                 </div>
                                             </div>
                                             <pagination-controls (pageChange)="recievingHistoryPage=$event"
-                                                previousLabel="" nextLabel="">
-                                            </pagination-controls>
-                                        </div>
-                                    </ng-template>
-                                </ngb-tab>
-                                <ngb-tab title="Pending Amount">
-                                    <ng-template ngbTabContent>
-                                        <div class="completedOrders">
-                                            <div class="row" *ngFor="let item of pendingAmount | paginate: { itemsPerPage:
-                                            3, currentPage: pendingAmountPage }; index as i;">
-                                                <div class="col">
-                                                    <div class="leaperName">
-                                                        <label for="">Account Title</label>
-                                                        <h6>{{item?.accountTitle}}</h6>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="leaperDeal">
-                                                        <label for="">Account No</label>
-                                                        <h6>{{item?.accountNo}}</h6>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="dealPrice">
-                                                        <label for="">Amount Recieved</label>
-                                                        <h6>{{item?.amountRecieved| currency:'USD'}}</h6>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                   <div class="leaperBtn">
-                                                       <button>Withdraw</button>
-                                                   </div>
-                                                </div>
-                                            </div>
-                                            <pagination-controls (pageChange)="pendingAmountPage=$event"
                                                 previousLabel="" nextLabel="">
                                             </pagination-controls>
                                         </div>

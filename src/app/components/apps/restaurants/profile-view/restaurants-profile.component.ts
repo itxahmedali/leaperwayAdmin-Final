@@ -170,6 +170,7 @@ export class ProfileViewComponent implements OnInit {
   revenueAmount;
   // ammount tab
   amountDue;
+  amount;
   constructor(
     private modalService: NgbModal,
     private calendar: NgbCalendar,
@@ -295,6 +296,7 @@ export class ProfileViewComponent implements OnInit {
     });
     setTimeout(() => {
       this.defaultRevenue();
+      this.amountData();
     }, 2000);
   }
   // restaurants Api
@@ -369,5 +371,12 @@ export class ProfileViewComponent implements OnInit {
       this.http.getApi(`admin/dues/${this.company.id}`, true).subscribe((res)=>{
         this.amountDue = res;
       })
+  }
+  amountData(){
+    this.http.getApi(`admin/admintransactions/${this.company.id}`, true).subscribe((res: any)=>{
+      this.amount = res;
+      console.log(this.amount);
+      
+    });
   }
 }
