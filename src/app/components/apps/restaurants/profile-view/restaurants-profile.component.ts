@@ -178,10 +178,14 @@ export class ProfileViewComponent implements OnInit {
     private http: HttpService,
     private activatedRoute: ActivatedRoute
   ) {
+    
     this.id = this.activatedRoute.snapshot.paramMap.get("id");
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), "d", 10);
     this.location();
+    setTimeout(() => {
+      console.log(this.company); 
+    }, 1000);
   }
   async location() {
     await navigator.geolocation.getCurrentPosition((position) => {

@@ -9,11 +9,6 @@ import { content } from "./shared/routes/routes";
 import { AdminGuard } from './shared/guard/admin.guard';
 
 const routes: Routes = [
-  //   {
-  //   path: '',
-  //   redirectTo: 'dashboard',
-  //   pathMatch: 'full'
-  // },
   {
     path: '',
     pathMatch: 'full',

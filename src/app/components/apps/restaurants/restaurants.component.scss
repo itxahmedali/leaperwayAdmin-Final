@@ -1,44 +1,61 @@
-.actionsBtn{
-    button{
-        margin:0 3px;
-    }
+.actionsBtn {
+  button {
+    margin: 0 3px;
+  }
 }
-::ng-deep .datatable-row-wrapper{
-    margin-top: 2px;
-    margin-bottom: 2px;
+::ng-deep .datatable-row-wrapper {
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
-.searchBox{
-    margin-bottom: 1rem;
+.searchBox {
+  margin-bottom: 1rem;
 }
 .btn {
-    padding: 0.375rem 1rem;
+  padding: 0.375rem 1rem;
 }
-.custom-datatable input{
-    margin-bottom: 0;
+.custom-datatable input {
+  margin-bottom: 0;
 }
 // pagination
-::ng-deep .datatable-body{
-    width: 100% !important;
+::ng-deep .datatable-body {
+  width: 100% !important;
 }
 .avatar {
-    width: 150px;
-    height: 150px;
-    border-radius: 140px;
-    overflow: hidden;
+  width: 150px;
+  height: 150px;
+  border-radius: 140px;
+  overflow: hidden;
 
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .imgBox {
-    position: relative;
+  position: relative;
 
-    label.icon-wrapper {
-        position: absolute;
-        left: 80%;
-        bottom: -10px;
-    }
+  label.icon-wrapper {
+    position: absolute;
+    left: 80%;
+    bottom: -10px;
+  }
 }
+.inpBox {
+  button {
+    position: absolute;
+    top: 6.5px;
+    right: 2px;
+    background: none;
+    border: none;
+    width: 30px;
+    height: fit-content;
+    img{
+        width: 100%;
+    }
+  }
+}
+agm-map {
+    height: 450px;
+  }

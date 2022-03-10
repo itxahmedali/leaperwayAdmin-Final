@@ -16,8 +16,8 @@ import { ObservableService } from "src/app/services/observable.service";
 export class FileManagerComponent implements OnInit {
   public url: any;
   public company;
-  lat;
-  long;
+  lat: number = 51.678418;
+  lng: number = 7.809007;
   id;
   // pagination
   page: number = 1;
@@ -25,7 +25,7 @@ export class FileManagerComponent implements OnInit {
   total;
   restaurantData;
   restauratnImage;
-  restaurantstatus
+  restaurantstatus;
   // edit form
   editForm = this.fb.group({
     name: [null],
@@ -37,6 +37,20 @@ export class FileManagerComponent implements OnInit {
     password: [null],
     image: [null],
   });
+  // add form
+  addForm = this.fb.group({
+    name: [null, [Validators.required] ],
+    email: [null, [Validators.required]],
+    password: [null, [Validators.required]],
+    address: [null, [Validators.required]],
+    city: [null, [Validators.required]],
+    state: [null, [Validators.required]],
+    country: [null, [Validators.required]],
+    phone: [null, [Validators.required]],
+    image: [null],
+    latlng: [null, [Validators.required]],
+    type: ["restaurant"],
+  });
   // temp = [];
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
   constructor(
@@ -46,7 +60,33 @@ export class FileManagerComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private toaster: ToastrService
-  ) {}
+  ) {
+    // edit form
+    this.editForm = this.fb.group({
+      name: [this.restaurantData?.user?.name, [Validators.required]],
+      password: [null],
+      address: [this.restaurantData?.address],
+      city: [this.restaurantData?.city],
+      state: [this.restaurantData?.state],
+      country: [this.restaurantData?.country],
+      phone: [this.restaurantData?.user?.phone, [Validators.required]],
+      image: [this.restaurantData?.user?.image, [Validators.required]],
+    });
+    // add form
+    this.addForm = this.fb.group({
+      name: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required]],
+      address: [null, [Validators.required]],
+      city: [null, [Validators.required]],
+      state: [null, [Validators.required]],
+      country: [null, [Validators.required]],
+      phone: [null, [Validators.required]],
+      image: [null],
+      latlng: [null, [Validators.required]],
+      type: ["restaurant"],
+    });
+  }
   ngOnInit() {
     setTimeout(() => {
       this.getRestuarants();
@@ -55,17 +95,24 @@ export class FileManagerComponent implements OnInit {
 
   // restaurants Api
   async getRestuarants() {
-    this.http.getApi(`admin/restaurents/${localStorage.getItem(
-      "lat"
-    )},${localStorage.getItem("lang")}`,
-    true).subscribe((res)=>{
-      this.company = res;
-      ObservableService.loader.next(false);
-    },
-    (err) => {
-      ObservableService.loader.next(false);
-      console.log(err);
-    })
+    // this.location();
+    this.http
+      .getApi(
+        `admin/restaurents/${localStorage.getItem(
+          "lat"
+        )},${localStorage.getItem("lang")}`,
+        true
+      )
+      .subscribe(
+        (res) => {
+          this.company = res;
+          ObservableService.loader.next(false);
+        },
+        (err) => {
+          ObservableService.loader.next(false);
+          console.log(err);
+        }
+      );
   }
 
   // modal
@@ -95,6 +142,18 @@ export class FileManagerComponent implements OnInit {
         }
       );
   }
+  addModal(content) {
+    this.modalService
+      .open(content, { ariaLabelledBy: "modal-basic-title" })
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return "by pressing ESC";
@@ -104,8 +163,8 @@ export class FileManagerComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-   // restaurant status
-   status(event, id) {
+  // restaurant status
+  status(event, id) {
     if (event.target.checked == true) {
       this.restaurantstatus = 1;
     } else {
@@ -113,20 +172,20 @@ export class FileManagerComponent implements OnInit {
     }
 
     let data = {
-      status:this.restaurantstatus
-    }
+      status: this.restaurantstatus,
+    };
 
-    this.http
-      .postApi(`admin/restaurent_edit/${id}`, data, true)
-      .subscribe((res: any) => {
+    this.http.postApi(`admin/restaurent_edit/${id}`, data, true).subscribe(
+      (res: any) => {
         ObservableService.loader.next(false);
         this.toaster.success(res.message);
         // event.target.checked == false
-        this.getRestuarants()
+        this.getRestuarants();
       },
-      (err)=>{
-        ObservableService.loader.next(false)
-      });
+      (err) => {
+        ObservableService.loader.next(false);
+      }
+    );
   }
   changeHeading(event) {
     if ($(event.target.id == "addBtn")) {
@@ -150,30 +209,51 @@ export class FileManagerComponent implements OnInit {
     }
   }
   // async location() {
-  //  await navigator.geolocation.getCurrentPosition((position) => {
+  //   await navigator.geolocation.getCurrentPosition((position) => {
   //     console.log("Got position", position.coords);
   //     this.lat = position.coords.latitude;
   //     this.long = position.coords.longitude;
   //   });
   // }
-  async dealAdd() {
-    if(this.url){
+  async dealUpdate() {
+    if (this.url) {
       await this.http
-      .uploadImages(this.restauratnImage, "admin/image_upload")
-      .then((res: any) => {
-        console.log(res);
-        if (res.image) {
-          return false;
-        }
-        this.editForm.patchValue({
-          image: res.data.image_url,
-        });
-        setTimeout(() => {
-          this.update();
-        }, 1000);
-      }),
-      (e) => {};
-    }else{
+        .uploadImages(this.restauratnImage, "admin/image_upload")
+        .then((res: any) => {
+          console.log(res);
+          if (res.image) {
+            return false;
+          }
+          this.editForm.patchValue({
+            image: res.data.image_url,
+          });
+          setTimeout(() => {
+            this.update();
+          }, 1000);
+        }),
+        (e) => {};
+    } else {
+      this.update();
+    }
+  }
+  // add deal
+  async dealAdd() {
+    if (this.url) {
+      await this.http
+        .uploadImages(this.restauratnImage, "admin/image_upload")
+        .then((res: any) => {
+          if (res.image) {
+            return false;
+          }
+          this.editForm.patchValue({
+            image: res.data.image_url,
+          });
+          setTimeout(() => {
+            this.update();
+          }, 1000);
+        }),
+        (e) => {};
+    } else {
       this.update();
     }
   }
@@ -184,30 +264,77 @@ export class FileManagerComponent implements OnInit {
     ]);
   }
   update() {
-    if(this.editForm.value.password == null){
-      this.editForm.removeControl('password');
+    if (this.editForm.value.password == null) {
+      this.editForm.removeControl("password");
     }
     this.http
-      .postApi(`admin/restaurent_edit/${this.restaurantData.id}`, this.editForm.value, true)
-      .subscribe((res: any) => {
-        ObservableService.loader.next(false);
-        this.toaster.success(res.message);
-        this.url = undefined;
-        this.editForm = this.fb.group({
-          name: [this.restaurantData?.user?.name, [Validators.required]],
-          password: [null],
-          address: [this.restaurantData?.address],
-          city: [this.restaurantData?.city],
-          state: [this.restaurantData?.state],
-          country: [this.restaurantData?.country],
-          phone: [this.restaurantData?.user?.phone, [Validators.required]],
-          image: [this.restaurantData?.user?.image, [Validators.required]],
-        });
-        this.getRestuarants()
-      },
-      (err)=>{
-        ObservableService.loader.next(false)
-      });
+      .postApi(
+        `admin/restaurent_edit/${this.restaurantData.id}`,
+        this.editForm.value,
+        true
+      )
+      .subscribe(
+        (res: any) => {
+          ObservableService.loader.next(false);
+          this.toaster.success(res.message);
+          this.url = undefined;
+          this.editForm = this.fb.group({
+            name: [this.restaurantData?.user?.name, [Validators.required]],
+            password: [null],
+            address: [this.restaurantData?.address],
+            city: [this.restaurantData?.city],
+            state: [this.restaurantData?.state],
+            country: [this.restaurantData?.country],
+            phone: [this.restaurantData?.user?.phone, [Validators.required]],
+            image: [this.restaurantData?.user?.image, [Validators.required]],
+          });
+          this.getRestuarants();
+        },
+        (err) => {
+          ObservableService.loader.next(false);
+        }
+      );
   }
-
+  // add restuarants
+  add() {
+    if (this.editForm.value.password == null) {
+      this.editForm.removeControl("password");
+    }
+    this.http
+      .postApi(`app/restaurent_register`, this.addForm.value, false)
+      .subscribe(
+        (res: any) => {
+          ObservableService.loader.next(false);
+          this.toaster.success(res.message);
+          if(res.hasOwnProperty('access_token')){
+            this.toaster.success("Restaurant Added");
+          }
+          this.url = undefined;
+          this.addForm = this.fb.group({
+            name: [null, [Validators.required]],
+            email: [null, [Validators.required, Validators.email]],
+            password: [null, [Validators.required]],
+            address: [null, [Validators.required]],
+            city: [null, [Validators.required]],
+            state: [null, [Validators.required]],
+            country: [null, [Validators.required]],
+            phone: [null, [Validators.required]],
+            image: [null],
+            latlng: [null, [Validators.required]],
+            type: ["restaurant"],
+          });
+          this.getRestuarants();
+        },
+        (err) => {
+          ObservableService.loader.next(false);
+        }
+      );
+  }
+  markerDragEnd($event: any) {
+    this.lat = $event.coords.lat;
+    this.lng = $event.coords.lng;
+    this.addForm.patchValue({
+      latlng : this.lat + "," + this.lng
+    })
+  }
 }

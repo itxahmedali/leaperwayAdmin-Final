@@ -11,123 +11,6 @@ import { ObservableService } from 'src/app/services/observable.service';
   styleUrls: ["./user-profile.component.scss"],
 })
 export class UserProfileComponent implements OnInit {
-  public cards12 = [
-    {
-      name: "Elena Gilbert",
-      type: "assets/1x/mastercard.png",
-      number: "************2174",
-      DateExpedition: "01/20",
-      DateExpiry: "01/26",
-      cc: "098",
-    },
-    {
-      name: "Damon Salvatore",
-      type: "assets/1x/visa.png",
-      number: "************3029",
-      DateExpedition: "01/20",
-      DateExpiry: "01/23",
-      cc: "008",
-    },
-    {
-      name: "Tony Stark",
-      type: "assets/1x/paypal.png",
-      number: "************2981",
-      DateExpedition: "01/20",
-      DateExpiry: "01/28",
-      cc: "100",
-    },
-    {
-      name: "Robert Stark",
-      type: "assets/1x/unionpay.png",
-      number: "************2174",
-      DateExpedition: "01/20",
-      DateExpiry: "01/30",
-      cc: "199",
-    },
-  ];
-  public depositHistory = [
-    {
-      cardHolder: "Elena Gilbert",
-      cardNo: "**************8412",
-      deposit: 10000,
-      transactionDate: "10/12/2021",
-      
-    },
-    {
-      cardHolder: "Klaus Mikalson",
-      cardNo: "**************1422",
-      deposit: 13200,
-      transactionDate: "15/12/2021",
-    },
-    {
-      cardHolder: "John Wu",
-      cardNo: "**************8662",
-      deposit: 14010,
-      transactionDate: "14/10/2021",
-    },
-    {
-      cardHolder: "Tony Stark",
-      cardNo: "**************0971",
-      deposit: 2870,
-      transactionDate: "13/12/2021",
-    },
-    {
-      cardHolder: "James Paulson",
-      cardNo: "**************1621",
-      deposit: 12073,
-      transactionDate: "22/12/2020",
-    },
-    {
-      cardHolder: "Damon Salvatore",
-      cardNo: "**************0163",
-      deposit: 966,
-      transactionDate: "08/11/2021",
-    },
-  ];
-  public currenttransaction = [
-    {
-      cardHolder: "Elena Gilbert",
-      cardNo: "**************8412",
-      deposit: 10000,
-      dueDate: "10/12/2021",
-      paymentDate:"30/12/2022"
-    },
-    {
-      cardHolder: "Klaus Mikalson",
-      cardNo: "**************1422",
-      deposit: 13200,
-      dueDate: "15/12/2021",
-      paymentDate:"30/12/2022"
-    },
-    {
-      cardHolder: "John Wu",
-      cardNo: "**************8662",
-      deposit: 14010,
-      dueDate: "14/10/2021",
-      paymentDate:"30/12/2022"
-    },
-    {
-      cardHolder: "Tony Stark",
-      cardNo: "**************0971",
-      deposit: 2870,
-      dueDate: "13/12/2021",
-      paymentDate:"30/12/2022"
-    },
-    {
-      cardHolder: "James Paulson",
-      cardNo: "**************1621",
-      deposit: 12073,
-      dueDate: "22/12/2020",
-      paymentDate:"30/12/2022"
-    },
-    {
-      cardHolder: "Damon Salvatore",
-      cardNo: "**************0163",
-      deposit: 966,
-      dueDate: "08/11/2021",
-      paymentDate:"30/12/2022"
-    },
-  ];
   // deposit history pagination
   p: number = 1;
   // current transaction pagination
@@ -141,6 +24,9 @@ export class UserProfileComponent implements OnInit {
   }
   ngOnInit(){
     this.getData()
+    setTimeout(() => {
+      this.depositHistory()
+        }, 1000);
   }
   getData(){
     // getting id
@@ -155,9 +41,14 @@ export class UserProfileComponent implements OnInit {
     })
     // getting wallet details
     this.http.getApi(`admin/cards/${this.id}`, true).subscribe((res:any)=>{
-      console.log(res);
       this.cards = res;
       ObservableService.loader.next(false)
+    })
+  }
+  // deposit history
+  depositHistory(){
+    this.http.getApi(`deposit_history_admin/${this.id}`, true).subscribe((res:any)=>{
+      console.log(res);
     })
   }
 }

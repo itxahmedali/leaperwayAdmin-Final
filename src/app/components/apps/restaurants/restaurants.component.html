@@ -6,9 +6,9 @@
         <div class="card-body custom-datatable">
           <div class="searchBox d-flex justify-content-between">
             <input type="text" class="filter-ngx form-control" placeholder='Search'/>
-            <!-- <button class="btn btn-primary" id="addBtn" (click)="open(content); changeHeading($event)">
+            <button class="btn btn-primary" id="addBtn" (click)="addModal(content);">
               <i class='fa fa-plus'></i>
-            </button> -->
+            </button>
           </div>
           <div class="table-responsive">
             <table class="table table-hover">
@@ -16,7 +16,6 @@
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Name</th>
-                  <th scope="col">Owner</th>
                   <th scope="col">Email</th>
                   <th scope="col">Registration</th>
                   <th scope="col">Status</th>
@@ -28,7 +27,6 @@
                   *ngFor="let restaurant of company | paginate: { itemsPerPage: 10, currentPage: page, totalItems: total}">
                   <th scope="row">{{restaurant?.user.id}}</th>
                   <td>{{restaurant?.user.name}}</td>
-                  <td>{{restaurant?.user.owner}}</td>
                   <td>{{restaurant?.user.email}}</td>
                   <td>{{restaurant?.created_at | date: 'dd/MM/yyyy'}}</td>
                   <td> 
@@ -44,7 +42,7 @@
                       <button class="btn btn-dark" (click)="viewpage(restaurant)">
                       <i class='fa fa-eye'></i>
                     </button>
-                    <button class="btn btn-primary" (click)="open(content, restaurant)">
+                    <button class="btn btn-primary" (click)="open(editModal, restaurant)">
                       <i class='fa fa-edit'></i>
                     </button>
                   </div>
@@ -63,20 +61,20 @@
 
 
 <!-- Add form info modals -->
-<ng-template #addForm let-modal>
+<ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Edit Restaurant Info</h4>
+    <h4 class="modal-title" id="modal-basic-title">Add Restaurant</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="editForm">
+    <form [formGroup]="addForm">
       <div class="row">
         <div class="col-lg-12 d-flex flex-column justify-content-center align-items-center">
           <div class="imgBox">
             <div class="avatar">
-              <img alt="" [src]="url? url: restaurantData?.user?.image">
+              <img alt="" [src]="url? url: 'assets/images/user/1.jpg'">
             </div>
             <input id="dashboardLogo" class="upload" type="file" (change)="readUrl($event)" hidden />
             <label for="dashboardLogo" class="icon-wrapper"><i class="icofont icofont-pencil-alt-5"></i></label>
@@ -87,11 +85,33 @@
           <div class="input-group">
             <input id="name" class="form-control" placeholder="Name" formControlName ="name">
           </div>
+          <div *ngIf="addForm.controls.name.touched && addForm.controls.name.errors?.required"
+                                        class="text text-danger mt-1 mb-3">
+                                        Name is required
+          </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="phone">Phone</label>
           <div class="input-group">
             <input id="phone" class="form-control" placeholder="Phone" formControlName ="phone" type="text">
+          </div>
+          <div *ngIf="addForm.controls.phone.touched && addForm.controls.phone.errors?.required"
+                                        class="text text-danger mt-1 mb-3">
+                                        Phone is required
+          </div>
+        </div>
+        <div class="col-lg-6 mt-3">
+          <label for="phone">Email</label>
+          <div class="input-group">
+            <input id="email" class="form-control" placeholder="Email" formControlName ="email" type="email">
+          </div>
+          <div *ngIf="addForm.controls.email.touched && addForm.controls.email.errors?.required"
+                                        class="text text-danger mt-1 mb-3">
+                                        Email is required
+          </div>
+          <div *ngIf="addForm.controls.email.touched && addForm.controls.email.errors?.email"
+                                        class="text text-danger mt-1 mb-3">
+                                        Invalid Email
           </div>
         </div>
         <div class="col-lg-6 mt-3">
@@ -99,11 +119,19 @@
           <div class="input-group">
             <input id="phone" class="form-control" placeholder="Password" formControlName ="password" type="password">
           </div>
+          <div *ngIf="addForm.controls.password.touched && addForm.controls.password.errors?.required"
+                                        class="text text-danger mt-1 mb-3">
+                                        Password is required
+          </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="address">Address</label>
           <div class="input-group">
             <input id="address" class="form-control" placeholder="Address" formControlName ="address">
+          </div>
+          <div *ngIf="addForm.controls.address.touched && addForm.controls.address.errors?.required"
+                                        class="text text-danger mt-1 mb-3">
+                                        Address is required
           </div>
         </div>
         <div class="col-lg-6 mt-3">
@@ -111,11 +139,19 @@
           <div class="input-group">
             <input id="city" class="form-control" placeholder="City" formControlName ="city">
           </div>
+          <div *ngIf="addForm.controls.city.touched && addForm.controls.city.errors?.required"
+                                        class="text text-danger mt-1 mb-3">
+                                        City is required
+          </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="state">State</label>
           <div class="input-group">
             <input id="state" class="form-control" placeholder="State" formControlName ="state">
+          </div>
+          <div *ngIf="addForm.controls.state.touched && addForm.controls.state.errors?.required"
+                                        class="text text-danger mt-1 mb-3">
+                                        State is required
           </div>
         </div>
         <div class="col-lg-6 mt-3">
@@ -123,18 +159,35 @@
           <div class="input-group">
             <input id="country" class="form-control" placeholder="Country" formControlName ="country">
           </div>
+          <div *ngIf="addForm.controls.country.touched && addForm.controls.country.errors?.required"
+                                        class="text text-danger mt-1 mb-3">
+                                        Country is required
+          </div>
+        </div>
+        <div class="col-lg-12 mt-3">
+          <label for="country">Location</label>
+          <div class="input-group">
+            <div class="inpBox position-relative w-100">
+              <input id="country" readonly class="form-control" placeholder="Location" formControlName ="latlng">
+              <button (click)="open(location);"><img src="assets/svg/location.svg" alt=""></button>
+            </div>
+            <div *ngIf="addForm.controls.latlng.touched && addForm.controls.latlng.errors?.required"
+                                        class="text text-danger mt-1 mb-3">
+                                        Location is required
+          </div>
+          </div>
         </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click'); dealAdd(); ">Save</button>
+    <button type="button" [disabled]="addForm.invalid" class="btn btn-outline-dark" (click)="modal.close('Save click'); dealAdd(); ">Add</button>
   </div>
 </ng-template>
 
 
 <!-- edit info modals -->
-<ng-template #content let-modal>
+<ng-template #editModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Edit Restaurant Info</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -199,6 +252,17 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click'); dealAdd(); ">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click'); dealUpdate(); ">Save</button>
+  </div>
+</ng-template>
+<!-- location modals -->
+<ng-template #location let-modal>
+  <div class="modal-body">
+    <agm-map [latitude]="lat" [longitude]="lng">
+      <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)"></agm-marker>
+    </agm-map>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
   </div>
 </ng-template>

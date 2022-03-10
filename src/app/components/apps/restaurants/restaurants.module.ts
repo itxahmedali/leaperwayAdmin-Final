@@ -8,6 +8,7 @@ import { CountToModule } from 'angular-count-to';
 import { ProfileViewComponent } from './profile-view/restaurants-profile.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgxPaginationModule } from "ngx-pagination";
+import { AgmCoreModule } from '@agm/core';
 @NgModule({
   imports: [
     CommonModule,
@@ -17,6 +18,7 @@ import { NgxPaginationModule } from "ngx-pagination";
     NgApexchartsModule,
     CountToModule,
     NgxPaginationModule,
+    AgmCoreModule
   ],
   declarations: [FileManagerComponent, ProfileViewComponent],
 })

@@ -37,7 +37,14 @@ export class TeamDetailsComponent implements OnInit {
     phone: [[null]],
     image: [[null]],
   });
-
+  // add form
+  addForm = this.fb.group({
+    name: [''],
+    email: [''],
+    password: [''],
+    confirm_password: [''],
+    type: ["user"],
+  });
   constructor(
     private modalService: NgbModal,
     private http: HttpService,
@@ -183,4 +190,31 @@ export class TeamDetailsComponent implements OnInit {
   userDetails(id) {
     this.router.navigate(["users/userProfile", id]);
   }
+  // add restuarants
+  addUser() {
+    this.http
+      .postApi(`app/register_by_admin`, this.addForm.value, false)
+      .subscribe(
+        (res: any) => {
+          ObservableService.loader.next(false);
+          console.log(res);
+          if(res.hasOwnProperty('access_token')){
+            this.toaster.success("Restaurant Added");
+          }
+          
+          this.addForm = this.fb.group({
+            name: [null, [Validators.required]],
+            email: [null, [Validators.required]],
+            password: [null],
+            confirm_password: [null],
+            type: ["user"],
+          });
+          this.getUsers();
+        },
+        (err) => {
+          ObservableService.loader.next(false);
+        }
+      );
+  }
+  
 }

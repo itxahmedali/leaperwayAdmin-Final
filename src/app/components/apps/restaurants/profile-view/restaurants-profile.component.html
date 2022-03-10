@@ -10,7 +10,7 @@
                             <div class="col-sm-12">
                                 <div class="card hovercard text-center">
                                     <div class="user-image">
-                                        <div class="avatar"><img alt="" [src]="url? url: company?.user?.image">
+                                        <div class="avatar"><img alt="" [src]="company?.user?.image ? company?.user?.image : 'assets/images/user/1.jpg' ">
                                         </div>
                                     </div>
                                     <div class="info">

@@ -14,7 +14,7 @@
                 <div class="card hovercard text-center">
                   <div class="user-image">
                     <div class="avatar">
-                      <img alt="" src="{{ userData?.image }}" />
+                      <img alt="" [src]="userData?.image ? userData?.image : 'assets/images/user/1.jpg' " />
                     </div>
                   </div>
                   <div class="info">

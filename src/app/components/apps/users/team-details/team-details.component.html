@@ -48,9 +48,6 @@
                       <button class="btn btn-primary" (click)="openEdit(edit, user)">
                         <i class='fa fa-pencil'></i>
                       </button>
-                      <button class="btn btn-danger">
-                        <i class='fa fa-times'></i>
-                      </button>
                     </div>
                   </td>
                 </tr>
@@ -78,7 +75,7 @@
         <div class="col-lg-12 d-flex flex-column justify-content-center align-items-center">
           <div class="imgBox">
             <div class="avatar">
-              <img alt="" [src]="url? url: userData?.image">
+              <img alt="" [src]="url? url: restaurantData?.user?.image">
             </div>
             <input id="dashboardLogo" class="upload" type="file" (change)="readUrl($event)" hidden />
             <label for="dashboardLogo" class="icon-wrapper"><i class="icofont icofont-pencil-alt-5"></i></label>
@@ -87,19 +84,19 @@
           <div class="col-lg-6 mt-3">
             <label for="name">Name</label>
             <div class="input-group">
-              <input id="name" class="form-control" placeholder="Name" formControlName="name">
+              <input class="form-control" placeholder="Name" formControlName="name">
             </div>
           </div>
           <div class="col-lg-6 mt-3">
             <label for="email">Password</label>
             <div class="input-group">
-              <input id="email" class="form-control" placeholder="Password" formControlName="password" type="password">
+              <input class="form-control" placeholder="Password" formControlName="password" type="password">
             </div>
           </div>
           <div class="col-lg-6 mt-3">
             <label for="phone">Phone</label>
             <div class="input-group">
-              <input id="phone" class="form-control" placeholder="Phone" formControlName="phone" type="text">
+              <input class="form-control" placeholder="Phone" formControlName="phone" type="text">
             </div>
           </div>
         </div>
@@ -121,9 +118,9 @@
     </button>
   </div>
   <div class="modal-body">
-    <form>
+    <form [formGroup]="addForm">
       <div class="row">
-        <div class="col-lg-12 d-flex flex-column justify-content-center align-items-center">
+        <!-- <div class="col-lg-12 d-flex flex-column justify-content-center align-items-center">
           <div class="imgBox">
             <div class="avatar">
               <img alt="" [src]="url? url:'assets/images/user/1.jpg'">
@@ -131,61 +128,35 @@
             <input id="dashboardLogo" class="upload" type="file" (change)="readUrl($event)" hidden />
             <label for="dashboardLogo" class="icon-wrapper"><i class="icofont icofont-pencil-alt-5"></i></label>
           </div>
-        </div>
-        <form [formGroup]="addForm">
+        </div> -->
         <div class="col-lg-6 mt-3">
           <label for="name">Name</label>
           <div class="input-group">
-            <input id="name" class="form-control" placeholder="Name" formControlName="name">
+            <input  class="form-control" placeholder="Name" formControlName="name">
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="email">Email</label>
           <div class="input-group">
-            <input id="email" class="form-control" placeholder="Email" formControlName="email" type="email">
+            <input  class="form-control" placeholder="Email" formControlName="email" type="email">
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="email">Password</label>
           <div class="input-group">
-            <input id="email" class="form-control" placeholder="Password" formControlName="password" type="password">
+            <input  class="form-control" placeholder="Password" formControlName="password" type="password">
           </div>
         </div>
         <div class="col-lg-6 mt-3">
-          <label for="phone">Phone</label>
+          <label for="email">Confirm Password</label>
           <div class="input-group">
-            <input id="phone" class="form-control" placeholder="Phone" formControlName="phone" type="number" [min]="0">
+            <input  class="form-control" placeholder="Confirm Password" formControlName="confirm_password" type="password">
           </div>
         </div>
-        <div class="col-lg-6 mt-3">
-          <label for="address">Address</label>
-          <div class="input-group">
-            <input id="address" class="form-control" placeholder="Address" formControlName="address">
-          </div>
-        </div>
-        <div class="col-lg-6 mt-3">
-          <label for="city">City</label>
-          <div class="input-group">
-            <input id="city" class="form-control" placeholder="City" formControlName="city">
-          </div>
-        </div>
-        <div class="col-lg-6 mt-3">
-          <label for="state">State</label>
-          <div class="input-group">
-            <input id="state" class="form-control" placeholder="State" formControlName="state">
-          </div>
-        </div>
-        <div class="col-lg-6 mt-3">
-          <label for="country">Country</label>
-          <div class="input-group">
-            <input id="country" class="form-control" placeholder="Country" formControlName="country">
-          </div>
-        </div>
-      </form>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="update()">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="addUser(); modal.dismiss('Cross click')">Save</button>
   </div>
 </ng-template>
