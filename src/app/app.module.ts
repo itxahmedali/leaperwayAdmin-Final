@@ -16,7 +16,7 @@ import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 // for Core import:
 import { LoadingBarModule } from '@ngx-loading-bar/core';
-
+import * as $ from "jquery";
 import { AuthService } from './shared/services/firebase/auth.service';
 import { AdminGuard } from './shared/guard/admin.guard';
 import { SecureInnerPagesGuard } from './shared/guard/SecureInnerPagesGuard.guard';
@@ -29,8 +29,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
-import { CountToModule } from 'angular-count-to';
-import { CountUpModule } from 'ngx-countup';
+// import { CountToModule } from 'angular-count-to';
+// import { CountUpModule } from 'ngx-countup';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }
@@ -53,8 +53,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    CountToModule,
-    CountUpModule,
+    // CountToModule,
+    // CountUpModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCab5ahH6KkodUavDwBCigXTL7ZbrkzS94'
     }),
