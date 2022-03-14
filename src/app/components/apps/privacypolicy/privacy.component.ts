@@ -23,7 +23,6 @@ export class EmailComponent implements OnInit {
 
 	privacyGet(){
 		this.http.get('admin/privacy',true).then((res:any)=>{
-			console.log(res)
 			this.privacyTxt = res.paragraph
 		}).catch((err)=>{
 			console.log(err)
