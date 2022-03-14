@@ -6,8 +6,7 @@
                 <div class="ecommerce-widgets media">
                     <div class="media-body">
                         <p class="f-w-500 font-roboto">Total Restaurants</p>
-                        <h4 class="f-w-500 mb-0 f-26"><span class="counter" [CountTo]="10000" [from]="0"
-                                [duration]="3"></span></h4>
+                        <h4 class="f-w-500 mb-0 f-26"><span class="counter">{{dashboardData?.TotalRestaurants}}</span></h4>
                     </div>
                     <div class="ecommerce-box light-bg-primary">
                         <!-- branch svg -->
@@ -30,8 +29,7 @@
                 <div class="ecommerce-widgets media">
                     <div class="media-body">
                         <p class="f-w-500 font-roboto">Total Users</p>
-                        <h4 class="f-w-500 mb-0 f-26"><span class="counter" [CountTo]="29000" [from]="0"
-                                [duration]="3"></span></h4>
+                        <h4 class="f-w-500 mb-0 f-26"><span class="counter">{{dashboardData?.TotalUsers}}</span></h4>
                     </div>
                     <div class="ecommerce-box light-bg-primary">
                         <!-- users svg -->
@@ -53,17 +51,19 @@
             <div class="card-body">
                 <div class="ecommerce-widgets media">
                     <div class="media-body">
-                        <p class="f-w-500 font-roboto">Total Income</p>
-                        <h4 class="f-w-500 mb-0 f-26"><span class="counter" [CountTo]="50000" [from]="0"
-                                [duration]="3"></span></h4>
+                        <p class="f-w-500 font-roboto">New Restaurant</p>
+                        <h4 class="f-w-500 mb-0 f-26"><span class="counter">{{dashboardData?.NewRestaurants}}</span></h4>
                     </div>
                     <div class="ecommerce-box light-bg-primary">
                         <!-- users svg -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-dollar-sign">
-                            <line x1="12" y1="1" x2="12" y2="23" />
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>
+                            class="feather feather-git-pull-request" _ngcontent-egg-c109="">
+                            <circle cx="18" cy="18" r="3"></circle>
+                            <circle cx="6" cy="6" r="3"></circle>
+                            <path d="M13 6h3a2 2 0 0 1 2 2v7"></path>
+                            <line x1="6" y1="9" x2="6" y2="21"></line>
+                        </svg>
                     </div>
                 </div>
             </div>
@@ -74,17 +74,19 @@
             <div class="card-body">
                 <div class="ecommerce-widgets media">
                     <div class="media-body">
-                        <p class="f-w-500 font-roboto">Gross profit</p>
-                        <h4 class="f-w-500 mb-0 f-26"><span class="counter" [CountTo]="50000" [from]="0"
-                                [duration]="3"></span></h4>
+                        <p class="f-w-500 font-roboto">New Users</p>
+                        <h4 class="f-w-500 mb-0 f-26"><span class="counter">{{dashboardData?.NewUsers}}</span></h4>
                     </div>
                     <div class="ecommerce-box light-bg-primary">
                         <!-- users svg -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-dollar-sign">
-                            <line x1="12" y1="1" x2="12" y2="23" />
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>
+                            class="feather feather-users" _ngcontent-kcn-c109="">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
                     </div>
                 </div>
             </div>
@@ -95,9 +97,8 @@
             <div class="card-body">
                 <div class="ecommerce-widgets media">
                     <div class="media-body">
-                        <p class="f-w-500 font-roboto">Today's Income</p>
-                        <h4 class="f-w-500 mb-0 f-26"><span class="counter" [CountTo]="15000" [from]="0"
-                                [duration]="3"></span></h4>
+                        <p class="f-w-500 font-roboto">Today Dues</p>
+                        <h4 class="f-w-500 mb-0 f-26"><span class="counter">{{dashboardData?.TodayDues}}</span></h4>
                     </div>
                     <div class="ecommerce-box light-bg-primary">
                         <!-- users svg -->
@@ -106,105 +107,6 @@
                             class="feather feather-dollar-sign">
                             <line x1="12" y1="1" x2="12" y2="23" />
                             <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-6 box-col-6 col-lg-6 col-md-6">
-        <div class="card o-hidden">
-            <div class="card-body">
-                <div class="ecommerce-widgets media">
-                    <div class="media-body">
-                        <p class="f-w-500 font-roboto">Today's Earning</p>
-                        <h4 class="f-w-500 mb-0 f-26"><span class="counter" [CountTo]="15000" [from]="0"
-                                [duration]="3"></span></h4>
-                    </div>
-                    <div class="ecommerce-box light-bg-primary">
-                        <!-- users svg -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-dollar-sign">
-                            <line x1="12" y1="1" x2="12" y2="23" />
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-6 box-col-6 col-lg-6 col-md-6">
-        <div class="card o-hidden">
-            <div class="card-body">
-                <div class="ecommerce-widgets media">
-                    <div class="media-body">
-                        <p class="f-w-500 font-roboto">This Month's Earning</p>
-                        <h4 class="f-w-500 mb-0 f-26"><span class="counter" [CountTo]="15000" [from]="0"
-                                [duration]="3"></span></h4>
-                    </div>
-                    <div class="ecommerce-box light-bg-primary">
-                        <!-- users svg -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-dollar-sign">
-                            <line x1="12" y1="1" x2="12" y2="23" />
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-6 box-col-6 col-lg-6 col-md-6">
-        <div class="card o-hidden">
-            <div class="card-body">
-                <div class="ecommerce-widgets media">
-                    <div class="media-body">
-                        <p class="f-w-500 font-roboto">This Year's Earning</p>
-                        <h4 class="f-w-500 mb-0 f-26"><span class="counter" [CountTo]="15000" [from]="0"
-                                [duration]="3"></span></h4>
-                    </div>
-                    <div class="ecommerce-box light-bg-primary">
-                        <!-- users svg -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-dollar-sign">
-                            <line x1="12" y1="1" x2="12" y2="23" />
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-12 xl-100 notification box-col-12">
-        <div class="card">
-            <div class="card-header card-no-border">
-                <div class="header-top">
-                    <h5 class="m-0">notification</h5>
-                    <div class="card-header-right-icon">
-                        <select class="button btn btn-primary">
-                            <option>Today</option>
-                            <option>Tomorrow</option>
-                            <option>Yesterday</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body pt-0">
-                <div class="media">
-                    <div class="media-body">
-                        <p>20-04-2020 <span>10:10</span></p>
-                        <h6>New Transaction<span class="dot-notification"></span></h6>
-                        <span>Elena Gilbert deposits $100 in her wallet</span>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="media-body">
-                        <p>20-04-2020<span class="pl-1">Today</span>
-                            <span class="badge badge-secondary">New</span>
-                        </p>
-                        <h6>
-                            New user send you a request <span class="dot-notification"></span>
-                        </h6>
-                        <span>User send you a request to register on your app</span>
                     </div>
                 </div>
             </div>

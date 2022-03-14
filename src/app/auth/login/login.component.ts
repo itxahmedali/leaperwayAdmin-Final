@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
       else{
         localStorage.setItem("token", res.access_token);
         GlobalDataService.authToken = res.access_token;
-        this.route.navigate(['/dashboard']);
+        this.route.navigate(['/dashboard/default']);
       }
     } ),
     (err)=>{

@@ -20,13 +20,13 @@ export interface User {
 })
 export class AuthService implements OnInit {
 
-  fakeUser = {
-    email: 'yasir@cuba.com',
-      displayName: 'Yasir Ali',
-      uid: '00038',
-      photoURL:'assets/dashboeard/boy-2.png',
-      emailVerified: true
-  }
+  // fakeUser = {
+  //   email: 'yasir@cuba.com',
+  //     displayName: 'Yasir Ali',
+  //     uid: '00038',
+  //     photoURL:'assets/dashboeard/boy-2.png',
+  //     emailVerified: true
+  // }
 
   public userData: any;
   public user: firebase.User;
@@ -51,15 +51,15 @@ export class AuthService implements OnInit {
     //     JSON.parse(localStorage.getItem('user'));
     //   }
     // });
-    if (this.fakeUser) {
-      this.userData = this.fakeUser;
-      cookieService.set('user', JSON.stringify(this.userData));
-      localStorage.setItem('user', JSON.stringify(this.userData));
-      JSON.parse(localStorage.getItem('user'));
-    } else {
-      localStorage.setItem('user', null);
-      JSON.parse(localStorage.getItem('user'));
-    }
+    // if (this.fakeUser) {
+    //   this.userData = this.fakeUser;
+    //   cookieService.set('user', JSON.stringify(this.userData));
+    //   localStorage.setItem('user', JSON.stringify(this.userData));
+    //   JSON.parse(localStorage.getItem('user'));
+    // } else {
+    //   localStorage.setItem('user', null);
+    //   JSON.parse(localStorage.getItem('user'));
+    // }
   }
 
   ngOnInit(): void { }

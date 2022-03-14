@@ -12,27 +12,27 @@ export class AdminGuard implements CanActivate {
   constructor(
     public router: Router,
     private authService:AuthGuardService) { }
-    canActivate(): boolean {
-        if(!this.authService.getToken()){
-          this.router.navigate(['/auth/login']);
-        }
-        return true
-    }
-  // canActivate(next: ActivatedRouteSnapshot, 
-  //     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-  //   // Guard for user is login or not
-  //   let user = JSON.parse(localStorage.getItem('user'));
-  //   if (!user || user === null) {
-  //     this.router.navigate(['/auth/login']);
-  //     return true
+  //   canActivate(): boolean {
+  //   if (!this.authService.getToken()) {
+  //     this.router.navigateByUrl("/login");
   //   }
-  //   else if (user) {
-  //     if (!Object.keys(user).length) {
-  //       this.router.navigate(['/auth/login']);
-  //       return true
-  //     }
-  //   }
-  //   return true
+  //   return this.authService.getToken();
   // }
+  canActivate(next: ActivatedRouteSnapshot, 
+      state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    // Guard for user is login or not
+    let user = (localStorage.getItem('token'));
+    if (!user ) {
+      this.router.navigate(['/login']);
+      return true
+    }
+    else if (user) {
+      if (!Object.keys(user).length) {
+        this.router.navigate(['/login']);
+        return true
+      }
+    }
+    return true
+  }
   
 }

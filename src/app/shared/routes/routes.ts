@@ -1,9 +1,11 @@
 import { Routes } from '@angular/router';
+import { AdminGuard } from '../guard/admin.guard';
 
 
 export const content: Routes = [
   {
-    path: 'dashboard',
+    path: 'default',
+    
     loadChildren: () => import('../../components/dashboard/dashboard.module').then(m => m.DashboardModule)
   },
   {

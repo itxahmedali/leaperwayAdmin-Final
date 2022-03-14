@@ -37,12 +37,12 @@ export class TeamDetailsComponent implements OnInit {
     phone: [[null]],
     image: [[null]],
   });
-  // add form
+  // add form 
   addForm = this.fb.group({
-    name: [''],
-    email: [''],
-    password: [''],
-    confirm_password: [''],
+    name: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
+    confirm_password: ['', Validators.required],
     type: ["user"],
   });
   constructor(
@@ -151,6 +151,10 @@ export class TeamDetailsComponent implements OnInit {
         ObservableService.loader.next(false);
         this.toaster.success(res.message);
         this.getUsers()
+      },
+      (err)=>{
+        ObservableService.loader.next(false);
+        console.log(err);
       });
   }
 
@@ -185,6 +189,10 @@ export class TeamDetailsComponent implements OnInit {
           image: [null, [Validators.required]],
         });
         this.getUsers()
+      },
+      (err)=>{
+        ObservableService.loader.next(false);
+        console.log(err);
       });
   }
   userDetails(id) {
@@ -192,29 +200,47 @@ export class TeamDetailsComponent implements OnInit {
   }
   // add restuarants
   addUser() {
-    this.http
-      .postApi(`app/register_by_admin`, this.addForm.value, false)
-      .subscribe(
-        (res: any) => {
-          ObservableService.loader.next(false);
-          console.log(res);
-          if(res.hasOwnProperty('access_token')){
-            this.toaster.success("Restaurant Added");
+    if(this.addForm.invalid){
+      Object.keys(this.addForm.controls).forEach(key => {
+        this.addForm.get(key).markAsTouched();
+        return
+      });
+    }
+    if(this.addForm.controls.password.value != this.addForm.controls.confirm_password.value){
+      this.toaster.error("Password and confirm password does not match");
+      return
+    }
+    else{
+      this.http
+        .postApi(`app/register_by_admin`, this.addForm.value, false)
+        .subscribe(
+          (res: any) => {
+            for (let x in res) {
+              console.log(x);
+              if(x == "email"){
+                this.toaster.error(res.email)
+              }
+            }
+            ObservableService.loader.next(false);
+            if(res.hasOwnProperty('access_token')){
+              $('.close').trigger('click')
+              this.toaster.success("Restaurant Added");
+            }
+            this.addForm = this.fb.group({
+              name: [null, [Validators.required]],
+              email: [null, [Validators.required]],
+              password: [null],
+              confirm_password: [null],
+              type: ["user"],
+            });
+            this.getUsers();
           }
-          
-          this.addForm = this.fb.group({
-            name: [null, [Validators.required]],
-            email: [null, [Validators.required]],
-            password: [null],
-            confirm_password: [null],
-            type: ["user"],
-          });
-          this.getUsers();
-        },
-        (err) => {
+        ),
+        (err)=>{
           ObservableService.loader.next(false);
+          console.log(err);
         }
-      );
+    }
   }
   
 }

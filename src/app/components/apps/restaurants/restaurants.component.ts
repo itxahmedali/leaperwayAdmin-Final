@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
-import { ActivatedRoute, Router, ParamMap } from "@angular/router";
+import {  Router } from "@angular/router";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { DatatableComponent } from "@swimlane/ngx-datatable";
 import * as $ from "jquery";
-import * as moment from "moment";
 import { ToastrService } from "ngx-toastr";
 import { HttpService } from "src/app/services/http.service";
 import { ObservableService } from "src/app/services/observable.service";
@@ -57,7 +56,6 @@ export class FileManagerComponent implements OnInit {
     private modalService: NgbModal,
     private http: HttpService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private toaster: ToastrService
   ) {
@@ -107,12 +105,12 @@ export class FileManagerComponent implements OnInit {
         (res) => {
           this.company = res;
           ObservableService.loader.next(false);
-        },
-        (err) => {
-          ObservableService.loader.next(false);
-          console.log(err);
         }
-      );
+      ),
+      (err)=>{
+        ObservableService.loader.next(false);
+        console.log(err);
+      };
   }
 
   // modal
@@ -179,13 +177,13 @@ export class FileManagerComponent implements OnInit {
       (res: any) => {
         ObservableService.loader.next(false);
         this.toaster.success(res.message);
-        // event.target.checked == false
         this.getRestuarants();
-      },
-      (err) => {
-        ObservableService.loader.next(false);
       }
-    );
+    ),
+    (err)=>{
+      ObservableService.loader.next(false);
+      console.log(err);
+    }
   }
   changeHeading(event) {
     if ($(event.target.id == "addBtn")) {
@@ -208,13 +206,6 @@ export class FileManagerComponent implements OnInit {
       return false;
     }
   }
-  // async location() {
-  //   await navigator.geolocation.getCurrentPosition((position) => {
-  //     console.log("Got position", position.coords);
-  //     this.lat = position.coords.latitude;
-  //     this.long = position.coords.longitude;
-  //   });
-  // }
   async dealUpdate() {
     if (this.url) {
       await this.http
@@ -289,46 +280,55 @@ export class FileManagerComponent implements OnInit {
             image: [this.restaurantData?.user?.image, [Validators.required]],
           });
           this.getRestuarants();
-        },
-        (err) => {
-          ObservableService.loader.next(false);
         }
-      );
+      ),
+      (err)=>{
+        ObservableService.loader.next(false);
+        console.log(err);
+      };
   }
   // add restuarants
   add() {
-    if (this.editForm.value.password == null) {
-      this.editForm.removeControl("password");
+    if(this.addForm.invalid){
+      Object.keys(this.addForm.controls).forEach(key => {
+        this.addForm.get(key).markAsTouched();
+        return
+      });
     }
-    this.http
-      .postApi(`app/restaurent_register`, this.addForm.value, false)
-      .subscribe(
-        (res: any) => {
-          ObservableService.loader.next(false);
-          this.toaster.success(res.message);
-          if(res.hasOwnProperty('access_token')){
-            this.toaster.success("Restaurant Added");
+    else{
+
+      this.http
+        .postApi(`app/restaurent_register`, this.addForm.value, false)
+        .subscribe(
+          (res: any) => {
+            ObservableService.loader.next(false);
+            this.toaster.success(res.message);
+            if(res.hasOwnProperty('access_token')){
+              $('.close').trigger('click')
+              this.toaster.success("Restaurant Added");
+            }
+            this.url = undefined;
+            this.addForm = this.fb.group({
+              name: [null, [Validators.required]],
+              email: [null, [Validators.required, Validators.email]],
+              password: [null, [Validators.required]],
+              address: [null, [Validators.required]],
+              city: [null, [Validators.required]],
+              state: [null, [Validators.required]],
+              country: [null, [Validators.required]],
+              phone: [null, [Validators.required]],
+              image: [null],
+              latlng: [null, [Validators.required]],
+              type: ["restaurant"],
+            });
+            this.getRestuarants();
           }
-          this.url = undefined;
-          this.addForm = this.fb.group({
-            name: [null, [Validators.required]],
-            email: [null, [Validators.required, Validators.email]],
-            password: [null, [Validators.required]],
-            address: [null, [Validators.required]],
-            city: [null, [Validators.required]],
-            state: [null, [Validators.required]],
-            country: [null, [Validators.required]],
-            phone: [null, [Validators.required]],
-            image: [null],
-            latlng: [null, [Validators.required]],
-            type: ["restaurant"],
-          });
-          this.getRestuarants();
-        },
-        (err) => {
+        ),
+        (err)=>{
           ObservableService.loader.next(false);
-        }
-      );
+          console.log(err);
+        };
+    }
   }
   markerDragEnd($event: any) {
     this.lat = $event.coords.lat;

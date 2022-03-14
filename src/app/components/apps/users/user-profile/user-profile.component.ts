@@ -25,7 +25,7 @@ export class UserProfileComponent implements OnInit {
   ngOnInit(){
     this.getData()
     setTimeout(() => {
-      this.depositHistory()
+      this.depositHistoryFunc()
         }, 1000);
   }
   getData(){
@@ -34,10 +34,11 @@ export class UserProfileComponent implements OnInit {
     // getting deails of user
     this.http.getApi(`admin/user/${this.id}`, true).subscribe((res:any)=>{
       this.formattedDate = moment(res.created_at).format('MMMM Do YYYY');
-      this.userData = res;
-      console.log(res);
-      
+      this.userData = res;      
       ObservableService.loader.next(false)
+    },
+    (err)=>{
+      console.log(err)
     })
     // getting wallet details
     this.http.getApi(`admin/cards/${this.id}`, true).subscribe((res:any)=>{
@@ -46,9 +47,11 @@ export class UserProfileComponent implements OnInit {
     })
   }
   // deposit history
-  depositHistory(){
-    this.http.getApi(`deposit_history_admin/${this.id}`, true).subscribe((res:any)=>{
-      console.log(res);
+  depositHistoryFunc(){
+    this.http.getApi(`admin/deposit_history_admin/${this.id}`, true).subscribe((res:any)=>{
+    },
+    (err)=>{
+      console.log(err)
     })
   }
 }

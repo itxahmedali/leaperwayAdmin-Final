@@ -171,6 +171,8 @@ export class ProfileViewComponent implements OnInit {
   // ammount tab
   amountDue;
   amount;
+  // orderDeatils
+  orderDetails;
   constructor(
     private modalService: NgbModal,
     private calendar: NgbCalendar,
@@ -184,7 +186,7 @@ export class ProfileViewComponent implements OnInit {
     this.toDate = calendar.getNext(calendar.getToday(), "d", 10);
     this.location();
     setTimeout(() => {
-      console.log(this.company); 
+      console.log(this.company);
     }, 1000);
   }
   async location() {
@@ -283,14 +285,15 @@ export class ProfileViewComponent implements OnInit {
         this.http
           .postApi(`admin/revenue/${this.company.id}`, this.dates, true)
           .subscribe((res: any) => {
-            console.log(res);
             res.data.map((data) => {
               this.ravenueData.push(data);
             });
-            console.log(this.ravenueData);
-
             ObservableService.loader.next(false);
-          });
+          }),
+          (err)=>{
+            ObservableService.loader.next(false);
+            console.log(err);
+          }
       }, 1000);
     }
   }
@@ -301,6 +304,7 @@ export class ProfileViewComponent implements OnInit {
     setTimeout(() => {
       this.defaultRevenue();
       this.amountData();
+      this.orderdetails();
     }, 2000);
   }
   // restaurants Api
@@ -345,12 +349,12 @@ export class ProfileViewComponent implements OnInit {
               });
             });
           ObservableService.loader.next(false);
-        },
-        (err) => {
-          console.log(err);
-          ObservableService.loader.next(false);
         }
-      );
+      ),
+      (err)=>{
+        ObservableService.loader.next(false);
+        console.log(err);
+      };
   }
   defaultRevenue() {
     var today = new Date(); // today!
@@ -371,16 +375,33 @@ export class ProfileViewComponent implements OnInit {
         });
 
         ObservableService.loader.next(false);
-      });
+      }),
+      (err)=>{
+        ObservableService.loader.next(false);
+        console.log(err);
+      };
       this.http.getApi(`admin/dues/${this.company.id}`, true).subscribe((res)=>{
         this.amountDue = res;
-      })
+      }),
+      (err)=>{
+        ObservableService.loader.next(false);
+        console.log(err);
+      }
   }
   amountData(){
     this.http.getApi(`admin/admintransactions/${this.company.id}`, true).subscribe((res: any)=>{
       this.amount = res;
-      console.log(this.amount);
-      
-    });
+    }),
+    (err)=>{
+      ObservableService.loader.next(false);
+      console.log(err);
+    };
+  }
+  orderdetails(){
+    this.http.getApi(`admin/restaurent/${this.company.id}`, true).subscribe((res)=>{
+      this.orderDetails = res;
+    }),(err)=>{
+      console.log(err);
+    }
   }
 }

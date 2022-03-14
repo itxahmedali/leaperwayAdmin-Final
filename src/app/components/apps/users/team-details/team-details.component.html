@@ -134,11 +134,23 @@
           <div class="input-group">
             <input  class="form-control" placeholder="Name" formControlName="name">
           </div>
+          <div *ngIf="addForm.controls.name.touched && addForm.controls.name.errors?.required"
+                                        class="text text-danger mt-1 mb-1">
+                                        Name is required
+                                    </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="email">Email</label>
           <div class="input-group">
             <input  class="form-control" placeholder="Email" formControlName="email" type="email">
+          </div>
+          <div *ngIf="addForm.controls.email.touched && addForm.controls.email.errors?.required"
+                                        class="text text-danger mt-1 mb-1">
+                                        Email is required
+          </div>
+          <div *ngIf="addForm.controls.email.touched && addForm.controls.email.errors?.email"
+                                        class="text text-danger mt-1 mb-3">
+                                        Invalid Email
           </div>
         </div>
         <div class="col-lg-6 mt-3">
@@ -146,17 +158,25 @@
           <div class="input-group">
             <input  class="form-control" placeholder="Password" formControlName="password" type="password">
           </div>
+          <div *ngIf="addForm.controls.password.touched && addForm.controls.password.errors?.required"
+                                        class="text text-danger mt-1 mb-1">
+                                        Password is required
+                                    </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="email">Confirm Password</label>
           <div class="input-group">
             <input  class="form-control" placeholder="Confirm Password" formControlName="confirm_password" type="password">
           </div>
+          <div *ngIf="addForm.controls.confirm_password.touched && addForm.controls.confirm_password.errors?.required"
+                                        class="text text-danger mt-1 mb-1">
+                                        Confirm Password is required
+                                    </div>
         </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="addUser(); modal.dismiss('Cross click')">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="addUser();">Save</button>
   </div>
 </ng-template>

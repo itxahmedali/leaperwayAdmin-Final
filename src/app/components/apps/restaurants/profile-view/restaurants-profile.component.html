@@ -58,18 +58,16 @@
                                         <div class="follow">
                                             <div class="row">
                                                 <div class="col-md-4 mb-3 text-md-right border-right">
-                                                    <div class="follow-num" [CountTo]="30000" [from]="0" [duration]="5">
+                                                    <div class="follow-num">{{orderDetails?.withdraw_orders}}
                                                     </div><span>Completed Orders</span>
                                                 </div>
                                                 <div class="col-md-4 mb-3 text-md-center border-right">
-                                                    <div class="follow-num counter" [CountTo]="29000" [from]="0"
-                                                        [duration]="5"></div>
+                                                    <div class="follow-num counter">{{orderDetails?.current_orders}}</div>
                                                     <span>Current Orders</span>
                                                 </div>
                                                 <div class="col-md-4 mb-3 text-md-left">
-                                                    <div class="follow-num counter" [CountTo]="25869" [from]="0"
-                                                        [duration]="5"></div>
-                                                    <span>Withdrawl Orders</span>
+                                                    <div class="follow-num counter">{{orderDetails?.cancelled_orders}}</div>
+                                                    <span>Cancelled Orders</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -121,6 +119,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <p *ngIf="pendingOrders.length === 0" class="noResult">No Result</p>
                                             <pagination-controls (pageChange)="currentOrdersPages=$event"
                                                 previousLabel=""
                                                 nextLabel="">
@@ -163,6 +162,7 @@
                                                    </div>
                                                 </div>
                                             </div>
+                                            <p *ngIf="withdrawOrders.length === 0" class="noResult">No Result</p>
                                             <pagination-controls (pageChange)="successOrdersPages=$event"
                                                 previousLabel="" nextLabel="">
                                             </pagination-controls>
@@ -204,6 +204,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <p *ngIf="cancelledOrder.length === 0" class="noResult">No Result</p>
                                             <pagination-controls (pageChange)="withdrawOrdersPages=$event"
                                                 previousLabel="" nextLabel="">
                                             </pagination-controls>
@@ -242,6 +243,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <p *ngIf="activeDeals.length === 0" class="noResult">No Active Deals Found</p>
                                         </div>
                                     </ng-template>
                                 </ngb-tab>
@@ -267,6 +269,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <p *ngIf="cancelledDeals.length === 0" class="noResult">No Cancelled Deals Found</p>
                                         </div>
                                     </ng-template>
                                 </ngb-tab>
@@ -334,7 +337,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <pagination-controls (pageChange)="revenuePages=$event" previousLabel=""
+                                        <p *ngIf="ravenueData.length === 0" class="noResult">No Transactions Found</p>
+                                        <pagination-controls *ngIf="ravenueData.length > 0" (pageChange)="revenuePages=$event" previousLabel=""
                                             nextLabel="">
                                         </pagination-controls>
                                     </div>
@@ -394,7 +398,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <pagination-controls (pageChange)="recievingHistoryPage=$event"
+                                        <p *ngIf="amount.length === 0" class="noResult">No Transactions Found</p>
+                                            <pagination-controls *ngIf="amount.length > 0" (pageChange)="recievingHistoryPage=$event"
                                                 previousLabel="" nextLabel="">
                                             </pagination-controls>
                                         </div>

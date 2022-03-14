@@ -59,8 +59,8 @@
                                 <i class="fa fa-credit-card"></i>   Wallet
                               </h6>
                               <span>{{
-                                userData ? userData?.wallet : null
-                              }}</span>
+                                userData?.wallet
+                                | currency: "USD"}}</span>
                             </div>
                           </div>
                         </div>
@@ -78,9 +78,7 @@
           <ngb-panel title="Cards">
             <ng-template ngbPanelContent>
               <div class="row">
-                <div
-                  class="col-lg-4 col-md-6 mb-3"
-                  *ngFor="let cards of cards; index as i">
+                <div class="col-lg-4 col-md-6 mb-3" *ngFor="let card of cards; index as i">
                   <div class="cstmcard">
                     <div class="card__front card__part">
                       <img
@@ -89,16 +87,16 @@
                       />
                       <img
                         class="card__front-logo card__logo"
-                        src="{{ cards.type }}"
+                        src="{{ card.type }}"
                       />
-                      <p class="card_numer">{{ cards.card_no }}</p>
+                      <p class="card_numer">{{ card.card_no }}</p>
                       <div class="card__space-75">
                         <span class="card__label">Card holder</span>
-                        <p class="card__info">{{ cards.card_name }}</p>
+                        <p class="card__info">{{ card.card_name }}</p>
                       </div>
                       <div class="card__space-25">
                         <span class="card__label">Expires</span>
-                        <p class="card__info">{{ cards.card_expiry }}</p>
+                        <p class="card__info">{{ card.card_expiry }}</p>
                       </div>
                     </div>
 
@@ -106,7 +104,7 @@
                       <div class="card__black-line"></div>
                       <div class="card__back-content">
                         <div class="card__secret">
-                          <p class="card__secret--last">{{ cards.card_cvv }}</p>
+                          <p class="card__secret--last">{{ card.card_cvv }}</p>
                         </div>
                         <img
                           class="card__back-square card__square"
@@ -115,27 +113,28 @@
 
                         <img
                           class="card__back-logo card__logo"
-                          *ngIf="cards.card_type == 'visa'"
+                          *ngIf="card.card_type == 'visa'"
                           src="assets/1x/visa.png"
                         />
                         <img
                           class="card__back-logo card__logo"
-                          *ngIf="cards.card_type == 'mastercard'"
+                          *ngIf="card.card_type == 'mastercard'"
                           src="assets/1x/mastercard.png"
                         />
                         <img
                           class="card__back-logo card__logo"
-                          *ngIf="cards.card_type == 'paypal'"
+                          *ngIf="card.card_type == 'paypal'"
                           src="assets/1x/paypal.png"
                         />
                         <img
                           class="card__back-logo card__logo"
-                          *ngIf="cards.card_type == 'unionpay'"
+                          *ngIf="card.card_type == 'unionpay'"
                           src="assets/1x/unionpay.png"
                         />
                       </div>
                     </div>
                   </div>
+                  <p *ngIf="cards.length === 0" class="noResult">No Cards Found</p>
                 </div>
               </div>
             </ng-template>
@@ -150,11 +149,7 @@
                 <div
                   class="row"
                   *ngFor="
-                    let item of depositHistory
-                      | paginate: { itemsPerPage: 3, currentPage: p };
-                    index as i
-                  "
-                >
+                    let item of depositHistory | paginate: { itemsPerPage: 3, currentPage: p }; index as i">
                   <div class="col">
                     <div class="leaperName">
                       <label for="">Card Title</label>
@@ -179,13 +174,10 @@
                       <h6>{{ item.transactionDate }}</h6>
                     </div>
                   </div>
+                  <p *ngIf="depositHistory.length === 0" class="noResult">No Transactions Found</p>
+                  <pagination-controls *ngIf="depositHistory.length > 0" (pageChange)="p = $event" previousLabel="" nextLabel="">
+                  </pagination-controls>
                 </div>
-                <pagination-controls
-                  (pageChange)="p = $event"
-                  previousLabel=""
-                  nextLabel=""
-                >
-                </pagination-controls>
               </div>
             </ng-template>
           </ngb-panel>
@@ -196,18 +188,7 @@
           <ngb-panel title="Donation History">
             <ng-template ngbPanelContent>
               <div class="completedOrders">
-                <div
-                  class="row"
-                  *ngFor="
-                    let item of currenttransaction
-                      | paginate
-                        : {
-                            itemsPerPage: 3,
-                            currentPage: currentTransactionPages
-                          };
-                    index as i
-                  "
-                >
+                <div class="row" *ngFor="let item of currenttransaction | paginate: {itemsPerPage: 3, currentPage: currentTransactionPages};index as i">
                   <div class="col">
                     <div class="leaperName">
                       <label for="">Card Title</label>
@@ -238,13 +219,10 @@
                       <h6>{{ item.dueDate }}</h6>
                     </div>
                   </div>
+                  <p *ngIf="currenttransaction.length === 0" class="noResult">No Transactions Found</p>
+                  <pagination-controls *ngIf="currenttransaction.length > 1" (pageChange)="currentTransactionPages = $event" previousLabel="" nextLabel="">
+                  </pagination-controls>
                 </div>
-                <pagination-controls
-                  (pageChange)="currentTransactionPages = $event"
-                  previousLabel=""
-                  nextLabel=""
-                >
-                </pagination-controls>
               </div>
             </ng-template>
           </ngb-panel>
