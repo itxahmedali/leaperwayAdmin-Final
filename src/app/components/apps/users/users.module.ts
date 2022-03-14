@@ -6,7 +6,7 @@ import { GalleryModule } from '@ks89/angular-modal-gallery';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../shared/shared.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { TeamDetailsComponent } from './team-details/team-details.component';
 import { NgxPaginationModule } from "ngx-pagination";
 import 'hammerjs';
@@ -27,6 +27,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     SharedModule,
     CountToModule,
     NgxDatatableModule,
+    Ng2SearchPipeModule,
     GalleryModule.forRoot(),
   ],
 })

@@ -5,7 +5,7 @@
       <div class="card">
         <div class="card-body custom-datatable">
           <div class="searchBox d-flex justify-content-between">
-            <input type="text" class="filter-ngx form-control" placeholder='Search'/>
+            <input type="text" class="filter-ngx form-control" placeholder='Search by name or email' [(ngModel)]="term"/>
             <button class="btn btn-primary" id="addBtn" (click)="openAdd(add)">
               <i class='fa fa-plus'></i>
             </button>
@@ -26,7 +26,7 @@
               </thead>
               <tbody>
                 <tr
-                  *ngFor="let user of company | paginate: { itemsPerPage: 10, currentPage: page, totalItems: total}">
+                  *ngFor="let user of company | paginate: { itemsPerPage: 10, currentPage: page, totalItems: total} |filter:term">
                   <th scope="row">{{user?.id}}</th>
                   <td>{{user?.name}}</td>
                   <td>{{user?.owner}}</td>
@@ -96,7 +96,7 @@
           <div class="col-lg-6 mt-3">
             <label for="phone">Phone</label>
             <div class="input-group">
-              <input class="form-control" placeholder="Phone" formControlName="phone" type="text">
+              <input class="form-control" placeholder="Phone" formControlName="phone" type="text" (keypress)="numberOnly($event)">
             </div>
           </div>
         </div>
@@ -120,15 +120,6 @@
   <div class="modal-body">
     <form [formGroup]="addForm">
       <div class="row">
-        <!-- <div class="col-lg-12 d-flex flex-column justify-content-center align-items-center">
-          <div class="imgBox">
-            <div class="avatar">
-              <img alt="" [src]="url? url:'assets/images/user/1.jpg'">
-            </div>
-            <input id="dashboardLogo" class="upload" type="file" (change)="readUrl($event)" hidden />
-            <label for="dashboardLogo" class="icon-wrapper"><i class="icofont icofont-pencil-alt-5"></i></label>
-          </div>
-        </div> -->
         <div class="col-lg-6 mt-3">
           <label for="name">Name</label>
           <div class="input-group">

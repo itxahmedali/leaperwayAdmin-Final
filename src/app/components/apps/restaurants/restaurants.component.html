@@ -5,7 +5,7 @@
       <div class="card">
         <div class="card-body custom-datatable">
           <div class="searchBox d-flex justify-content-between">
-            <input type="text" class="filter-ngx form-control" placeholder='Search'/>
+            <input type="text" class="filter-ngx form-control" placeholder='Search by name or email' [(ngModel)]="term"/>
             <button class="btn btn-primary" id="addBtn" (click)="addModal(content);">
               <i class='fa fa-plus'></i>
             </button>
@@ -24,7 +24,7 @@
               </thead>
               <tbody>
                 <tr
-                  *ngFor="let restaurant of company | paginate: { itemsPerPage: 10, currentPage: page, totalItems: total}">
+                  *ngFor="let restaurant of company | paginate: { itemsPerPage: 10, currentPage: page, totalItems: total} |filter:term">
                   <th scope="row">{{restaurant?.user.id}}</th>
                   <td>{{restaurant?.user.name}}</td>
                   <td>{{restaurant?.user.email}}</td>
@@ -83,7 +83,7 @@
         <div class="col-lg-6 mt-3">
           <label for="name">Name</label>
           <div class="input-group">
-            <input id="name" class="form-control" placeholder="Name" formControlName ="name">
+            <input class="form-control" placeholder="Name" formControlName ="name">
           </div>
           <div *ngIf="addForm.controls.name.touched && addForm.controls.name.errors?.required"
                                         class="text text-danger mt-1 mb-3">
@@ -93,7 +93,7 @@
         <div class="col-lg-6 mt-3">
           <label for="phone">Phone</label>
           <div class="input-group">
-            <input id="phone" class="form-control" placeholder="Phone" formControlName ="phone" type="text">
+            <input class="form-control" placeholder="Phone" formControlName ="phone" type="text">
           </div>
           <div *ngIf="addForm.controls.phone.touched && addForm.controls.phone.errors?.required"
                                         class="text text-danger mt-1 mb-3">
@@ -103,7 +103,7 @@
         <div class="col-lg-6 mt-3">
           <label for="phone">Email</label>
           <div class="input-group">
-            <input id="email" class="form-control" placeholder="Email" formControlName ="email" type="email">
+            <input class="form-control" placeholder="Email" formControlName ="email" type="email">
           </div>
           <div *ngIf="addForm.controls.email.touched && addForm.controls.email.errors?.required"
                                         class="text text-danger mt-1 mb-3">
@@ -117,7 +117,7 @@
         <div class="col-lg-6 mt-3">
           <label for="phone">Password</label>
           <div class="input-group">
-            <input id="phone" class="form-control" placeholder="Password" formControlName ="password" type="password">
+            <input class="form-control" placeholder="Password" formControlName ="password" type="password">
           </div>
           <div *ngIf="addForm.controls.password.touched && addForm.controls.password.errors?.required"
                                         class="text text-danger mt-1 mb-3">
@@ -127,7 +127,7 @@
         <div class="col-lg-6 mt-3">
           <label for="address">Address</label>
           <div class="input-group">
-            <input id="address" class="form-control" placeholder="Address" formControlName ="address">
+            <input class="form-control" placeholder="Address" formControlName ="address">
           </div>
           <div *ngIf="addForm.controls.address.touched && addForm.controls.address.errors?.required"
                                         class="text text-danger mt-1 mb-3">
@@ -137,7 +137,7 @@
         <div class="col-lg-6 mt-3">
           <label for="city">City</label>
           <div class="input-group">
-            <input id="city" class="form-control" placeholder="City" formControlName ="city">
+            <input class="form-control" placeholder="City" formControlName ="city">
           </div>
           <div *ngIf="addForm.controls.city.touched && addForm.controls.city.errors?.required"
                                         class="text text-danger mt-1 mb-3">
@@ -147,7 +147,7 @@
         <div class="col-lg-6 mt-3">
           <label for="state">State</label>
           <div class="input-group">
-            <input id="state" class="form-control" placeholder="State" formControlName ="state">
+            <input class="form-control" placeholder="State" formControlName ="state">
           </div>
           <div *ngIf="addForm.controls.state.touched && addForm.controls.state.errors?.required"
                                         class="text text-danger mt-1 mb-3">
@@ -157,7 +157,7 @@
         <div class="col-lg-6 mt-3">
           <label for="country">Country</label>
           <div class="input-group">
-            <input id="country" class="form-control" placeholder="Country" formControlName ="country">
+            <input class="form-control" placeholder="Country" formControlName ="country">
           </div>
           <div *ngIf="addForm.controls.country.touched && addForm.controls.country.errors?.required"
                                         class="text text-danger mt-1 mb-3">
@@ -168,7 +168,7 @@
           <label for="country">Location</label>
           <div class="input-group">
             <div class="inpBox position-relative w-100">
-              <input id="country" readonly class="form-control" placeholder="Location" formControlName ="latlng">
+              <input readonly class="form-control" placeholder="Location" formControlName ="latlng">
               <button (click)="open(location);"><img src="assets/svg/location.svg" alt=""></button>
             </div>
             <div *ngIf="addForm.controls.latlng.touched && addForm.controls.latlng.errors?.required"
@@ -209,43 +209,43 @@
         <div class="col-lg-6 mt-3">
           <label for="name">Name</label>
           <div class="input-group">
-            <input id="name" class="form-control" placeholder="Name" formControlName ="name">
+            <input class="form-control" placeholder="Name" formControlName ="name">
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="phone">Phone</label>
           <div class="input-group">
-            <input id="phone" class="form-control" placeholder="Phone" formControlName ="phone" type="text">
+            <input class="form-control" placeholder="Phone" formControlName ="phone" type="text" (keypress)="numberOnly($event)">
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="phone">Password</label>
           <div class="input-group">
-            <input id="phone" class="form-control" placeholder="Password" formControlName ="password" type="password">
+            <input class="form-control" placeholder="Password" formControlName ="password" type="password">
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="address">Address</label>
           <div class="input-group">
-            <input id="address" class="form-control" placeholder="Address" formControlName ="address">
+            <input class="form-control" placeholder="Address" formControlName ="address">
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="city">City</label>
           <div class="input-group">
-            <input id="city" class="form-control" placeholder="City" formControlName ="city">
+            <input class="form-control" placeholder="City" formControlName ="city">
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="state">State</label>
           <div class="input-group">
-            <input id="state" class="form-control" placeholder="State" formControlName ="state">
+            <input class="form-control" placeholder="State" formControlName ="state">
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="country">Country</label>
           <div class="input-group">
-            <input id="country" class="form-control" placeholder="Country" formControlName ="country">
+            <input class="form-control" placeholder="Country" formControlName ="country">
           </div>
         </div>
       </div>

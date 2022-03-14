@@ -14,6 +14,8 @@ import { ObservableService } from "src/app/services/observable.service";
   styleUrls: ["./team-details.component.scss"],
 })
 export class TeamDetailsComponent implements OnInit {
+  // filter
+  term
   // pagination
   page: number = 1;
   totalPage = [];
@@ -241,6 +243,13 @@ export class TeamDetailsComponent implements OnInit {
           console.log(err);
         }
     }
+  }
+  numberOnly(event): boolean {
+    const charCode = event.which ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
   }
   
 }

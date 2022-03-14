@@ -9,6 +9,8 @@ import { ProfileViewComponent } from './profile-view/restaurants-profile.compone
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgxPaginationModule } from "ngx-pagination";
 import { AgmCoreModule } from '@agm/core';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -18,7 +20,8 @@ import { AgmCoreModule } from '@agm/core';
     NgApexchartsModule,
     CountToModule,
     NgxPaginationModule,
-    AgmCoreModule
+    AgmCoreModule,
+    Ng2SearchPipeModule
   ],
   declarations: [FileManagerComponent, ProfileViewComponent],
 })

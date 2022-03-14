@@ -13,6 +13,8 @@ import { ObservableService } from "src/app/services/observable.service";
   styleUrls: ["./restaurants.component.scss"],
 })
 export class FileManagerComponent implements OnInit {
+  // filter
+  term
   public url: any;
   public company;
   lat: number = 51.678418;
@@ -336,5 +338,12 @@ export class FileManagerComponent implements OnInit {
     this.addForm.patchValue({
       latlng : this.lat + "," + this.lng
     })
+  }
+  numberOnly(event): boolean {
+    const charCode = event.which ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
   }
 }

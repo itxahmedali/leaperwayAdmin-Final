@@ -49,5 +49,5 @@ export class AppComponent {
       localStorage.setItem('lang',JSON.stringify(position.coords.longitude))
      });
    }
-
+   
 }

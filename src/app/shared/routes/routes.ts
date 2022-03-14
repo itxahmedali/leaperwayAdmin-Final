@@ -5,7 +5,6 @@ import { AdminGuard } from '../guard/admin.guard';
 export const content: Routes = [
   {
     path: 'default',
-    
     loadChildren: () => import('../../components/dashboard/dashboard.module').then(m => m.DashboardModule)
   },
   {
