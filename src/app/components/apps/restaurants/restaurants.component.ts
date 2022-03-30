@@ -252,7 +252,7 @@ export class FileManagerComponent implements OnInit {
   }
   viewpage(restaurant) {
     this.router.navigate([
-      "/all-restaurants/restaurant-profile",
+      "dashboard/all-restaurants/restaurant-profile",
       restaurant.id,
     ]);
   }

@@ -165,6 +165,8 @@ export class TeamDetailsComponent implements OnInit {
     let reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
       let file = event.target.files[0];
+      console.log(file);
+      
       this.dealImage = event.target.files[0];
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -198,7 +200,7 @@ export class TeamDetailsComponent implements OnInit {
       });
   }
   userDetails(id) {
-    this.router.navigate(["users/userProfile", id]);
+    this.router.navigate(["dashboard/users/userProfile", id]);
   }
   // add restuarants
   addUser() {

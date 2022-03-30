@@ -30,17 +30,6 @@ export class AppComponent {
 
   ngOnInit() {
     this.location()
-    // this.router.events
-    //   .pipe(filter((event) => event instanceof NavigationEnd))
-    //   .subscribe((event) => {
-    //     if (this.user) {
-    //       if (
-    //         window.location.href.indexOf("login") > -1
-    //       ) {
-    //         this.router.navigate(["/dashboard"]);
-    //       }
-    //     }
-    //   });
   }
 
   async location() {

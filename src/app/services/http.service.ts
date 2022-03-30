@@ -100,8 +100,11 @@ export class HttpService {
     }
   
     uploadImages(fileToUpload: File, url) {
+
       ObservableService.loader.next(true)
       var formData = new FormData();
+      console.log(formData);
+      
       formData.append("image", fileToUpload);
   
       let headers = {
