@@ -88,9 +88,17 @@ export class FileManagerComponent implements OnInit {
     });
   }
   ngOnInit() {
+    this.location()
     setTimeout(() => {
       this.getRestuarants();
     }, 1000);
+  }
+
+  async location() {
+    await navigator.geolocation.getCurrentPosition((position) => {
+      this.lat = position.coords.latitude;
+      this.lng = position.coords.longitude;
+    });
   }
 
   // restaurants Api
@@ -238,16 +246,16 @@ export class FileManagerComponent implements OnInit {
           if (res.image) {
             return false;
           }
-          this.editForm.patchValue({
+          this.addForm.patchValue({
             image: res.data.image_url,
           });
           setTimeout(() => {
-            this.update();
+            this.add();
           }, 1000);
         }),
         (e) => {};
     } else {
-      this.update();
+      this.add();
     }
   }
   viewpage(restaurant) {

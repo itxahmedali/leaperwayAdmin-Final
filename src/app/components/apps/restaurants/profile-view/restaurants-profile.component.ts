@@ -180,19 +180,22 @@ export class ProfileViewComponent implements OnInit {
     private http: HttpService,
     private activatedRoute: ActivatedRoute
   ) {
-    
     this.id = this.activatedRoute.snapshot.paramMap.get("id");
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), "d", 10);
-    this.location();
-    setTimeout(() => {
-      console.log(this.company);
-    }, 1000);
   }
+
+  ngOnInit(): void {
+    
+    this.location();
+
+  }
+
   async location() {
     await navigator.geolocation.getCurrentPosition((position) => {
       this.lat = position.coords.latitude;
       this.long = position.coords.longitude;
+      this.getRestuarants(position.coords.latitude, position.coords.longitude)
     });
   }
   // modal
@@ -297,20 +300,10 @@ export class ProfileViewComponent implements OnInit {
       }, 1000);
     }
   }
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.getRestuarants();
-    });
-    setTimeout(() => {
-      this.defaultRevenue();
-      this.amountData();
-      this.orderdetails();
-    }, 2000);
-  }
   // restaurants Api
-  async getRestuarants() {
+  async getRestuarants(lat, lng) {
     await this.http
-      .getApi(`admin/restaurents/${this.lat},${this.long}`, true)
+      .getApi(`admin/restaurents/${lat},${lng}`, true)
       .subscribe(
         (res: any) => {
           this.apiData = res;
@@ -326,9 +319,10 @@ export class ProfileViewComponent implements OnInit {
           // emptying array
           this.cancelledDeals.length = 0;
           this.activeDeals.length = 0;
-          this.http
-            .getApi(`admin/orders_by_restaurant/${this.company.id}`, true)
-            .subscribe((res: any) => {
+          this.defaultRevenue();
+          this.amountData();
+          this.orderdetails();
+          this.http.getApi(`admin/orders_by_restaurant/${this.company.id}`, true).subscribe((res: any) => {
               res.map((data) => {
                 if (data.status == "withdraw") {
                   this.withdrawOrders.push(data);
@@ -346,6 +340,7 @@ export class ProfileViewComponent implements OnInit {
                 if (data.deal.status == 1) {
                   this.activeDeals.push(data.deal);
                 }
+               
               });
             });
           ObservableService.loader.next(false);
@@ -400,6 +395,7 @@ export class ProfileViewComponent implements OnInit {
   orderdetails(){
     this.http.getApi(`admin/restaurent/${this.company.id}`, true).subscribe((res)=>{
       this.orderDetails = res;
+      console.log(this.orderDetails, 'this.orderDetails')
     }),(err)=>{
       console.log(err);
     }

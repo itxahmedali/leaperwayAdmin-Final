@@ -398,7 +398,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        <p *ngIf="amount.length === 0" class="noResult">No Transactions Found</p>
+                                        <p *ngIf="amount?.length === 0" class="noResult">No Transactions Found</p>
                                             <pagination-controls *ngIf="amount.length > 0" (pageChange)="recievingHistoryPage=$event"
                                                 previousLabel="" nextLabel="">
                                             </pagination-controls>

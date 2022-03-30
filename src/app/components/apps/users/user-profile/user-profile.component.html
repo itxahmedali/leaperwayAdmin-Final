@@ -146,34 +146,35 @@
           <ngb-panel title="Transactions History">
             <ng-template ngbPanelContent>
               <div class="currentOrder">
-                <div
-                  class="row"
-                  *ngFor="
-                    let item of depositHistory | paginate: { itemsPerPage: 3, currentPage: p }; index as i">
-                  <div class="col">
-                    <div class="leaperName">
-                      <label for="">Card Title</label>
-                      <h6>{{ item.cardHolder }}</h6>
+                <div class="" >
+                  
+                  <div class="row" *ngFor="let item of depositHistory | paginate: { itemsPerPage: 3, currentPage: p }; index as i">
+                    <div class="col">
+                      <div class="leaperName">
+                        <label for="">Card Title</label>
+                        <h6>{{ item?.card?.card_name }}</h6>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="leaperDeal">
+                        <label for="">Card No</label>
+                        <h6>{{ item?.card?.card_no }}</h6>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="dealPrice">
+                        <label for="">Deposit</label>
+                        <h6>{{ item.amount | currency: "USD" }}</h6>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="coupanDate">
+                        <label for="">Transaction Date</label>
+                        <h6>{{ item.created_at | date:'fullDate' }} {{item.created_at | date:'h:mm a z'}}</h6>
+                      </div>
                     </div>
                   </div>
-                  <div class="col">
-                    <div class="leaperDeal">
-                      <label for="">Card No</label>
-                      <h6>{{ item.cardNo }}</h6>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="dealPrice">
-                      <label for="">Deposit</label>
-                      <h6>{{ item.deposit | currency: "USD" }}</h6>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="coupanDate">
-                      <label for="">Transaction Date</label>
-                      <h6>{{ item.transactionDate }}</h6>
-                    </div>
-                  </div>
+
                   <p *ngIf="depositHistory.length === 0" class="noResult">No Transactions Found</p>
                   <pagination-controls *ngIf="depositHistory.length > 0" (pageChange)="p = $event" previousLabel="" nextLabel="">
                   </pagination-controls>
@@ -188,35 +189,37 @@
           <ngb-panel title="Donation History">
             <ng-template ngbPanelContent>
               <div class="completedOrders">
-                <div class="row" *ngFor="let item of currenttransaction | paginate: {itemsPerPage: 3, currentPage: currentTransactionPages};index as i">
-                  <div class="col">
-                    <div class="leaperName">
-                      <label for="">Card Title</label>
-                      <h6>{{ item.cardHolder }}</h6>
+                <div class="" >
+                  <div class="row" *ngFor="let item of currenttransaction | paginate: {itemsPerPage: 3, currentPage: currentTransactionPages};index as i">
+                    <div class="col">
+                      <div class="leaperName">
+                        <label for="">Card Title</label>
+                        <h6>{{ item.cardHolder }}</h6>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col">
-                    <div class="leaperDeal">
-                      <label for="">Card No</label>
-                      <h6>{{ item.cardNo }}</h6>
+                    <div class="col">
+                      <div class="leaperDeal">
+                        <label for="">Card No</label>
+                        <h6>{{ item.cardNo }}</h6>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col">
-                    <div class="dealPrice">
-                      <label for="">Deposit</label>
-                      <h6>{{ item.deposit | currency: "USD" }}</h6>
+                    <div class="col">
+                      <div class="dealPrice">
+                        <label for="">Deposit</label>
+                        <h6>{{ item.deposit | currency: "USD" }}</h6>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col">
-                    <div class="coupanDate">
-                      <label for="">Payment Date</label>
-                      <h6>{{ item.paymentDate }}</h6>
+                    <div class="col">
+                      <div class="coupanDate">
+                        <label for="">Payment Date</label>
+                        <h6>{{ item.paymentDate }}</h6>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col">
-                    <div class="coupanDate">
-                      <label for="">Due Date</label>
-                      <h6>{{ item.dueDate }}</h6>
+                    <div class="col">
+                      <div class="coupanDate">
+                        <label for="">Due Date</label>
+                        <h6>{{ item.dueDate }}</h6>
+                      </div>
                     </div>
                   </div>
                   <p *ngIf="currenttransaction.length === 0" class="noResult">No Transactions Found</p>

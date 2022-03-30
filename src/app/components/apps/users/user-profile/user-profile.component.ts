@@ -19,6 +19,7 @@ export class UserProfileComponent implements OnInit {
   userData;
   formattedDate;
   cards;
+  depositHistory = []
   constructor(private route: ActivatedRoute, private http:HttpService){
 
   }
@@ -49,6 +50,8 @@ export class UserProfileComponent implements OnInit {
   // deposit history
   depositHistoryFunc(){
     this.http.getApi(`admin/deposit_history_admin/${this.id}`, true).subscribe((res:any)=>{
+      console.log(res)
+      this.depositHistory = res;
     },
     (err)=>{
       console.log(err)
