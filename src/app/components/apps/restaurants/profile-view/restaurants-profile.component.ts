@@ -14,6 +14,7 @@ import { ComingSoonModule } from "src/app/pages/coming-soon/coming-soon.module";
 import { HttpService } from "src/app/services/http.service";
 import { ActivatedRoute } from "@angular/router";
 import { ObservableService } from "src/app/services/observable.service";
+
 @Component({
   selector: "app-profile-view",
   templateUrl: "./restaurants-profile.component.html",
@@ -42,6 +43,8 @@ export class ProfileViewComponent implements OnInit {
   apiData;
   formatDate;
   formattedDate;
+  activatedDeals = [];
+  deactivatedDeals = [];
   public recievingHistory = [
     {
       accountTitle: "Elena Gilbert",
@@ -173,6 +176,15 @@ export class ProfileViewComponent implements OnInit {
   amount;
   // orderDeatils
   orderDetails;
+
+  account_title:string = null;
+  account_no:number = null;
+  amountPayable:number = null;
+
+  account_title_error : boolean = false;
+  account_no_error : boolean = false;
+  amountPayable_error : boolean = false;
+
   constructor(
     private modalService: NgbModal,
     private calendar: NgbCalendar,
@@ -300,6 +312,7 @@ export class ProfileViewComponent implements OnInit {
       }, 1000);
     }
   }
+
   // restaurants Api
   async getRestuarants(lat, lng) {
     await this.http
@@ -386,6 +399,7 @@ export class ProfileViewComponent implements OnInit {
   amountData(){
     this.http.getApi(`admin/admintransactions/${this.company.id}`, true).subscribe((res: any)=>{
       this.amount = res;
+      console.log(res)
     }),
     (err)=>{
       ObservableService.loader.next(false);
@@ -393,11 +407,49 @@ export class ProfileViewComponent implements OnInit {
     };
   }
   orderdetails(){
-    this.http.getApi(`admin/restaurent/${this.company.id}`, true).subscribe((res)=>{
+    this.http.getApi(`admin/restaurent/${this.company.id}`, true).subscribe((res:any)=>{
       this.orderDetails = res;
+      res.deals.map((v,i)=>{
+        if(v.status == '1'){
+          this.activatedDeals.push(v)
+        }else{
+          this.deactivatedDeals.push(v)
+        }
+      })
       console.log(this.orderDetails, 'this.orderDetails')
     }),(err)=>{
       console.log(err);
+    }
+  }
+  payNowo(){
+    let submitted = true
+    let da = {
+      account_title:this.account_title,
+      account_no:this.account_no,
+      amount:this.amountPayable,
+      restaurant_id:this.orderDetails.id
+    }
+
+    if(this.account_title == null || this.account_title == ''){
+      this.account_title_error = true;
+      submitted = false
+    }
+    if(this.account_no == null){
+      this.account_no_error = true;
+      submitted = false
+    }
+    if(this.amountPayable == null){
+      this.amountPayable_error = true;
+      submitted = false
+    }
+
+    if(submitted){
+      this.http.postApi('admin/clear_dues' , da, true).subscribe((res:any)=>{
+        this.modalService.dismissAll();
+        window.location.reload();
+      },(err)=>{ 
+        console.log(err);
+      })
     }
   }
 }

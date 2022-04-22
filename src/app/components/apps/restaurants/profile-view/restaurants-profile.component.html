@@ -225,7 +225,7 @@
                                     <ng-template ngbTabContent>
                                         <div class="deals-cards">
                                             <div class="row">
-                                                <div class="col-lg-4"  *ngFor="let company of activeDeals">
+                                                <div class="col-lg-4"  *ngFor="let company of activatedDeals">
                                                     <div class="card" style="width: 95%;">
                                                         <div class="cardImgBox">
                                                             <img src="{{company?.deal_image}}" class="card-img-top" alt="...">
@@ -243,7 +243,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <p *ngIf="activeDeals.length === 0" class="noResult">No Active Deals Found</p>
+                                            <p *ngIf="activatedDeals.length === 0" class="noResult">No Active Deals Found</p>
                                         </div>
                                     </ng-template>
                                 </ngb-tab>
@@ -251,7 +251,7 @@
                                     <ng-template ngbTabContent>
                                         <div class="deals-cards">
                                             <div class="row">
-                                                <div class="col-lg-4"  *ngFor="let company of cancelledDeals">
+                                                <div class="col-lg-4"  *ngFor="let company of deactivatedDeals">
                                                     <div class="card" style="width: 95%;">
                                                         <div class="cardImgBox">
                                                             <img src="{{company?.deal_image}}" class="card-img-top" alt="...">
@@ -269,7 +269,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <p *ngIf="cancelledDeals.length === 0" class="noResult">No Cancelled Deals Found</p>
+                                            <p *ngIf="deactivatedDeals.length === 0" class="noResult">No Deactivated Deals Found</p>
                                         </div>
                                     </ng-template>
                                 </ngb-tab>
@@ -304,8 +304,7 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="withdrawOrders">
-                                        <div class="row" *ngFor="let item of ravenueData | paginate: { itemsPerPage:
-                                            3, currentPage: revenuePages }; index as i;">
+                                        <div class="row" *ngFor="let item of ravenueData | paginate: { itemsPerPage:3, currentPage: revenuePages, id:'pagination1' }; index as i;">
                                             <div class="col">
                                                 <div class="leaperName">
                                                     <label for="">Card Title</label>
@@ -339,7 +338,7 @@
                                         </div>
                                         <p *ngIf="ravenueData.length === 0" class="noResult">No Transactions Found</p>
                                         <pagination-controls *ngIf="ravenueData.length > 0" (pageChange)="revenuePages=$event" previousLabel=""
-                                            nextLabel="">
+                                            nextLabel="" id="pagination1">
                                         </pagination-controls>
                                     </div>
                                 </div>
@@ -354,14 +353,21 @@
                         <ng-template ngbPanelContent>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <div class="d-flex justify-content-end">
-                                        <div class="dueAmount d-flex flex-column mr-5">
-                                            <h6>Due</h6>
-                                            <h4>{{amountDue?.due | currency:'USD'}}</h4>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <button class="btn btn-primary" (click)="open(paynow)">Pay now</button>
                                         </div>
-                                        <div class="pendingAmount d-flex flex-column">
-                                            <h6>Wallet</h6>
-                                            <h4>{{amountDue?.wallet | currency:'USD'}}</h4>
+                                        <div class="col-lg-6">
+                                            <div class="d-flex align-items-center justify-content-end">
+                                                <div class="dueAmount d-flex flex-column mr-5">
+                                                    <h6>Due</h6>
+                                                    <h4>{{amountDue?.due | currency:'USD'}}</h4>
+                                                </div>
+                                                <div class="pendingAmount d-flex flex-column">
+                                                    <h6>Wallet</h6>
+                                                    <h4>{{amountDue?.wallet | currency:'USD'}}</h4>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -370,9 +376,7 @@
                                 <ngb-tab title="Recieving History">
                                     <ng-template ngbTabContent>
                                         <div class="currentOrder">
-                                            <div class="row"
-                                                *ngFor="let item of amount | paginate: { itemsPerPage:
-                                            3, currentPage: recievingHistoryPage }; index as i;">
+                                            <div class="row" *ngFor="let item of amount | paginate: { itemsPerPage:3, currentPage: recievingHistoryPage, id:'pagination2' }; index as i;">
                                                 <div class="col">
                                                     <div class="leaperName">
                                                         <label for="">Account Title</label>
@@ -400,7 +404,7 @@
                                             </div>
                                         <p *ngIf="amount?.length === 0" class="noResult">No Transactions Found</p>
                                             <pagination-controls *ngIf="amount.length > 0" (pageChange)="recievingHistoryPage=$event"
-                                                previousLabel="" nextLabel="">
+                                                previousLabel="" nextLabel="" id="pagination2">
                                             </pagination-controls>
                                         </div>
                                     </ng-template>
@@ -516,3 +520,39 @@
             (click)="modal.close('Save click'); saveDate()">Save</button>
     </div>
 </ng-template>
+
+
+<!-- edit info modals -->
+<ng-template #paynow let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Pay Now</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-12 mt-3">
+                <label for="name">Account Title</label>
+                <div class="input-group">
+                <input class="form-control" placeholder="John Doe" [(ngModel)]="account_title" [ngClass]="account_title_error ? 'erroro' : ''">
+                </div>
+            </div>
+            <div class="col-lg-6 mt-3">
+                <label for="phone">Account Number</label>
+                <div class="input-group">
+                <input class="form-control" placeholder="000 0000 00000" type="number" [(ngModel)]="account_no" [ngClass]="account_no_error ? 'erroro' : ''"> 
+                </div>
+            </div>
+            <div class="col-lg-6 mt-3">
+                <label for="phone">Ammount</label>
+                <div class="input-group">
+                <input class="form-control" placeholder="10" type="number" [(ngModel)]="amountPayable" [ngClass]="amountPayable_error ? 'erroro' : ''">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)=" payNowo()">Pay</button>
+    </div>
+  </ng-template>

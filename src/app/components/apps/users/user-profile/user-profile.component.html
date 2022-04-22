@@ -148,7 +148,7 @@
               <div class="currentOrder">
                 <div class="" >
                   
-                  <div class="row" *ngFor="let item of depositHistory | paginate: { itemsPerPage: 3, currentPage: p }; index as i">
+                  <div class="row" *ngFor="let item of depositHistory | paginate: { itemsPerPage: 3, currentPage: p, id:'pagi1' }; index as i">
                     <div class="col">
                       <div class="leaperName">
                         <label for="">Card Title</label>
@@ -176,7 +176,7 @@
                   </div>
 
                   <p *ngIf="depositHistory.length === 0" class="noResult">No Transactions Found</p>
-                  <pagination-controls *ngIf="depositHistory.length > 0" (pageChange)="p = $event" previousLabel="" nextLabel="">
+                  <pagination-controls *ngIf="depositHistory.length > 0" (pageChange)="p = $event" previousLabel="" nextLabel="" id="pagi1">
                   </pagination-controls>
                 </div>
               </div>
@@ -190,40 +190,40 @@
             <ng-template ngbPanelContent>
               <div class="completedOrders">
                 <div class="" >
-                  <div class="row" *ngFor="let item of currenttransaction | paginate: {itemsPerPage: 3, currentPage: currentTransactionPages};index as i">
+                  <div class="row" *ngFor="let item of currenttransaction | paginate: {itemsPerPage: 3, currentPage: currentTransactionPages, id:'pagi2'};index as i">
                     <div class="col">
                       <div class="leaperName">
-                        <label for="">Card Title</label>
-                        <h6>{{ item.cardHolder }}</h6>
+                        <label for="">Leaper Name</label>
+                        <h6>{{ item.leaper_name }}</h6>
                       </div>
                     </div>
                     <div class="col">
                       <div class="leaperDeal">
-                        <label for="">Card No</label>
-                        <h6>{{ item.cardNo }}</h6>
+                        <label for="">DOB</label>
+                        <h6>{{ item.leaper_dob }}</h6>
                       </div>
                     </div>
                     <div class="col">
                       <div class="dealPrice">
-                        <label for="">Deposit</label>
-                        <h6>{{ item.deposit | currency: "USD" }}</h6>
+                        <label for="">Coupon</label>
+                        <h6>{{ item.coupon }}</h6>
                       </div>
                     </div>
                     <div class="col">
                       <div class="coupanDate">
-                        <label for="">Payment Date</label>
-                        <h6>{{ item.paymentDate }}</h6>
+                        <label for="">Deal Price</label>
+                        <h6>{{ item.deal?.deal_price | currency: "USD" }}</h6>
                       </div>
                     </div>
                     <div class="col">
                       <div class="coupanDate">
-                        <label for="">Due Date</label>
-                        <h6>{{ item.dueDate }}</h6>
+                        <label for="">Date</label>
+                        <h6>{{ item.created_at | date:'fullDate' }} {{ item.created_at | date:'h:mm a z' }}</h6>
                       </div>
                     </div>
                   </div>
                   <p *ngIf="currenttransaction.length === 0" class="noResult">No Transactions Found</p>
-                  <pagination-controls *ngIf="currenttransaction.length > 1" (pageChange)="currentTransactionPages = $event" previousLabel="" nextLabel="">
+                  <pagination-controls *ngIf="currenttransaction.length > 1" (pageChange)="currentTransactionPages = $event" previousLabel="" nextLabel="" id="pagi2">
                   </pagination-controls>
                 </div>
               </div>
