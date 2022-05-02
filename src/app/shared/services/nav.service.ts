@@ -102,7 +102,7 @@ export class NavService implements OnDestroy {
 
     {
       path: "/dashboard/privacy",
-      title: "Privay Policy",
+      title: "Privacy Policy",
       icon: "file",
       type: "link",
     },

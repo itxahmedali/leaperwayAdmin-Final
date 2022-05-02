@@ -343,7 +343,7 @@ export class ProfileViewComponent implements OnInit {
                 if (data.status == "pending") {
                   this.pendingOrders.push(data);
                 }
-                if (data.status == "Cancelled") {
+                if (data.status == "cancelled") {
                   this.cancelledOrder.push(data);
                 }
 
@@ -425,7 +425,7 @@ export class ProfileViewComponent implements OnInit {
     let submitted = true
     let da = {
       account_title:this.account_title,
-      account_no:this.account_no,
+      account_no:this.account_no.toString(),
       amount:this.amountPayable,
       restaurant_id:this.orderDetails.id
     }
@@ -442,11 +442,11 @@ export class ProfileViewComponent implements OnInit {
       this.amountPayable_error = true;
       submitted = false
     }
-
     if(submitted){
       this.http.postApi('admin/clear_dues' , da, true).subscribe((res:any)=>{
         this.modalService.dismissAll();
         window.location.reload();
+        console.log(res)
       },(err)=>{ 
         console.log(err);
       })
