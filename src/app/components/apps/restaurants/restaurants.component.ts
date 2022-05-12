@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
-import {  Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { DatatableComponent } from "@swimlane/ngx-datatable";
 import * as $ from "jquery";
@@ -17,8 +17,8 @@ export class FileManagerComponent implements OnInit {
   term
   public url: any;
   public company;
-  lat: number = 51.678418;
-  lng: number = 7.809007;
+  lat: number = 29.8159954;
+  lng: number = -95.9617495;
   id;
   // pagination
   page: number = 1;
@@ -40,7 +40,7 @@ export class FileManagerComponent implements OnInit {
   });
   // add form
   addForm = this.fb.group({
-    name: [null, [Validators.required] ],
+    name: [null, [Validators.required]],
     email: [null, [Validators.required]],
     password: [null, [Validators.required]],
     address: [null, [Validators.required]],
@@ -96,28 +96,24 @@ export class FileManagerComponent implements OnInit {
 
   async location() {
     await navigator.geolocation.getCurrentPosition((position) => {
-      this.lat = position.coords.latitude;
-      this.lng = position.coords.longitude;
+      // this.lat = position.coords.latitude;
+      // this.lng = position.coords.longitude;
     });
   }
 
   // restaurants Api
   async getRestuarants() {
     // this.location();
-    this.http
-      .getApi(
-        `admin/restaurents/${localStorage.getItem(
-          "lat"
-        )},${localStorage.getItem("lang")}`,
-        true
-      )
+    this.http.getApi(`admin/restaurents/${localStorage.getItem("lat")},${localStorage.getItem("lang")}`,
+      true
+    )
       .subscribe(
         (res) => {
           this.company = res;
           ObservableService.loader.next(false);
         }
       ),
-      (err)=>{
+      (err) => {
         ObservableService.loader.next(false);
         console.log(err);
       };
@@ -190,10 +186,10 @@ export class FileManagerComponent implements OnInit {
         this.getRestuarants();
       }
     ),
-    (err)=>{
-      ObservableService.loader.next(false);
-      console.log(err);
-    }
+      (err) => {
+        ObservableService.loader.next(false);
+        console.log(err);
+      }
   }
   changeHeading(event) {
     if ($(event.target.id == "addBtn")) {
@@ -232,7 +228,7 @@ export class FileManagerComponent implements OnInit {
             this.update();
           }, 1000);
         }),
-        (e) => {};
+        (e) => { };
     } else {
       this.update();
     }
@@ -253,7 +249,7 @@ export class FileManagerComponent implements OnInit {
             this.add();
           }, 1000);
         }),
-        (e) => {};
+        (e) => { };
     } else {
       this.add();
     }
@@ -292,59 +288,65 @@ export class FileManagerComponent implements OnInit {
           this.getRestuarants();
         }
       ),
-      (err)=>{
+      (err) => {
         ObservableService.loader.next(false);
         console.log(err);
       };
   }
   // add restuarants
   add() {
-    if(this.addForm.invalid){
+    if (this.addForm.invalid) {
       Object.keys(this.addForm.controls).forEach(key => {
         this.addForm.get(key).markAsTouched();
         return
       });
     }
-    else{
-
-      this.http
-        .postApi(`app/restaurent_register`, this.addForm.value, false)
-        .subscribe(
-          (res: any) => {
-            ObservableService.loader.next(false);
-            this.toaster.success(res.message);
-            if(res.hasOwnProperty('access_token')){
-              $('.close').trigger('click')
-              this.toaster.success("Restaurant Added");
-            }
-            this.url = undefined;
-            this.addForm = this.fb.group({
-              name: [null, [Validators.required]],
-              email: [null, [Validators.required, Validators.email]],
-              password: [null, [Validators.required]],
-              address: [null, [Validators.required]],
-              city: [null, [Validators.required]],
-              state: [null, [Validators.required]],
-              country: [null, [Validators.required]],
-              phone: [null, [Validators.required]],
-              image: [null],
-              latlng: [null, [Validators.required]],
-              type: ["restaurant"],
-            });
-            this.getRestuarants();
-          }
-        ),
-        (err)=>{
+    else {
+      this.http.postApi('app/check-email', { email: this.addForm.value.email }, true).subscribe((res: any) => {
+        this.http.postApi(`app/restaurent_register`, this.addForm.value, false).subscribe((res: any) => {
           ObservableService.loader.next(false);
-          console.log(err);
-        };
+          this.toaster.success(res.message);
+          if (res.hasOwnProperty('access_token')) {
+            $('.close').trigger('click')
+            this.toaster.success("Restaurant Added");
+          }
+          this.url = undefined;
+          this.addForm = this.fb.group({
+            name: [null, [Validators.required]],
+            email: [null, [Validators.required, Validators.email]],
+            password: [null, [Validators.required]],
+            address: [null, [Validators.required]],
+            city: [null, [Validators.required]],
+            state: [null, [Validators.required]],
+            country: [null, [Validators.required]],
+            phone: [null, [Validators.required]],
+            image: [null],
+            latlng: [null, [Validators.required]],
+            type: ["restaurant"],
+          });
+          this.getRestuarants();
+        }
+        ),
+          (err) => {
+            ObservableService.loader.next(false);
+            console.log(err);
+          };
+      }, (err: any) => {
+        
+        this.toaster.error(err.error.message);
+        ObservableService.loader.next(false);
+        setTimeout(() => {
+          window.location.reload()
+        }, 1000);
+      })
+      
     }
   }
   markerDragEnd($event: any) {
     this.lat = $event.coords.lat;
     this.lng = $event.coords.lng;
     this.addForm.patchValue({
-      latlng : this.lat + "," + this.lng
+      latlng: this.lat + "," + this.lng
     })
   }
   numberOnly(event): boolean {

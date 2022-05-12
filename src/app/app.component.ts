@@ -29,13 +29,17 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.location()
+    // this.location()
+    localStorage.setItem('lat','29.8159954')
+    localStorage.setItem('lang','-95.9617495')
   }
 
   async location() {
     await navigator.geolocation.getCurrentPosition((position) => { 
-      localStorage.setItem('lat',JSON.stringify(position.coords.latitude))
-      localStorage.setItem('lang',JSON.stringify(position.coords.longitude))
+      // localStorage.setItem('lat',JSON.stringify(position.coords.latitude))
+      // localStorage.setItem('lang',JSON.stringify(position.coords.longitude))
+
+      
      });
    }
    

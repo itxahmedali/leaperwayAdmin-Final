@@ -5,7 +5,8 @@
       <div class="card">
         <div class="card-body custom-datatable">
           <div class="searchBox d-flex justify-content-between">
-            <input type="text" class="filter-ngx form-control" placeholder='Search by name or email' [(ngModel)]="term"/>
+            <input type="text" class="filter-ngx form-control" placeholder='Search by name or email'
+              [(ngModel)]="term" />
             <button class="btn btn-primary" id="addBtn" (click)="addModal(content);">
               <i class='fa fa-plus'></i>
             </button>
@@ -29,10 +30,10 @@
                   <td>{{restaurant?.user.name}}</td>
                   <td>{{restaurant?.user.email}}</td>
                   <td>{{restaurant?.created_at | date: 'dd/MM/yyyy'}}</td>
-                  <td> 
+                  <td>
                     <div class="toggleBtn">
                       <label class="switch"><input type="checkbox" (change)="status($event, restaurant?.id)"
-                        [checked]="restaurant?.user?.status == 1 ? true : false" />
+                          [checked]="restaurant?.user?.status == 1 ? true : false" />
                         <div></div>
                       </label>
                     </div>
@@ -40,12 +41,12 @@
                   <td>
                     <div class="d-flex actionsBtn">
                       <button class="btn btn-dark" (click)="viewpage(restaurant)">
-                      <i class='fa fa-eye'></i>
-                    </button>
-                    <button class="btn btn-primary" (click)="open(editModal, restaurant)">
-                      <i class='fa fa-edit'></i>
-                    </button>
-                  </div>
+                        <i class='fa fa-eye'></i>
+                      </button>
+                      <button class="btn btn-primary" (click)="open(editModal, restaurant)">
+                        <i class='fa fa-edit'></i>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -83,105 +84,106 @@
         <div class="col-lg-6 mt-3">
           <label for="name">Name</label>
           <div class="input-group">
-            <input class="form-control" placeholder="Name" formControlName ="name">
+            <input class="form-control" placeholder="Name" formControlName="name">
           </div>
           <div *ngIf="addForm.controls.name.touched && addForm.controls.name.errors?.required"
-                                        class="text text-danger mt-1 mb-3">
-                                        Name is required
+            class="text text-danger mt-1 mb-3">
+            Name is required
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="phone">Phone</label>
           <div class="input-group">
-            <input class="form-control" placeholder="Phone" formControlName ="phone" type="text">
+            <input class="form-control" placeholder="Phone" formControlName="phone" type="text">
           </div>
           <div *ngIf="addForm.controls.phone.touched && addForm.controls.phone.errors?.required"
-                                        class="text text-danger mt-1 mb-3">
-                                        Phone is required
+            class="text text-danger mt-1 mb-3">
+            Phone is required
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="phone">Email</label>
           <div class="input-group">
-            <input class="form-control" placeholder="Email" formControlName ="email" type="email">
+            <input class="form-control" placeholder="Email" formControlName="email" type="email">
           </div>
           <div *ngIf="addForm.controls.email.touched && addForm.controls.email.errors?.required"
-                                        class="text text-danger mt-1 mb-3">
-                                        Email is required
+            class="text text-danger mt-1 mb-3">
+            Email is required
           </div>
           <div *ngIf="addForm.controls.email.touched && addForm.controls.email.errors?.email"
-                                        class="text text-danger mt-1 mb-3">
-                                        Invalid Email
+            class="text text-danger mt-1 mb-3">
+            Invalid Email
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="phone">Password</label>
           <div class="input-group">
-            <input class="form-control" placeholder="Password" formControlName ="password" type="password">
+            <input class="form-control" placeholder="Password" formControlName="password" type="password">
           </div>
           <div *ngIf="addForm.controls.password.touched && addForm.controls.password.errors?.required"
-                                        class="text text-danger mt-1 mb-3">
-                                        Password is required
+            class="text text-danger mt-1 mb-3">
+            Password is required
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="address">Address</label>
           <div class="input-group">
-            <input class="form-control" placeholder="Address" formControlName ="address">
+            <input class="form-control" placeholder="Address" formControlName="address">
           </div>
           <div *ngIf="addForm.controls.address.touched && addForm.controls.address.errors?.required"
-                                        class="text text-danger mt-1 mb-3">
-                                        Address is required
+            class="text text-danger mt-1 mb-3">
+            Address is required
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="city">City</label>
           <div class="input-group">
-            <input class="form-control" placeholder="City" formControlName ="city">
+            <input class="form-control" placeholder="City" formControlName="city">
           </div>
           <div *ngIf="addForm.controls.city.touched && addForm.controls.city.errors?.required"
-                                        class="text text-danger mt-1 mb-3">
-                                        City is required
+            class="text text-danger mt-1 mb-3">
+            City is required
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="state">State</label>
           <div class="input-group">
-            <input class="form-control" placeholder="State" formControlName ="state">
+            <input class="form-control" placeholder="State" formControlName="state">
           </div>
           <div *ngIf="addForm.controls.state.touched && addForm.controls.state.errors?.required"
-                                        class="text text-danger mt-1 mb-3">
-                                        State is required
+            class="text text-danger mt-1 mb-3">
+            State is required
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="country">Country</label>
           <div class="input-group">
-            <input class="form-control" placeholder="Country" formControlName ="country">
+            <input class="form-control" placeholder="Country" formControlName="country">
           </div>
           <div *ngIf="addForm.controls.country.touched && addForm.controls.country.errors?.required"
-                                        class="text text-danger mt-1 mb-3">
-                                        Country is required
+            class="text text-danger mt-1 mb-3">
+            Country is required
           </div>
         </div>
         <div class="col-lg-12 mt-3">
           <label for="country">Location</label>
           <div class="input-group">
             <div class="inpBox position-relative w-100">
-              <input readonly class="form-control" placeholder="Location" formControlName ="latlng">
+              <input readonly class="form-control" placeholder="Location" formControlName="latlng">
               <button (click)="open(location);"><img src="assets/svg/location.svg" alt=""></button>
             </div>
             <div *ngIf="addForm.controls.latlng.touched && addForm.controls.latlng.errors?.required"
-                                        class="text text-danger mt-1 mb-3">
-                                        Location is required
-          </div>
+              class="text text-danger mt-1 mb-3">
+              Location is required
+            </div>
           </div>
         </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" [disabled]="addForm.invalid" class="btn btn-outline-dark" (click)="modal.close('Save click'); dealAdd(); ">Add</button>
+    <button type="button" [disabled]="addForm.invalid" class="btn btn-outline-dark"
+      (click)="modal.close('Save click'); dealAdd(); ">Add</button>
   </div>
 </ng-template>
 
@@ -209,43 +211,44 @@
         <div class="col-lg-6 mt-3">
           <label for="name">Name</label>
           <div class="input-group">
-            <input class="form-control" placeholder="Name" formControlName ="name">
+            <input class="form-control" placeholder="Name" formControlName="name">
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="phone">Phone</label>
           <div class="input-group">
-            <input class="form-control" placeholder="Phone" formControlName ="phone" type="text" (keypress)="numberOnly($event)">
+            <input class="form-control" placeholder="Phone" formControlName="phone" type="text"
+              (keypress)="numberOnly($event)">
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="phone">Password</label>
           <div class="input-group">
-            <input class="form-control" placeholder="Password" formControlName ="password" type="password">
+            <input class="form-control" placeholder="Password" formControlName="password" type="password">
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="address">Address</label>
           <div class="input-group">
-            <input class="form-control" placeholder="Address" formControlName ="address">
+            <input class="form-control" placeholder="Address" formControlName="address">
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="city">City</label>
           <div class="input-group">
-            <input class="form-control" placeholder="City" formControlName ="city">
+            <input class="form-control" placeholder="City" formControlName="city">
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="state">State</label>
           <div class="input-group">
-            <input class="form-control" placeholder="State" formControlName ="state">
+            <input class="form-control" placeholder="State" formControlName="state">
           </div>
         </div>
         <div class="col-lg-6 mt-3">
           <label for="country">Country</label>
           <div class="input-group">
-            <input class="form-control" placeholder="Country" formControlName ="country">
+            <input class="form-control" placeholder="Country" formControlName="country">
           </div>
         </div>
       </div>
@@ -258,8 +261,10 @@
 <!-- location modals -->
 <ng-template #location let-modal>
   <div class="modal-body">
+   
     <agm-map [latitude]="lat" [longitude]="lng">
-      <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)"></agm-marker>
+      <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)">
+      </agm-marker>
     </agm-map>
   </div>
   <div class="modal-footer">

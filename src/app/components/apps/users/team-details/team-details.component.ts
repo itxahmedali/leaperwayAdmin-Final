@@ -207,8 +207,8 @@ export class TeamDetailsComponent implements OnInit {
     if(this.addForm.invalid){
       Object.keys(this.addForm.controls).forEach(key => {
         this.addForm.get(key).markAsTouched();
-        return
       });
+      return false
     }
     if(this.addForm.controls.password.value != this.addForm.controls.confirm_password.value){
       this.toaster.error("Password and confirm password does not match");

@@ -29,6 +29,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 // import { CountToModule } from 'angular-count-to';
 // import { CountUpModule } from 'ngx-countup';
 export function HttpLoaderFactory(http: HttpClient) {
@@ -53,10 +54,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    GooglePlaceModule,
     // CountToModule,
     // CountUpModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCab5ahH6KkodUavDwBCigXTL7ZbrkzS94'
+      apiKey: 'AIzaSyDpjC5dmFxhdUHi24y0ZH6PGD_NhOLFCMA'
     }),
     TranslateModule.forRoot({
       loader: {
