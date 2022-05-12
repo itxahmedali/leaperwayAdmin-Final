@@ -90,10 +90,22 @@ export class FileManagerComponent implements OnInit {
   ngOnInit() {
     this.location()
     setTimeout(() => {
+      this.lat = 29.749907;
+      this.lng = -95.358421;
       this.getRestuarants();
     }, 1000);
   }
-
+  title = 'rou';
+  //Local Variable defined
+  formattedaddress=" ";
+  options={
+  }
+  public AddressChange(address: any) {
+  //setting address from API to local variable
+   this.formattedaddress=address.formatted_address
+   this.lat = address.geometry.location.lat();
+   this.lng = address.geometry.location.lng();
+}
   async location() {
     await navigator.geolocation.getCurrentPosition((position) => {
       // this.lat = position.coords.latitude;

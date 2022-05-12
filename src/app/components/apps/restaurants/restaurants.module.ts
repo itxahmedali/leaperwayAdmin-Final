@@ -10,6 +10,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgxPaginationModule } from "ngx-pagination";
 import { AgmCoreModule } from '@agm/core';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
+
 
 @NgModule({
   imports: [
@@ -21,7 +23,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     CountToModule,
     NgxPaginationModule,
     AgmCoreModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    GooglePlaceModule,
   ],
   declarations: [FileManagerComponent, ProfileViewComponent],
 })

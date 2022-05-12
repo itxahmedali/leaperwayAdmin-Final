@@ -261,7 +261,11 @@
 <!-- location modals -->
 <ng-template #location let-modal>
   <div class="modal-body">
-   
+    <!-- <ngx-google-places-autocomplete autoSubmit="true" formControlName="place" placeholder="Enter a location"></ngx-google-places-autocomplete> -->
+    <div class="mt-2 mb-2">
+      <input ngx-google-places-autocomplete [options]=
+       'options'  (onAddressChange)="AddressChange($event)"/>
+    </div>
     <agm-map [latitude]="lat" [longitude]="lng">
       <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)">
       </agm-marker>

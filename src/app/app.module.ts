@@ -58,7 +58,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     // CountToModule,
     // CountUpModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDpjC5dmFxhdUHi24y0ZH6PGD_NhOLFCMA'
+      apiKey: 'AIzaSyDpjC5dmFxhdUHi24y0ZH6PGD_NhOLFCMA',
+      libraries:['places']
     }),
     TranslateModule.forRoot({
       loader: {
