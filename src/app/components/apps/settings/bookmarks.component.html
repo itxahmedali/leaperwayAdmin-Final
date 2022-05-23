@@ -24,25 +24,96 @@
         <label for="dashboardIcon" class="icon-wrapper"><i class="icofont icofont-pencil-alt-5"></i></label>
     </div>
 </div> -->
-<div class="row">
-    <div class="col-lg-12 mb-3 mt-5 text-center">
-        <h2>
-            App Url
-        </h2>
-    </div>
-    <div class="col-lg-12 mt-3">
-        <label for="name">Android Url</label>
-        <div class="input-group">
-            <input placeholder="Url" class="form-control" [(ngModel)]="androidUrl">
+<div class="card p-3">
+    <div class="row">
+        <div class="col-lg-12 mb-3 mt-5 text-center">
+            <h2>
+                App Url
+            </h2>
+        </div>
+        <div class="col-lg-12 mt-3">
+            <label for="name">Android Url</label>
+            <div class="input-group">
+                <input placeholder="Url" class="form-control" [(ngModel)]="androidUrl">
+            </div>
+        </div>
+        <div class="col-lg-12 mt-3 mb-5">
+            <label for="name">IOS Url</label>
+            <div class="input-group">
+                <input placeholder="Url" class="form-control" [(ngModel)]="iosUrl">
+            </div>
+        </div>
+        <div class="col-lg-2 offset-lg-10 d-flex justify-content-end" >
+            <button class="btn btn-primary" (click)="saveUrl()">Save</button>
         </div>
     </div>
-    <div class="col-lg-12 mt-3 mb-5">
-        <label for="name">IOS Url</label>
-        <div class="input-group">
-            <input placeholder="Url" class="form-control" [(ngModel)]="iosUrl">
+</div>
+
+<div class="card p-3">
+    <div class="row">
+        <div class="col-lg-12 mb-3 mt-5 text-center">
+            <h2>
+                Deal Cancellation Duration
+            </h2>
+        </div>
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-8 mt-3">
+                    <label for="name">Duration</label>
+                    <div class="input-group">
+                        <input type="number" [placeholder]="Timetype" class="form-control" [(ngModel)]="Duration">
+
+                    </div>
+                </div>
+                <div class="col-lg-4 mt-3 mb-5">
+                    <label for="name">Time type</label>
+                    <div class="input-group">
+                        <!-- <input placeholder="Url" class="form-control" [(ngModel)]="Timetype"> -->
+                        <select name="" id="" class="form-control" [(ngModel)]="Timetype">
+                            <option value="day">Days</option>
+                            <option value="hour">Hours</option>
+                            <option value="minut">Minut(s)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 offset-lg-10 d-flex justify-content-end" >
+            <button class="btn btn-primary" (click)="saveDuration()">Save</button>
         </div>
     </div>
-    <div class="col-lg-2 offset-lg-10 d-flex justify-content-end" >
-        <button class="btn btn-primary" (click)="saveUrl()">Save</button>
+</div>
+
+<div class="card p-3">
+    <div class="row">
+        <div class="col-lg-12 mb-3 mt-5 text-center">
+            <h2>
+                Processing Fee
+            </h2>
+        </div>
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-8 mt-3">
+                    <label for="name">Fee</label>
+                    <div class="input-group">
+                        <input type="number" placeholder="Fee" class="form-control" [(ngModel)]="processingFee">
+
+                    </div>
+                </div>
+                <div class="col-lg-4 mt-3 mb-5">
+                    <label for="name">Fee type</label>
+                    <div class="input-group">
+                        <!-- <input placeholder="Url" class="form-control" [(ngModel)]="Timetype"> -->
+                        <select name="" id="" class="form-control" [(ngModel)]="processingFeeMethod">
+                            <option value="%">% (Percent on amount)</option>
+                            <option value="$">$ (Fixed amount)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 offset-lg-10 d-flex justify-content-end" >
+            <button class="btn btn-primary" (click)="saveMerchantFee()">Save</button>
+        </div>
     </div>
 </div>

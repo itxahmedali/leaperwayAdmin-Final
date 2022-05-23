@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import * as $ from "jquery";
+import { ToastrService } from "ngx-toastr";
 import { HttpService } from "src/app/services/http.service";
 import { ObservableService } from "src/app/services/observable.service";
 @Component({
@@ -12,13 +13,20 @@ export class BookmarksComponent implements OnInit {
   dashboardIcon: string = "assets/images/user/1.jpg";
   androidUrl:string = null;
   iosUrl:string = null;
+  Duration:any = null;
+  Timetype:string = 'minut';
+  processingFeeMethod:string = '%';
+  processingFee:number = null;
 
   constructor(
     private http: HttpService,
+    private toaster: ToastrService,
   ) {}
   //FileUpload
   ngOnInit() {
-    this.getData()
+    this.getData();
+    this.getDuration();
+    this.getProcessingFee();
   }
   readUrl(event: any, param) {
     if (event.target.files.length === 0) return;
@@ -73,4 +81,74 @@ export class BookmarksComponent implements OnInit {
       ObservableService.loader.next(false);
     })
   }
+
+  getDuration(){
+    this.http.getApi('admin/crontime_get', true).subscribe((res:any)=>{
+      this.Duration = res.time_duration;
+      // this.Timetype = res.type;
+      ObservableService.loader.next(false);
+    }, (err)=>{
+      console.log(err)
+      ObservableService.loader.next(false);
+    })
+  }
+
+  saveDuration(){
+    if(this.Duration == null || this.Duration == ''){
+      this.toaster.error("Duration cannot be null!");
+      return
+    }
+    let min = 0
+    if(this.Timetype == 'day'){
+      min = (this.Duration*1440)
+    }else if(this.Timetype == 'hour'){
+      min = (this.Duration*60)
+    }else{
+      min = this.Duration;
+    }
+    let data = {
+      time_duration:Number(min),
+      type:this.Timetype
+    }
+    this.http.postApi('admin/crontime', data, true).subscribe((res:any)=>{
+      console.log(res)
+      ObservableService.loader.next(false);
+      this.getDuration()
+    }, (err)=>{
+      console.log(err)
+      ObservableService.loader.next(false);
+    })
+  }
+
+  getProcessingFee(){
+    this.http.getApi('admin/processing_fee_get',true).subscribe((res:any)=>{
+      console.log(res)
+      this.processingFee = res.fee;
+      this.processingFeeMethod = res.type;
+      ObservableService.loader.next(false);
+    },(err)=>{
+      console.log(err);
+      ObservableService.loader.next(false);
+    })
+  }
+
+  saveMerchantFee(){
+    if(this.processingFee == null){
+      this.toaster.error("Processing fee cannot be null!");
+      return
+    }
+    let data = {
+      fee:this.processingFee,
+      type:this.processingFeeMethod
+    }
+
+    this.http.postApi('admin/processing_fee', data, true).subscribe((res:any)=>{
+      this.getProcessingFee();
+      ObservableService.loader.next(false);
+    },(err)=>{
+      console.log(err);
+      ObservableService.loader.next(false);
+    })
+  }
+
 }

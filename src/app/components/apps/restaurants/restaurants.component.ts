@@ -83,7 +83,7 @@ export class FileManagerComponent implements OnInit {
       country: [null, [Validators.required]],
       phone: [null, [Validators.required]],
       image: [null],
-      latlng: [null, [Validators.required]],
+      latlng: [this.lat + "," + this.lng, [Validators.required]],
       type: ["restaurant"],
     });
   }
@@ -101,10 +101,16 @@ export class FileManagerComponent implements OnInit {
   options={
   }
   public AddressChange(address: any) {
-  //setting address from API to local variable
-   this.formattedaddress=address.formatted_address
-   this.lat = address.geometry.location.lat();
-   this.lng = address.geometry.location.lng();
+    console.log(address.geometry.location.lat(),'address')
+  //setting address from API to local variable;
+  let a = address.geometry.location.lat();
+  let b = address.geometry.location.lng();
+   this.formattedaddress=address.formatted_address;
+   this.lat = a;
+   this.lng = b;
+   this.addForm.patchValue({
+     latlng:a+','+b
+   })
 }
   async location() {
     await navigator.geolocation.getCurrentPosition((position) => {
@@ -116,11 +122,12 @@ export class FileManagerComponent implements OnInit {
   // restaurants Api
   async getRestuarants() {
     // this.location();
-    this.http.getApi(`admin/restaurents/${localStorage.getItem("lat")},${localStorage.getItem("lang")}`,
+    this.http.getApi(`admin/restaurents/${this.lat},${this.lng}`,
       true
     )
       .subscribe(
         (res) => {
+          this.term = null
           this.company = res;
           ObservableService.loader.next(false);
         }
@@ -314,6 +321,7 @@ export class FileManagerComponent implements OnInit {
       });
     }
     else {
+      console.log('lp')
       this.http.postApi('app/check-email', { email: this.addForm.value.email }, true).subscribe((res: any) => {
         this.http.postApi(`app/restaurent_register`, this.addForm.value, false).subscribe((res: any) => {
           ObservableService.loader.next(false);
@@ -321,6 +329,7 @@ export class FileManagerComponent implements OnInit {
           if (res.hasOwnProperty('access_token')) {
             $('.close').trigger('click')
             this.toaster.success("Restaurant Added");
+            this.getRestuarants();
           }
           this.url = undefined;
           this.addForm = this.fb.group({
@@ -333,10 +342,10 @@ export class FileManagerComponent implements OnInit {
             country: [null, [Validators.required]],
             phone: [null, [Validators.required]],
             image: [null],
-            latlng: [null, [Validators.required]],
+            latlng: [this.lat + "," + this.lng, [Validators.required]],
             type: ["restaurant"],
           });
-          this.getRestuarants();
+          
         }
         ),
           (err) => {
